@@ -1,9 +1,9 @@
 #import "@preview/i-figured:0.2.4"
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体, 字号
 #import "../utils/custom-numbering.typ": custom-numbering
-#import "../utils/custom-heading.typ": heading-display, active-heading
+#import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
-#import "../utils/header.typ": header-render, graduate-header-title
+#import "../utils/header.typ": graduate-header-title, header-render
 
 #let mainmatter(
   // documentclass 传入参数
@@ -16,7 +16,7 @@
   justify: true,
   first-line-indent: (amount: 2em, all: true),
   numbering: custom-numbering.with(
-    first-level: n => [#("第" + str(n) + "章 ")],
+    first-level: n => [#("第" + str(n) + "章　")],
     depth: 4,
     "1.1 ",
   ),
@@ -64,9 +64,11 @@
   set page(numbering: "1")
 
   // 2.  处理 heading- 开头的其他参数
-  let heading-text-args-lists = args.named().pairs()
-    .filter((pair) => pair.at(0).starts-with("heading-"))
-    .map((pair) => (pair.at(0).slice("heading-".len()), pair.at(1)))
+  let heading-text-args-lists = args
+    .named()
+    .pairs()
+    .filter(pair => pair.at(0).starts-with("heading-"))
+    .map(pair => (pair.at(0).slice("heading-".len()), pair.at(1)))
 
   // 3.  辅助函数
   let array-at(arr, pos) = {
@@ -92,7 +94,7 @@
   show math.equation.where(block: true): show-equation
   // 4.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(
-    kind: table
+    kind: table,
   ): set figure.caption(position: top)
   set figure.caption(separator: separator)
   show figure.caption: caption-style
@@ -110,8 +112,7 @@
       font: array-at(heading-font, it.level),
       size: array-at(heading-size, it.level),
       weight: array-at(heading-weight, it.level),
-      ..unpairs(heading-text-args-lists
-        .map((pair) => (pair.at(0), array-at(pair.at(1), it.level))))
+      ..unpairs(heading-text-args-lists.map(pair => (pair.at(0), array-at(pair.at(1), it.level)))),
     )
     set block(
       above: array-at(heading-above, it.level),
@@ -140,38 +141,40 @@
   }
 
   // 6.  处理页眉
-  set page(..(if display-header {
-    (
-      header: context {
-        // 重置 footnote 计数器
-        if reset-footnote {
-          counter(footnote).update(0)
-        }
-        let loc = here()
-        // 判断是否为研究生
-        let is-graduate = doctype == "master" or doctype == "doctor"
-        // 页眉内容
-        let header-content = if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
-          // 偶数页：显示论文标题
-          graduate-header-title(doctype)
-        } else {
-          // 奇数页或单面打印：显示当前章标题
-          heading-display(active-heading(level: 1, prev: false))
-        }
-        // 使用统一的页眉格式
-        header-render(header-content, fonts: fonts)
-      }
-    )
-  } else {
-    (
-      header: {
-        // 重置 footnote 计数器
-        if reset-footnote {
-          counter(footnote).update(0)
-        }
-      }
-    )
-  }))
+  set page(..(
+    if display-header {
+      (
+        header: context {
+          // 重置 footnote 计数器
+          if reset-footnote {
+            counter(footnote).update(0)
+          }
+          let loc = here()
+          // 判断是否为研究生
+          let is-graduate = doctype == "master" or doctype == "doctor"
+          // 页眉内容
+          let header-content = if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
+            // 偶数页：显示论文标题
+            graduate-header-title(doctype)
+          } else {
+            // 奇数页或单面打印：显示当前章标题
+            heading-display(active-heading(level: 1, prev: false))
+          }
+          // 使用统一的页眉格式
+          header-render(header-content, fonts: fonts)
+        },
+      )
+    } else {
+      (
+        header: {
+          // 重置 footnote 计数器
+          if reset-footnote {
+            counter(footnote).update(0)
+          }
+        },
+      )
+    }
+  ))
 
   it
 }
