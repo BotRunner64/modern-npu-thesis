@@ -1,6 +1,7 @@
 // 文稿设置，可以进行一些像页面边距这类的全局设置
 #import "../utils/style.typ": 字号, 字体
 #import "../utils/header.typ": header-render, graduate-header-config
+#import "../utils/custom-cuti.typ": show-cn-fakebold
 
 #let doc(
   // documentclass 传入参数
@@ -50,6 +51,8 @@
   }
 
   // 3.  基本的样式设置
+  // 启用中文伪粗体（模拟 Word 的加粗效果）
+  show: show-cn-fakebold
   set text(fallback: fallback, lang: lang)
   set page(
     paper: "a4",

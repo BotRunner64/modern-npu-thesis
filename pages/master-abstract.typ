@@ -10,7 +10,7 @@
   fonts: (:),
   info: (:),
   keywords: (),
-  outline-title: "摘 要",
+  outline-title: "摘　要",
   outlined: true,
   anonymous-info-keys: ("author", "grade", "supervisor", "supervisor-ii"),
   leading: 1.0em,
