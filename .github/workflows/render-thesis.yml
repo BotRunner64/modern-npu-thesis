@@ -48,7 +48,7 @@ jobs:
         run: mkdir -p dist
 
       - name: Compile thesis
-        run: typst compile --font-path fonts template/thesis.typ dist/thesis.pdf
+        run: typst compile --root . --font-path fonts template/thesis.typ dist/thesis.pdf
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v6
