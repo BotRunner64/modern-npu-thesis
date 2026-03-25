@@ -32,7 +32,19 @@ permissions:
 
 jobs:
   render:
-    runs-on: ubuntu-latest
+    name: Render on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    defaults:
+      run:
+        shell: pwsh
 
     steps:
       - name: Checkout repository
@@ -45,12 +57,13 @@ jobs:
           cache-dependency-path: .github/typst-packages.typ
 
       - name: Create output directory
-        run: mkdir -p dist
+        run: New-Item -ItemType Directory -Force -Path dist | Out-Null
 
       - name: Compile thesis
         run: typst compile --root . --font-path fonts template/thesis.typ dist/thesis.pdf
 
       - name: Upload PDF artifact
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v6
         with:
           name: thesis-pdf
