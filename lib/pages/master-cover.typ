@@ -331,13 +331,9 @@
   // 日期
   text(font: fonts.宋体, size: 字号.三号, datetime-year-month(info.submit-date))
 
-  // 双面打印时，如果中文内封结束在奇数页，添加空白偶数页
+  // 双面打印时，稳定地补到偶数页，避免基于当前页码的自引用布局。
   if twoside {
-    context {
-      if calc.rem(here().page(), 2) == 1 {
-        pagebreak(to: "even") + " "
-      }
-    }
+    pagebreak(weak: true, to: "even")
   }
 
 
@@ -411,13 +407,9 @@
   v(0pt)
   text(font: "Times New Roman", datetime-year-month-en(info.submit-date))
 
-  // 双面打印时，如果英文封面结束在奇数页，添加空白偶数页
+  // 双面打印时，稳定地补到偶数页，避免基于当前页码的自引用布局。
   if twoside {
-    context {
-      if calc.rem(here().page(), 2) == 1 {
-        pagebreak(to: "even") + " "
-      }
-    }
+    pagebreak(weak: true, to: "even")
   }
 
 
