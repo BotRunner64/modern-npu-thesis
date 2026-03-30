@@ -7,7 +7,8 @@
   colored-cover: true, // 是否开启彩色封面封底
   info: (
     title: ("基于 Typst 的", "西北工业大学学位论文"),
-    title-en: "My Title in English",
+    title-en: "First Line 
+              Second Line",
     student-id: "2023123456",
     clc: "TP311.1", // 分类号
     author: "航小天",

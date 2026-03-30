@@ -343,26 +343,32 @@
   pagebreak(weak: true)
 
   set text(font: fonts.宋体, size: 字号.小四)
-  set par(leading: 1.5em)
+  set par(leading: 0.7em)
 
   v(5 * 14pt * 1.4) // 约 59pt
 
   // 标题
   set text(font: fonts.宋体, size: 字号.二号)
-  text(font: "Times New Roman", weight: "bold")[Title: ]
-  text(font: "Times New Roman", size: 字号.三号, info.title-en.intersperse(" ").sum())
+  align(center)[
+    #text(font: "Times New Roman", weight: "bold")[Title: ]
+    #text(font: "Times New Roman", size: 字号.三号, info.title-en.at(0, default: ""))
+    #for line in info.title-en.slice(1) [
+      #linebreak()
+      #text(font: "Times New Roman", size: 字号.三号, line)
+    ]
+  ]
 
-  v(3 * 14pt * 1.4) // 约 59pt
+  v((if info.title-en.len() >= 2 { 2 } else { 3 }) * 14pt * 1.4)
 
   // 作者信息
   set text(font: "Times New Roman", size: 字号.小三)
   text(weight: "bold")[By]
 
-  v(-7pt)
+  linebreak()
 
   text(weight: "regular", anonymous-text("author-en", info.author-en))
 
-  v(-7pt)
+  linebreak()
 
   // 中文学术职称到英文的映射
   let title-en-map = (
@@ -375,23 +381,23 @@
   let supervisor-title-en = title-en-map.at(info.supervisor.at(1, default: "教授"), default: "Professor")
 
   text(weight: "bold")[Under the Supervision of #supervisor-title-en]
-  v(-7pt)
+  linebreak()
   text(anonymous-text("supervisor-en", { info.supervisor-en }))
 
-  v(4 * 14pt * 1.4) // 约 78pt
+  v(5 * 14pt * 1.4) // 约 78pt
 
   // 学位信息
   set text(font: "Times New Roman", size: 字号.小三)
   [A Dissertation Submitted to]
-  v(-7pt)
+  linebreak()
   [Northwestern Polytechnical University]
 
   v(1 * 14pt * 1.4) // 约 20pt
 
   [In Partial Fulfillment of The Requirement]
-  v(-7pt)
+  linebreak()
   [For The Degree of]
-  v(-7pt)
+  linebreak()
   let degree-title = if doctype == "doctor" { "Doctor of " } else { "Master of " }
   if doctype == "doctor" {
     text(degree-title)
@@ -404,7 +410,7 @@
 
   // 地点和日期
   [Xi'an, P.R. China]
-  v(0pt)
+  linebreak()
   text(font: "Times New Roman", datetime-year-month-en(info.submit-date))
 
   // 双面打印时，稳定地补到偶数页，避免基于当前页码的自引用布局。
