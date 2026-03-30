@@ -17,7 +17,7 @@
   anonymous-info-keys: ("author-en", "supervisor-en", "supervisor-ii-en"),
   leading: 1.0em,
   spacing: 1.0em,
-  funding: "The present work is supported by the XXX (Project No.xxx)",
+  funding: none,
   body,
 ) = {
   fonts = 字体 + fonts

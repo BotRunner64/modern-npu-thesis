@@ -288,8 +288,10 @@
   // 页面控制
   abstract: none,
   keywords: (),
+  funding: none,
   abstract-en: none,
   keywords-en: (),
+  funding-en: none,
   acknowledgement: none,
   academic-achievements: none,
   scan-declaration: none,
@@ -323,10 +325,10 @@
   // 2. 前置部分（摘要、目录等）
   show: cls.preface
   if abstract != none {
-    (cls.abstract)(keywords: keywords)[#abstract]
+    (cls.abstract)(keywords: keywords, funding: funding)[#abstract]
   }
   if abstract-en != none {
-    (cls.abstract-en)(keywords: keywords-en)[#abstract-en]
+    (cls.abstract-en)(keywords: keywords-en, funding: funding-en)[#abstract-en]
   }
 
   (cls.outline-page)(depth: outline-depth)

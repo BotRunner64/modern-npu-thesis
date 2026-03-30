@@ -42,10 +42,12 @@
     中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
   ],
   keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
+  funding: "本研究得到某某基金（编号：   ）资助。",
   abstract-en: [
     English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
   ],
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
+  funding-en: "The present work is supported by the XXX（Project No.xxx）",
   appendix: [
     =
     附录是学位论文主体的补充，并不是必需的。

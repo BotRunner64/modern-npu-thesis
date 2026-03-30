@@ -15,7 +15,7 @@
   anonymous-info-keys: ("author", "grade", "supervisor", "supervisor-ii"),
   leading: 1.0em,
   spacing: 1.0em,
-  funding: "本研究得到某某基金（编号：   ）资助。",
+  funding: none,
   body,
 ) = {
   fonts = 字体 + fonts
