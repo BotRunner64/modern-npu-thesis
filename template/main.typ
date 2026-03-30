@@ -7,7 +7,8 @@
   colored-cover: true, // 是否开启彩色封面封底
   info: (
     title: ("基于 Typst 的", "西北工业大学学位论文"),
-    title-en: "My Title in English",
+    title-en: "First Line 
+              Second Line",
     student-id: "2023123456",
     clc: "TP311.1", // 分类号
     author: "航小天",
@@ -41,13 +42,16 @@
     中文摘要内容。中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
   ],
   keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
+  funding: "本研究得到某某基金（编号：   ）资助。",
   abstract-en: [
     English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
   ],
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
+  funding-en: "The present work is supported by the XXX（Project No.xxx）",
   appendix: [
     =
     附录是学位论文主体的补充，并不是必需的。
+    
     附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
   ],
   acknowledgement: [
@@ -60,36 +64,36 @@
 )
 
 #let thesis-body = [
-  
+
   = 绪论
-  
+
   == 研究背景
-  
+
   XXX
-  
+
   === 研究意义
-  
+
   研究意义内容。
-  
+
   === 研究现状
-  
+
   研究现状内容。
-  
+
   == 研究内容
-  
+
   研究内容概述。
-  
+
   == 图表测试
-  
+
   引用@tbl:timing-tlt，以及@fig:test。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
-  
+
   #figure(
     table(
       columns: (1fr, 1fr, 1fr, 1fr),
       stroke: none,
       inset: (x: 0.3em, y: 0.4em),
       align: center + horizon,
-      
+
       table.hline(y: 0, stroke: 1.5pt),
       table.header([t], [1], [2], [3]),
       table.hline(y: 1, stroke: 0.5pt),
@@ -105,7 +109,7 @@
       stroke: none,
       inset: (x: 0.3em, y: 0.4em),
       align: center + horizon,
-      
+
       table.hline(y: 0, stroke: 1.5pt),
       table.cell(rowspan: 2)[材料],
       table.cell(colspan: 2)[碳/环氧],
@@ -120,14 +124,14 @@
     ),
     caption: [复杂三线表示例：聚合物基复合材料的性能],
   ) <composite-performance>
-  
+
   #figure(
     image("template/images/博士论文封面.jpg", width: 45%),
     caption: [图片测试],
   ) <test>
-  
+
   图片之间的文字
-  
+
   #figure(
     grid(
       columns: (1fr, 1fr),
@@ -143,7 +147,7 @@
     ),
     caption: [总图标题],
   ) <fig-main>
-  
+
   #figure(
     grid(
       columns: (1fr, 1fr),
@@ -157,7 +161,7 @@
         #image("template/images/专硕论文封底.jpg", width: 50%)
         (b) 第二个子图说明
       ],
-      
+
       align(center)[
         #image("template/images/学硕论文封面.jpg", width: 50%)
         (c) 第三个子图说明
@@ -169,29 +173,29 @@
     ),
     caption: [总图标题],
   ) <fig-main>
-  
+
   == 数学公式
-  
+
   可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
-  
+
   $ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
-  
+
   引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
-  
+
   $ F_n = floor(1 / sqrt(5) phi.alt^n) $
-  
+
   我们也可以通过 `<->` 标签来标识该行间公式不需要编号
-  
+
   $ y = integral_1^2 x^2 dif x $ <->
-  
+
   而后续数学公式仍然能正常编号。
-  
+
   $ F_n = floor(1 / sqrt(5) phi.alt^n) $
-  
+
   == 算法示例
-  
+
   下面给出采用单独算法编号的三线表风格算法示例，见#algorithm-ref(<alg:binary-search>)。
-  
+
   #algorithm(
     title: [二分查找算法],
     input: [有序数组 $A$，目标值 target。],
@@ -210,19 +214,19 @@
       [return -1],
     ),
   ) <alg:binary-search>
-  
+
   == 参考文献
-  
+
   可以像这样引用参考文献@蒋有绪1998，引用两个以上的文献时，文献之间用逗号分隔，如@WHO1970 @张志祥1998，引用三个以上的文献 @河北绿洲2001 @李炳穆2000 @丁文祥2000。
-  
+
   = 研究方法
-  
+
   == 方法概述
-  
+
   方法概述内容。
-  
+
   == 实验设计
-  
+
   实验设计内容。
 ]
 
