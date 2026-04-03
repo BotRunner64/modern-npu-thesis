@@ -235,6 +235,7 @@
     bilingual-bibliography: (..args) => {
       bilingual-bibliography(
         bibliography: bibliography,
+        twoside: twoside,
         ..args,
       )
     },
@@ -305,6 +306,15 @@
   let anonymous = _parse-bool(sys.inputs.at("anonymous", default: none), anonymous)
   let twoside = _parse-bool(sys.inputs.at("twoside", default: none), twoside)
   let colored-cover = _parse-bool(sys.inputs.at("colored-cover", default: none), colored-cover)
+  let close-backmatter-section = has-more-content => {
+    if twoside {
+      if has-more-content {
+        pagebreak(to: "odd")
+      } else {
+        pagebreak(to: "even")
+      }
+    }
+  }
 
   let cls = documentclass(
     doctype: doctype,
@@ -342,22 +352,38 @@
   // 参考文献
   if bibliography != none {
     (cls.bilingual-bibliography)()
+    close-backmatter-section(
+      appendix != none
+        or acknowledgement != none
+        or academic-achievements != none
+        or scan-declaration != none,
+    )
   }
 
   // 附录
   if appendix != none {
     show: cls.appendix
     appendix
+    close-backmatter-section(
+      acknowledgement != none
+        or academic-achievements != none
+        or scan-declaration != none,
+    )
   }
 
   // 致谢
   if acknowledgement != none {
     (cls.acknowledgement)(acknowledgement)
+    close-backmatter-section(
+      academic-achievements != none
+        or scan-declaration != none,
+    )
   }
 
   // 学术成果
   if academic-achievements != none {
     (cls.academic-achievements)(academic-achievements)
+    close-backmatter-section(scan-declaration != none)
   }
 
   // 声明扫描页

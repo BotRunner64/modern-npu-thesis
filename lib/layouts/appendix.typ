@@ -54,9 +54,6 @@
       #metadata(none) <appendix-start>
       #it
       #metadata(none) <appendix-end>
-      #if twoside {
-        pagebreak(weak: true, to: "even")
-      }
     ]
   }
 }

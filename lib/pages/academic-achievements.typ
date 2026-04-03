@@ -28,8 +28,5 @@
 
       #body
     ]
-    if twoside {
-      pagebreak(weak: true, to: "odd")
-    }
   }
 }

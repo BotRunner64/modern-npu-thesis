@@ -2,6 +2,7 @@
 // Tested only on GB-7714-2015-Numeric
 #let bilingual-bibliography(
   bibliography: none,
+  twoside: false,
   title: "参考文献",
   full: false,
   style: "gb-7714-2015-numeric",
@@ -19,6 +20,8 @@
   // 如果使用的 CSL 中，英文姓名中会出现逗号，请设置为 true
 ) = {
   assert(bibliography != none, message: "请传入带有 source 的 bibliography 函数。")
+
+  pagebreak(weak: true, to: if twoside { "odd" })
 
   // Please fill in the remaining mapping table here
   mapping = (
@@ -213,4 +216,5 @@
     full: full,
     style: style,
   )
+
 }
