@@ -1,6 +1,6 @@
 // 文稿设置，可以进行一些像页面边距这类的全局设置
-#import "../utils/style.typ": 字号, 字体
-#import "../utils/header.typ": header-render, graduate-header-config
+#import "../utils/style.typ": 字体, 字号
+#import "../utils/header.typ": graduate-header-config, header-render
 #import "../utils/custom-cuti.typ": show-cn-fakebold
 
 #let doc(
@@ -20,7 +20,7 @@
   fonts = 字体 + fonts
   info = (
     (
-      title: ("基于 Typst 的", "南京大学学位论文"),
+      title: ("基于 Typst 的", "西北工业大学学位论文"),
       author: "张三",
     )
       + info
