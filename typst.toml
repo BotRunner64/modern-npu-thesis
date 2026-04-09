@@ -4,7 +4,7 @@
 name = "modern-npu-thesis"
 version = "0.1.0"
 entrypoint = "template.typ"
-authors = ["OrangeX4", "Jiayi Yan"]
+authors = ["Jiayi Yan", "OrangeX4"]
 license = "MIT"
 description = "西北工业大学学位论文模板。Modern Northwestern Polytechnical University Thesis."
 repository = "https://github.com/1195343015/modern-npu-thesis"
