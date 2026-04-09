@@ -61,7 +61,7 @@
     #v(1em)
 
     #text(font: fonts.宋体, size: 字号.小四)[
-      KEY WORDS: #(("",)+ keywords.intersperse(", ")).sum()
+      #text(weight: "bold")[KEY WORDS]：#(("",)+ keywords.intersperse(", ")).sum()
     ]
   ]
 }

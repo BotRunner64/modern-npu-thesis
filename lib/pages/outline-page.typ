@@ -5,7 +5,7 @@
 )
 
 // 目录生成页面
-#let bachelor-outline-page(
+#let outline-page(
   // documentclass 传入参数
   twoside: false,
   doctype: "bachelor",
@@ -22,13 +22,10 @@
   // 字体与字号
   font: auto,
   size: auto,
-  // 垂直间距
-  above: auto,
-  below: auto,
   indent: (0pt, 20pt, 20pt),
   weight: auto,
-  // 全都显示点号
-  fill: (repeat([.], gap: 0.15em),),
+  // 默认引导符
+  fill: auto,
   gap: .3em,
   // 行间距
   leading: auto,
@@ -47,14 +44,14 @@
 
   // 标题默认值
   if title == auto {
-    title = if is-graduate { "目　录" } else { "目　　录" }
+    title = if is-graduate { "目　录" } else { "目 录" }
   }
 
   if title-text-args == auto {
     title-text-args = if is-graduate {
       (font: fonts.黑体, size: 字号.三号)
     } else {
-      (font: fonts.宋体, size: 字号.三号, weight: "bold")
+      (font: fonts.黑体, size: 字号.三号, weight: "bold")
     }
   }
   // 引用页数的字体，这里用于显示 Times New Roman
@@ -69,7 +66,7 @@
     font = if is-graduate {
       (fonts.宋体, fonts.宋体)
     } else {
-      (fonts.黑体, fonts.宋体)
+      (fonts.宋体, fonts.宋体)
     }
   }
   if size == auto {
@@ -79,21 +76,6 @@
       (字号.四号, 字号.小四)
     }
   }
-  // 垂直间距
-  if above == auto {
-    above = if is-graduate {
-      (20pt, 6pt)
-    } else {
-      (0.5em, 0pt, 0pt)
-    }
-  }
-  if below == auto {
-    below = if is-graduate {
-      (6pt, 6pt)
-    } else {
-      (0em, 0pt, 0pt)
-    }
-  }
   if weight == auto {
     weight = if is-graduate {
       ("regular", "regular", "regular")
@@ -101,9 +83,16 @@
       ("bold", "regular", "regular")
     }
   }
+  if fill == auto {
+    fill = if is-graduate {
+      (repeat([.], gap: 0.15em),)
+    } else {
+      (repeat([#text(size: 0.6em)[·]], gap: 0.05em),)
+    }
+  }
   // 行间距
   if leading == auto {
-    leading = if is-graduate { 14pt } else { 2.4pt }
+    leading = 14pt
   }
 
   // 2.  正式渲染
@@ -118,7 +107,7 @@
   [
     // 目录标题：字体由 title-text-args 控制，间距使用统一配置
     #show heading.where(level: 1, numbering: none): it => {
-      set text(..title-text-args, size: preface-heading-size, weight: preface-heading-weight)
+      set text(..title-text-args)
       set par(leading: leading, spacing: 0pt)
       set block(above: 0pt, below: preface-heading-below)
       align(center, it)
@@ -160,10 +149,10 @@
         // 研究生：固定行间距，每条目占一行
         entry-content
       } else {
-        // 本科生：使用 above/below 控制间距
+        // 本科生：各级目录项使用统一段间距
         block(
-          above: above.at(entry.level - 1, default: above.last()),
-          below: below.at(entry.level - 1, default: below.last()),
+          above: 1.1em,
+          below: 0.1em,
           entry-content,
         )
       }

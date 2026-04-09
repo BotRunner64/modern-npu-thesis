@@ -12,7 +12,7 @@
 #import "lib/pages/master-abstract.typ": master-abstract
 #import "lib/pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "lib/pages/master-abstract-en.typ": master-abstract-en
-#import "lib/pages/bachelor-outline-page.typ": bachelor-outline-page
+#import "lib/pages/outline-page.typ": outline-page
 #import "lib/pages/acknowledgement.typ": acknowledgement
 #import "lib/pages/design-summary.typ": design-summary as design-summary-page
 #import "lib/pages/academic-achievements.typ": academic-achievements
@@ -420,7 +420,7 @@
     },
     // 目录页
     outline-page: (..args) => {
-      bachelor-outline-page(
+      outline-page(
         twoside: twoside,
         doctype: doctype,
         leading: if doctype == "bachelor" { bachelor_leading } else { auto },

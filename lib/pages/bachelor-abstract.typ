@@ -13,7 +13,7 @@
   // 其他参数
   keywords: (),
   funding: none,
-  outline-title: "摘　　要",
+  outline-title: "摘 要",
   outlined: false,
   anonymous-info-keys: ("author", "supervisor", "supervisor-ii"),
   leading: 2.4pt,
@@ -61,10 +61,10 @@
       #body
     ]
 
-    #v(0.1em)
+    #v(1em)
 
     #text(font: fonts.宋体, size: 字号.小四)[
-      #fakebold[关键词：]#(("",)+ keywords.intersperse("，")).sum()
+      #text(font: fonts.黑体, weight: "regular")[关键词]：#(("",)+ keywords.intersperse("，")).sum()
     ]
   ]
 }
