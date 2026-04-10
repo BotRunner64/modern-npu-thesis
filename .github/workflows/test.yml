@@ -1,25 +1,23 @@
-name: Render thesis
+name: Test
 
 on:
   push:
     paths:
-      - ".github/workflows/render-thesis.yml"
+      - ".github/workflows/test.yml"
       - ".github/typst-packages.typ"
       - "template/**"
       - "lib/**"
       - "fonts/**"
       - "template.typ"
-      - "thesis.typ"
       - "typst.toml"
   pull_request:
     paths:
-      - ".github/workflows/render-thesis.yml"
+      - ".github/workflows/test.yml"
       - ".github/typst-packages.typ"
       - "template/**"
       - "lib/**"
       - "fonts/**"
       - "template.typ"
-      - "thesis.typ"
       - "typst.toml"
   workflow_dispatch:
 
@@ -32,7 +30,7 @@ env:
 
 jobs:
   render:
-    name: Render on ${{ matrix.os }}
+    name: Compile on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -53,14 +51,14 @@ jobs:
       - name: Setup Typst
         uses: typst-community/setup-typst@v4
         with:
-          typst-version: 0.14.2
+          typst-version: 0.14.0
           cache-dependency-path: .github/typst-packages.typ
 
       - name: Create output directory
         run: New-Item -ItemType Directory -Force -Path dist | Out-Null
 
       - name: Compile repository example
-        run: typst compile --root . --font-path fonts thesis.typ dist/thesis.pdf
+        run: typst compile --root . --font-path fonts template/graduate.typ dist/thesis.pdf
 
       - name: Install package locally for template smoke test
         run: |
@@ -73,7 +71,7 @@ jobs:
           } | Copy-Item -Destination $packageDir -Recurse -Force
 
       - name: Compile package template entrypoint
-        run: typst compile --root . --package-cache-path .typst/packages --font-path fonts template/main.typ dist/thesis-template.pdf
+        run: typst compile --root . --package-cache-path .typst/packages --font-path fonts template/graduate.typ dist/thesis-template.pdf
 
       - name: Upload PDF artifact
         if: matrix.os == 'ubuntu-latest'
