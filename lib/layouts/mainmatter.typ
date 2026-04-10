@@ -167,6 +167,7 @@
   set figure(supplement: if english-writing { [Figure] } else { [图] })
   show figure.where(kind: table): set figure(supplement: if english-writing { [Table] } else { [表] })
   // 4.4 设置 equation 的编号和假段落首行缩进
+  set math.equation(supplement: if english-writing { [Equation] } else { [式] })
   show math.equation.where(block: true): show-equation
   // 4.5 表格表头置顶 + 不用冒号用空格分割 + 样式
   show figure.where(

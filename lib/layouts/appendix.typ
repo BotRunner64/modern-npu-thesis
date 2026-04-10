@@ -59,6 +59,7 @@
     show figure: i-figured.show-figure.with(numbering: if appendix-headings.len() > 1 { "A-1" } else { "1" })
     set figure(supplement: if english-writing { [Figure] } else { [图] })
     show figure.where(kind: table): set figure(supplement: if english-writing { [Table] } else { [表] })
+    set math.equation(supplement: if english-writing { [Equation] } else { [式] })
     show math.equation.where(block: true): i-figured.show-equation.with(
       numbering: if appendix-headings.len() > 1 { "(A-1)" } else { "(1)" },
     )
