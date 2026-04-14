@@ -26,8 +26,6 @@
     date: datetime(year: 2026, month: 3, day: 9),
     chairman: (name: "赵某某", title: "教授", unit: "西北工业大学"),
     members: (
-      (name: "钱某某", title: "教授", unit: "西安交通大学"),
-      (name: "孙某某", title: "教授", unit: "西安电子科技大学"),
       (name: "周某某", title: "教授", unit: "西北工业大学"),
       (name: "吴某某", title: "副教授", unit: "西北工业大学"),
     ),
