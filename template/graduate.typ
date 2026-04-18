@@ -6,7 +6,7 @@
   anonymous: false, // 是否开启盲审模式
   english-writing: false, // 是否用英文写作（国际研究生论文）
   colored-cover: true, // 是否启用彩色封面
-  title: ("基于 Typst 的", "西北工业大学学位论文"),
+  title: ("基于 Typst 的", "西北工业大学论文模板"),
   title-en: "First Line \nSecond Line",
   student-id: "2023123456",
   clc: "TP311.1",

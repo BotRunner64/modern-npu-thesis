@@ -1,7 +1,7 @@
 ﻿#import "/template.typ": algorithm, algorithm-ref, bachelor-thesis-config, nwpu-thesis
 
 #let thesis-config = bachelor-thesis-config(
-  title: ("基于 Typst 的西工大论文"),
+  title: ("基于 Typst 的西工大论文模板"),
   author: "航小天",
   major: "计算机科学与技术",
   supervisor: ("张三", "教授"),
