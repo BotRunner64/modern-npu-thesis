@@ -1,8 +1,7 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": header-render
 #import "../layouts/preface.typ": (
-  preface-heading-above, preface-heading-below, preface-heading-size, preface-heading-weight,
-  preface-heading-leading, preface-body-first-line-indent,
+  preface-heading-above, preface-heading-style, preface-body-first-line-indent,
   preface-keywords-above,
 )
 
@@ -44,17 +43,13 @@
   [
     #set par(leading: leading, spacing: spacing, justify: true)
 
-    // 英文摘要标题使用 Times New Roman，加粗，其他样式统一配置
+    // 英文摘要标题复用统一标题样式，只覆盖字体与字重
     #show heading.where(level: 1): it => {
-      set text(font: "Times New Roman", size: preface-heading-size, weight: "bold")
-      set par(leading: preface-heading-leading, spacing: 0pt)
-      set block(above: 0pt, below: preface-heading-below)
-      align(center, it)
+      preface-heading-style(it, fonts, font: "Times New Roman", weight: "bold")
     }
     #v(preface-heading-above)
-    #box(width: 0pt, height: 0pt) <__nwpu_master_abstract_en_heading_start__>
-    #heading(level: 1, outlined: outlined, outline-title)
-    #box(width: 0pt, height: 0pt) <__nwpu_master_abstract_en_heading_end__>
+    <__nwpu_master_abstract_en_heading_start__>
+    #heading(level: 1, outlined: outlined, outline-title)<__nwpu_master_abstract_en_heading_end__>
 
     #[
       #set text(font: "Times New Roman", size: 字号.小四)

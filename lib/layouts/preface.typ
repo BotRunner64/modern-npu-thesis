@@ -35,14 +35,17 @@
   it,
   fonts,
   centered: true,
+  font: auto,
+  size: preface-heading-size,
+  weight: preface-heading-weight,
   leading: 2.4pt,
   above: 0pt,
   below: preface-heading-below,
 ) = {
   set text(
-    font: preface-heading-font(fonts),
-    size: preface-heading-size,
-    weight: preface-heading-weight,
+    font: if font == auto { preface-heading-font(fonts) } else { font },
+    size: size,
+    weight: weight,
   )
   set par(leading: leading, spacing: 0pt)
   set block(above: above, below: below)
