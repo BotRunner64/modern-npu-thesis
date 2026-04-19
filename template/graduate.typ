@@ -1,4 +1,4 @@
-﻿#import "/template.typ": algorithm, algorithm-ref, equation-note, graduate-thesis-config, nwpu-thesis, subfigure-caption
+﻿#import "/template.typ": algorithm, algorithm-ref, appendix, appendices, equation-note, graduate-thesis-config, nwpu-thesis, subfigure-caption
 
 #let thesis-config = graduate-thesis-config(
   doctype: "master", // "master" | "doctor"，研究生论文类型
@@ -44,12 +44,14 @@
   ],
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
   funding-en: "The present work is supported by the XXX（Project No.xxx）",
-  appendix: [
-    =
-    附录是学位论文主体的补充，并不是必需的。
-    
-    附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
-  ],
+  appendices: appendices(
+    appendix[
+      附录是学位论文主体的补充，并不是必需的。
+    ],
+    appendix[
+      附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
+    ],
+  ),
   acknowledgement: [
     致谢是作者对该文章的形成作过贡献的组织或个人予以感谢的文字记载，语言要诚恳、恰当、简短。致谢内容可以包括但不限于：国家科学基金、资助研究工作的奖学金基金、合同单位、资助或支持的企业、组织或个人；协助完成研究工作和提供便利条件的组织或个人；在研究工作中提出建议和提供帮助的人；给予转载和引用权的资料、图片、文献、研究和调查的所有者；其他应感谢的组织和个人。
   ],
@@ -220,7 +222,7 @@
 
   == 参考文献
 
-  可以像这样引用参考文献@蒋有绪1998，引用两个以上的文献时，文献之间用逗号分隔，如@WHO1970 @张志祥1998，引用三个以上的文献 @河北绿洲2001 @李炳穆2000 @丁文祥2000。
+  可以像这样引用参考文献@周融2003对新形势下毕业设计管理工作的思考与实践，引用两个以上的文献时，文献之间用逗号分隔，如@图书馆 @李大伦1998，引用三个以上的文献 @河北绿洲2001 @李炳穆2000 @丁文祥2000。
 
   = 研究方法
 
