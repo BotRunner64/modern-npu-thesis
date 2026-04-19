@@ -3,7 +3,7 @@
 #import "utils/equation-note.typ": equation-note
 #import "layouts/preface.typ": preface
 #import "layouts/mainmatter.typ": mainmatter
-#import "layouts/appendix.typ": appendix
+#import "layouts/appendix.typ": appendix as appendix-layout
 #import "utils/header.typ": add-blank-even-page
 #import "utils/header.typ": break-to-odd-page
 #import "utils/header.typ": graduate-header-title, header-render
@@ -26,10 +26,50 @@
 
 #let indent = h(2em)
 #let subfigure-caption(body) = text(size: 字号.五号)[#body]
+#let appendix(title: auto, body) = (
+  title: title,
+  body: body,
+)
+#let appendices(..items) = items.pos()
 #let bachelor-first-level-value(value) = if type(value) == array {
   value.at(0, default: value.last())
 } else {
   value
+}
+
+#let normalize-graduate-appendix-items(legacy-appendix: none, appendices: none) = {
+  if appendices != none {
+    if type(appendices) == array {
+      appendices
+    } else {
+      (appendices,)
+    }
+  } else if legacy-appendix != none {
+    ((title: auto, body: legacy-appendix),)
+  } else {
+    ()
+  }
+}
+
+#let render-graduate-appendices(legacy-appendix: none, appendices: none) = {
+  let items = normalize-graduate-appendix-items(legacy-appendix: legacy-appendix, appendices: appendices)
+  items.map(item => {
+    let appendix-title = auto
+    let appendix-body = item
+    if type(item) == dictionary {
+      appendix-title = item.at("title", default: auto)
+      appendix-body = item.at("body", default: [])
+    }
+
+    [
+      #heading(level: 1)[
+        #if appendix-title != auto {
+          appendix-title
+        }
+      ]
+      #appendix-body
+    ]
+  }).join()
 }
 
 #let bachelor_style_defaults = (
@@ -167,6 +207,7 @@
   acknowledgement: none,
   academic-achievements: none,
   appendix: none,
+  appendices: none,
   scan-declaration: none,
   outline-depth: 3,
   info_extra: (:),
@@ -217,6 +258,7 @@
     acknowledgement: acknowledgement,
     academic-achievements: academic-achievements,
     appendix: appendix,
+    appendices: appendices,
     scan-declaration: scan-declaration,
     outline-depth: outline-depth,
   ) + config_extra
@@ -417,7 +459,7 @@
       }
     },
     appendix: (..args) => {
-      appendix(
+      appendix-layout(
         twoside: twoside,
         doctype: doctype,
         english-writing: english-writing,
@@ -641,6 +683,7 @@
   academic-achievements: none,
   scan-declaration: none,
   appendix: none,
+  appendices: none,
   design_summary: none,
   outline-depth: auto,
   // 文档内容
@@ -652,6 +695,11 @@
   let english-writing = _parse-bool(sys.inputs.at("english-writing", default: none), english-writing)
   let effective_twoside = if doctype == "bachelor" { false } else { twoside }
   let colored-cover = _parse-bool(sys.inputs.at("colored-cover", default: none), colored-cover)
+  let graduate-appendix-items = normalize-graduate-appendix-items(
+    legacy-appendix: appendix,
+    appendices: appendices,
+  )
+  let has-graduate-appendices = graduate-appendix-items.len() > 0
   if outline-depth == auto {
     outline-depth = if doctype == "bachelor" { 2 } else { 3 }
   }
@@ -732,7 +780,7 @@
         )
       } else {
         (
-          appendix != none
+          has-graduate-appendices
           or acknowledgement != none
           or academic-achievements != none
           or scan-declaration != none
@@ -771,9 +819,9 @@
     }
   } else {
     // 附录
-    if appendix != none {
+    if has-graduate-appendices {
       show: cls.appendix
-      appendix
+      render-graduate-appendices(legacy-appendix: appendix, appendices: appendices)
       close-backmatter-section(
         acknowledgement != none
           or academic-achievements != none

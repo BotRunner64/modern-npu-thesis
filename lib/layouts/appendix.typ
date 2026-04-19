@@ -28,13 +28,24 @@
       "附录"
     }
     let has-appendix = appendix-headings.len() > 0
+    let auto-appendix-title = if doctype == "bachelor" {
+      appendix-label
+    } else {
+      [#appendix-label#numbering("A", 1)]
+    }
     let appendix-prefix = if has-appendix {
       numbering("A", 1)
     } else {
       "A"
     }
 
-    let appendix-numbering = if appendix-headings.len() > 1 {
+    let appendix-numbering = if not has-appendix {
+      custom-numbering.with(
+        first-level: n => [],
+        depth: 4,
+        "1 ",
+      )
+    } else if appendix-headings.len() > 1 {
       custom-numbering.with(
         first-level: n => if doctype == "bachelor" {
           [#appendix-label#numbering("A", n)]
@@ -81,6 +92,9 @@
 
     [
       #metadata(none) <appendix-start>
+      #if not has-appendix [
+        #heading(level: 1)[#auto-appendix-title]
+      ]
       #it
       #metadata(none) <appendix-end>
     ]
