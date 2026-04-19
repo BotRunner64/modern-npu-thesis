@@ -9,8 +9,8 @@
   twoside: false,
   doctype: "master",
   english-writing: false,
-  leading: 2.4pt,
-  spacing: 0pt,
+  leading: auto,
+  spacing: auto,
   title-leading: auto,
   title-above: auto,
   title-below: auto,
@@ -40,14 +40,20 @@
   if title-below == auto {
     title-below = if is-graduate { preface-heading-below } else { 0pt }
   }
+  if leading == auto {
+    leading = if doctype == "bachelor" { 2.4pt } else { preface-body-leading }
+  }
+  if spacing == auto {
+    spacing = if doctype == "bachelor" { 0pt } else { preface-body-spacing }
+  }
 
   if not anonymous {
     pagebreak(weak: true, to: if twoside { "odd" })
     [
       #set text(font: fonts.宋体, size: 字号.小四)
       #set par(
-        leading: if doctype == "bachelor" { leading } else { preface-body-leading },
-        spacing: if doctype == "bachelor" { spacing } else { preface-body-spacing },
+        leading: leading,
+        spacing: spacing,
         justify: true,
         first-line-indent: if doctype == "bachelor" { (amount: 26pt, all: true) } else { preface-body-first-line-indent },
       )

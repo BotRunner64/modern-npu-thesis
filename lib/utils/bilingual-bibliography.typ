@@ -9,6 +9,8 @@
   twoside: false,
   english-writing: false,
   fonts: (:),
+  leading: auto,
+  spacing: auto,
   title: auto,
   title-leading: auto,
   title-above: auto,
@@ -42,6 +44,12 @@
   }
   if title-below == auto {
     title-below = if is-graduate { preface-heading-below } else { 0pt }
+  }
+  if leading == auto {
+    leading = if is-graduate { preface-body-leading } else { auto }
+  }
+  if spacing == auto {
+    spacing = if is-graduate { preface-body-spacing } else { auto }
   }
 
   pagebreak(weak: true, to: if twoside { "odd" })
@@ -236,7 +244,7 @@
   set text(lang: "zh")
   if is-graduate {
     set text(font: fonts.宋体, size: 字号.小四)
-    set par(leading: preface-body-leading, spacing: preface-body-spacing, justify: true, first-line-indent: preface-body-first-line-indent)
+    set par(leading: leading, spacing: spacing, justify: true, first-line-indent: preface-body-first-line-indent)
     show heading.where(level: 1, numbering: none): it => preface-heading-style(
       it,
       fonts,

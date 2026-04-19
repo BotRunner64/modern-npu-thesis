@@ -7,6 +7,8 @@
   anonymous: false,
   twoside: false,
   english-writing: false,
+  leading: auto,
+  spacing: auto,
   fonts: (:),
   // 其他参数
   title: auto,
@@ -33,14 +35,20 @@
   if title-below == auto {
     title-below = preface-heading-below
   }
+  if leading == auto {
+    leading = preface-body-leading
+  }
+  if spacing == auto {
+    spacing = preface-body-spacing
+  }
 
   if not anonymous {
     pagebreak(weak: true, to: if twoside { "odd" })
     [
       #set text(font: fonts.宋体, size: 字号.小四)
       #set par(
-        leading: preface-body-leading,
-        spacing: preface-body-spacing,
+        leading: leading,
+        spacing: spacing,
         justify: true,
         first-line-indent: preface-body-first-line-indent,
       )
