@@ -15,4 +15,4 @@ Thumbs.db
 dist/
 .typst/
 *.pdf
-!template/images/*.pdf
+!template/figures/*.pdf
