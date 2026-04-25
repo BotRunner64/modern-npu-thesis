@@ -4,11 +4,11 @@
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
-#import "../format.typ": body-format, heading-format, caption-format, preface-format, header-format
+#import "../format.typ": body-format, heading-format, caption-format, header-format
 
-// 一级标题统一间距（前置部分），用于二级三级标题间距计算
-#let level1-heading-above = preface-format.heading.above
-#let level1-heading-below = preface-format.heading.below
+// 一级标题间距，用于二级三级标题间距计算
+#let level1-heading-above = heading-format.graduate.above.first()
+#let level1-heading-below = heading-format.graduate.below.first()
 
 #let mainmatter(
   // documentclass 传入参数

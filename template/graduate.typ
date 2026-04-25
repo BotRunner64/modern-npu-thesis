@@ -1,4 +1,5 @@
 ﻿#import "/template.typ": algorithm, algorithm-ref, appendix, appendices, equation-note, graduate-thesis-config, nwpu-thesis, subfigure-caption
+#import "@preview/gb7714-bilingual:0.2.3": multicite
 
 #let thesis-config = graduate-thesis-config(
   doctype: "master", // "master" | "doctor"，研究生论文类型
@@ -221,7 +222,7 @@
 
   == 参考文献
 
-  可以像这样引用参考文献@周融2003，引用两个的文献 @图书馆 @李大伦1998，引用三个以上的文献 @伍蠡甫 @张筑生 @冯西桥1998 @姜锡洲 @gbt16159-1996 @科学技术期刊管理办法 @中国大学学报论文文摘。
+  可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("图书馆", "李大伦1998")，引用三个以上的文献 #multicite("伍蠡甫", "张筑生", "冯西桥1998", "姜锡洲", "gbt16159-1996", "科学技术期刊管理办法", "中国大学学报论文文摘")。
 
   = 研究方法
 

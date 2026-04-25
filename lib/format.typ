@@ -5,9 +5,8 @@
 //   1. 页面格式 → page-format
 //   2. 页眉格式 → header-format
 //   3. 正文格式 → body-format
-//   4. 标题格式 → heading-format
-//   5. 前置部分格式 → preface-format（摘要、目录、致谢等）
-//   6. 图表标题格式 → caption-format
+//   4. 标题格式 → heading-format（正文与前置部分共用）
+//   5. 图表标题格式 → caption-format
 
 #import "utils/style.typ": 字号
 
@@ -65,8 +64,8 @@
     size: (字号.三号, 字号.四号, 字号.小四),
     weight: ("regular", "regular", "regular"),
     leading: (0.9em, 0.9em, 0.9em),
-    above: (22pt, 15pt, 12pt),
-    below: (24pt, 12pt, 10pt),
+    above: (2 * 14pt - 0.7em, 2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
+    below: (2 * 17pt - 0.7em, 1.5 * 15.6pt - 0.7em, 1.5 * 15.6pt - 0.7em),
   ),
   bachelor: (
     size: (字号.三号, 字号.四号, 字号.小四),
@@ -78,29 +77,7 @@
 )
 
 // =========================================================
-// 5. 前置部分格式
-//    用于摘要、目录、致谢、学术成果等非正文页面的一级标题和正文
-// =========================================================
-#let preface-format = (
-  heading: (
-    above: 2 * 14pt - 0.7em,
-    below: 2 * 17pt - 0.7em,
-    leading: 2.4pt,
-    size: 字号.三号,
-    weight: "regular",
-  ),
-  body: (
-    leading: 0.9em,
-    spacing: 0pt,
-    first-line-indent: (amount: 2em, all: true),
-  ),
-  keywords: (
-    above: 2.2em,
-  ),
-)
-
-// =========================================================
-// 6. 图表标题格式
+// 5. 图表标题格式
 // =========================================================
 #let caption-format = (
   size: 字号.五号,

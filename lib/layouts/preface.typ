@@ -1,7 +1,7 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
 #import "../utils/custom-heading.typ": active-heading, heading-display
-#import "../format.typ": preface-format, header-format
+#import "../format.typ": body-format, heading-format, header-format
 
 // ============================================
 // 一级标题统一配置
@@ -9,13 +9,13 @@
 // 所有数值来自 format.typ，修改格式请编辑该文件
 // ============================================
 
-#let heading-above = preface-format.heading.above
-#let heading-below = preface-format.heading.below
-#let graduate-heading-leading = preface-format.heading.leading
-#let graduate-body-leading = preface-format.body.leading
-#let graduate-body-spacing = preface-format.body.spacing
-#let graduate-body-first-line-indent = preface-format.body.first-line-indent
-#let graduate-keywords-above = preface-format.keywords.above
+#let heading-above = heading-format.graduate.above.first()
+#let heading-below = heading-format.graduate.below.first()
+#let graduate-heading-leading = heading-format.graduate.leading.first()
+#let graduate-body-leading = body-format.graduate.leading
+#let graduate-body-spacing = body-format.graduate.spacing
+#let graduate-body-first-line-indent = body-format.graduate.first-line-indent
+#let graduate-keywords-above = 2.2em
 
 // 兼容旧名称的别名
 #let preface-heading-above = heading-above
@@ -28,8 +28,8 @@
 
 // 标题字体配置
 #let preface-heading-font = fonts => fonts.黑体
-#let preface-heading-size = preface-format.heading.size
-#let preface-heading-weight = preface-format.heading.weight
+#let preface-heading-size = heading-format.graduate.size.first()
+#let preface-heading-weight = heading-format.graduate.weight.first()
 
 // 标题样式函数 - 供各页面调用
 #let preface-heading-style(
@@ -39,7 +39,7 @@
   font: auto,
   size: preface-heading-size,
   weight: preface-heading-weight,
-  leading: 2.4pt,
+  leading: graduate-heading-leading,
   above: 0pt,
   below: preface-heading-below,
 ) = {
@@ -86,7 +86,6 @@
   )
 
   // 3. 页眉设置
-  // 我们直接在这里针对 it 应用 show rule，或者直接 set page
   show: it => {
     set page(
       header: context {
@@ -95,10 +94,8 @@
         let loc = here()
         let is-graduate = (doctype == "master" or doctype == "doctor")
 
-        // 默认显示当前章节
         let header-content = heading-display(active-heading(level: 1, prev: false))
 
-        // 双面模式下的偶数页替换为校名
         if twoside and calc.rem(loc.page(), 2) == 0 and is-graduate {
           header-content = graduate-header-title(doctype)
         }
@@ -122,7 +119,6 @@
   }
 
   // 4. 统一控制前置部分一级标题的间距
-  // 使用 Typst 官方推荐的 block 方式，避免手动 v() 间距
   if doctype != "bachelor" {
     show heading.where(level: 1, numbering: none): set block(
       above: preface-heading-above,

@@ -1,4 +1,5 @@
 ﻿#import "/template.typ": algorithm, algorithm-ref, bachelor-thesis-config, equation-note, nwpu-thesis, subfigure-caption
+#import "@preview/gb7714-bilingual:0.2.3": multicite
 
 #let thesis-config = bachelor-thesis-config(
   title: ("基于 Typst 的西工大论文模板"),
@@ -155,7 +156,7 @@
 
   == 参考文献
 
-  可以像这样引用参考文献@周融2003，引用两个的文献@伍蠡甫 @图书馆，引用三个以上的文献 @张筑生 @gbt16159-1996 @冯西桥1998 @姜锡洲 @中国大学学报论文文摘。
+  可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("伍蠡甫", "图书馆")，引用三个以上的文献 #multicite("张筑生", "gbt16159-1996", "冯西桥1998", "姜锡洲", "中国大学学报论文文摘")。
 ]
 
 #show: nwpu-thesis.with(..thesis-config)
