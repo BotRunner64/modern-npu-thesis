@@ -5,7 +5,6 @@
 #import "layouts/mainmatter.typ": mainmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
 #import "utils/header.typ": add-blank-even-page
-#import "utils/header.typ": break-to-odd-page
 #import "utils/header.typ": graduate-header-title, header-render
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
@@ -261,7 +260,7 @@
 
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
 #let documentclass(
-  doctype: "bachelor", // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为本科生 bachelor
+  doctype: "bachelor", // "bachelor" | "master" | "doctor"，文档类型，默认为本科生 bachelor
   degree: "academic", // "academic" | "professional"，学位类型，默认为学术型 academic
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: true, // 双面模式，会加入空白页，便于打印
@@ -479,8 +478,6 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
-      } else if doctype == "postdoc" {
-        panic("postdoc has not yet been implemented.")
       } else {
         bachelor-cover(
           anonymous: anonymous,
@@ -509,8 +506,6 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
-      } else if doctype == "postdoc" {
-        panic("postdoc has not yet been implemented.")
       } else {
         bachelor-abstract(
           anonymous: anonymous,
@@ -544,8 +539,6 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
-      } else if doctype == "postdoc" {
-        panic("postdoc has not yet been implemented.")
       } else {
         bachelor-abstract-en(
           anonymous: anonymous,
@@ -654,7 +647,7 @@
 
 // 主配置函数（借鉴自 pkuthss-typst，提供更简洁的接口）
 #let nwpu-thesis(
-  doctype: "bachelor", // "bachelor" | "master" | "doctor" | "postdoc"
+  doctype: "bachelor", // "bachelor" | "master" | "doctor"
   degree: "academic", // "academic" | "professional"
   nl-cover: false,
   twoside: true,

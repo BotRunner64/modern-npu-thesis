@@ -69,16 +69,3 @@
     }
   }
 }
-
-#let break-to-odd-page(doctype: "master", fonts: (:)) = {
-  fonts = 字体 + fonts
-  context {
-    let current-page = counter(page).get().first()
-    if calc.rem(current-page, 2) == 1 {
-      pagebreak()
-      set page(header: header-render([#graduate-header-title(doctype)], fonts: fonts))
-      v(1fr)
-    }
-    pagebreak()
-  }
-}
