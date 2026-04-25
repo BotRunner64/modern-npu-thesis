@@ -1,36 +1,29 @@
 #import "../utils/style.typ": 字体, 字号
+#import "../format.typ": header-format
 
 // ============================================
 // 页眉统一配置
 // ============================================
-// 直接对齐 LaTeX 模板中的 geometry/fancyhdr 参数
-#let graduate_header_ascent = 0.93cm
-#let bachelor_header_ascent = 0.4cm
-#let graduate_headsep = -0.1cm
-#let graduate_headrule_offset = 0.3cm
-#let bachelor_headsep = 0.04cm
-#let bachelor_headrule = 0.8pt
-#let graduate_headrule_thick = 3.2pt
-#let graduate_headrule_thin = 0.6pt
+// 所有数值来自 format.typ，修改格式请编辑该文件
 
 // 页眉配置（用于 set page）
 #let graduate-header-config = (
-  header-ascent: graduate_header_ascent,
+  header-ascent: header-format.graduate.ascent,
 )
 
 #let bachelor-header-config = (
-  header-ascent: bachelor_header_ascent,
+  header-ascent: header-format.bachelor.ascent,
 )
 
 // 页眉渲染函数
 #let header-render(
   content,
   fonts: (:),
-  graduate_headsep: graduate_headsep,
-  graduate_headrule_offset: graduate_headrule_offset,
-  graduate_headrule_thick: graduate_headrule_thick,
-  graduate_headrule_thin: graduate_headrule_thin,
-  graduate_headrule_gap: 0.35em,
+  graduate_headsep: header-format.graduate.headsep,
+  graduate_headrule_offset: header-format.graduate.headrule-offset,
+  graduate_headrule_thick: header-format.graduate.headrule-thick,
+  graduate_headrule_thin: header-format.graduate.headrule-thin,
+  graduate_headrule_gap: header-format.graduate.headrule-gap,
 ) = {
   fonts = 字体 + fonts
   [
@@ -60,8 +53,8 @@
     #align(center)[
       #image("../../template/figures/nwpuheader.png", width: 7cm)
     ]
-    #v(bachelor_headsep)
-    #line(length: 100%, stroke: bachelor_headrule + black)
+    #v(header-format.bachelor.headsep)
+    #line(length: 100%, stroke: header-format.bachelor.headrule + black)
   ]
 }
 

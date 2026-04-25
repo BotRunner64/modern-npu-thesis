@@ -4,20 +4,24 @@
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
-#import "../layouts/preface.typ": heading-above as level1-heading-above, heading-below as level1-heading-below
+#import "../format.typ": body-format, heading-format, caption-format, preface-format, header-format
+
+// 一级标题统一间距（前置部分），用于二级三级标题间距计算
+#let level1-heading-above = preface-format.heading.above
+#let level1-heading-below = preface-format.heading.below
 
 #let mainmatter(
   // documentclass 传入参数
   twoside: false,
   doctype: "bachelor",
   english-writing: false,
-  graduate-leading: 0.9em,
-  graduate-spacing: 1.0em,
-  bachelor_leading: 2.4pt,
-  bachelor_spacing: 0pt,
-  bachelor_heading_leading: (2.4pt, 2.4pt, 2.4pt),
-  bachelor_heading_above: (15.2pt, -3pt, -1.5pt),
-  bachelor_heading_below: (14.4pt, 2pt, -1pt),
+  graduate-leading: body-format.graduate.leading,
+  graduate-spacing: body-format.graduate.spacing,
+  bachelor_leading: body-format.bachelor.leading,
+  bachelor_spacing: body-format.bachelor.spacing,
+  bachelor_heading_leading: heading-format.bachelor.leading,
+  bachelor_heading_above: heading-format.bachelor.above,
+  bachelor_heading_below: heading-format.bachelor.below,
   fonts: (:),
   // 其他参数
   leading: auto,
@@ -41,16 +45,16 @@
   display-header: false,
   stroke-width: 0.5pt,
   reset-footnote: true,
-  graduate_headsep: -0.1cm,
-  graduate_headrule_offset: 0.3cm,
-  graduate_headrule_thick: 3.2pt,
-  graduate_headrule_thin: 0.6pt,
-  graduate_headrule_gap: 0.35em,
+  graduate_headsep: header-format.graduate.headsep,
+  graduate_headrule_offset: header-format.graduate.headrule-offset,
+  graduate_headrule_thick: header-format.graduate.headrule-thick,
+  graduate_headrule_thin: header-format.graduate.headrule-thin,
+  graduate_headrule_gap: header-format.graduate.headrule-gap,
   // caption 的 separator
-  separator: "  ",
+  separator: caption-format.separator,
   // caption 样式（宋体五号不加粗）
   caption-style: it => it,
-  caption-size: 字号.五号,
+  caption-size: caption-format.size,
   // figure 计数
   show-figure: i-figured.show-figure.with(numbering: "1-1"),
   ..args,

@@ -1,20 +1,21 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
 #import "../utils/custom-heading.typ": active-heading, heading-display
+#import "../format.typ": preface-format, header-format
 
 // ============================================
 // 一级标题统一配置
 // 用于摘要、目录、致谢、正文章节等所有页面
+// 所有数值来自 format.typ，修改格式请编辑该文件
 // ============================================
 
-// 一级标题间距（默认值，可由模板入口覆盖）
-#let heading-above = 2 * 14pt - 0.7em
-#let heading-below = 2 * 17pt - 0.7em
-#let graduate-heading-leading = 2.4pt
-#let graduate-body-leading = 0.9em
-#let graduate-body-spacing = 0pt
-#let graduate-body-first-line-indent = (amount: 2em, all: true)
-#let graduate-keywords-above = 2.2em
+#let heading-above = preface-format.heading.above
+#let heading-below = preface-format.heading.below
+#let graduate-heading-leading = preface-format.heading.leading
+#let graduate-body-leading = preface-format.body.leading
+#let graduate-body-spacing = preface-format.body.spacing
+#let graduate-body-first-line-indent = preface-format.body.first-line-indent
+#let graduate-keywords-above = preface-format.keywords.above
 
 // 兼容旧名称的别名
 #let preface-heading-above = heading-above
@@ -26,9 +27,9 @@
 #let preface-keywords-above = graduate-keywords-above
 
 // 标题字体配置
-#let preface-heading-font = fonts => fonts.黑体  // 函数，传入 fonts 返回字体
-#let preface-heading-size = 字号.三号
-#let preface-heading-weight = "regular"  // "regular" 不加粗, "bold" 加粗
+#let preface-heading-font = fonts => fonts.黑体
+#let preface-heading-size = preface-format.heading.size
+#let preface-heading-weight = preface-format.heading.weight
 
 // 标题样式函数 - 供各页面调用
 #let preface-heading-style(
@@ -61,11 +62,11 @@
   doctype: "master",
   fonts: (:),
   display-header: true,
-  graduate_headsep: -0.1cm,
-  graduate_headrule_offset: 0.3cm,
-  graduate_headrule_thick: 3.2pt,
-  graduate_headrule_thin: 0.6pt,
-  graduate_headrule_gap: 0.35em,
+  graduate_headsep: header-format.graduate.headsep,
+  graduate_headrule_offset: header-format.graduate.headrule-offset,
+  graduate_headrule_thick: header-format.graduate.headrule-thick,
+  graduate_headrule_thin: header-format.graduate.headrule-thin,
+  graduate_headrule_gap: header-format.graduate.headrule-gap,
   ..args,
   it,
 ) = {

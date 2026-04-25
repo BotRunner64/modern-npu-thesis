@@ -24,6 +24,7 @@
 #import "utils/custom-heading.typ": active-heading, current-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": 字体, 字号
+#import "format.typ": body-format, heading-format, header-format, preface-format
 
 #let indent = h(2em)
 #let subfigure-caption(body) = text(size: 字号.五号)[#body]
@@ -75,27 +76,6 @@
     .join()
 }
 
-#let bachelor_style_defaults = (
-  leading: 11pt,
-  spacing: 10pt,
-  heading_leading: (11pt, 11pt, 11pt),
-  heading_above: (28pt, 12pt, 12pt),
-  heading_below: (28pt, 12pt, 12pt),
-)
-
-#let graduate_style_defaults = (
-  header_ascent: 0.9cm,
-  headsep: -0.22cm,
-  headrule_offset: 0.4cm,
-  headrule_thick: 3.2pt,
-  headrule_thin: 0.6pt,
-  headrule_gap: 0.32em,
-  keywords_above: 1.3em,
-  heading_leading: (0.9em, 0.9em, 0.9em),
-  heading_above: (22pt, 15pt, 12pt),
-  heading_below: (24pt, 12pt, 10pt),
-)
-
 #let default-bibliography(doctype) = {
   if doctype == "bachelor" {
     "../template/bib/bachelor.bib"
@@ -121,12 +101,12 @@
   acknowledgement: none,
   appendix: none,
   design_summary: none,
-  outline-depth: 2,
-  bachelor_leading: bachelor_style_defaults.leading,
-  bachelor_spacing: bachelor_style_defaults.spacing,
-  bachelor_heading_leading: bachelor_style_defaults.heading_leading,
-  bachelor_heading_above: bachelor_style_defaults.heading_above,
-  bachelor_heading_below: bachelor_style_defaults.heading_below,
+  outline-depth: 3,
+  bachelor_leading: body-format.bachelor.leading,
+  bachelor_spacing: body-format.bachelor.spacing,
+  bachelor_heading_leading: heading-format.bachelor.leading,
+  bachelor_heading_above: heading-format.bachelor.above,
+  bachelor_heading_below: heading-format.bachelor.below,
   info_extra: (:),
   config_extra: (:),
 ) = {
@@ -170,18 +150,18 @@
   anonymous: false,
   english-writing: false,
   colored-cover: false,
-  graduate_leading: 0.9em,
-  graduate_spacing: 1.0em,
-  graduate_header_ascent: graduate_style_defaults.header_ascent,
-  graduate_headsep: graduate_style_defaults.headsep,
-  graduate_headrule_offset: graduate_style_defaults.headrule_offset,
-  graduate_headrule_thick: graduate_style_defaults.headrule_thick,
-  graduate_headrule_thin: graduate_style_defaults.headrule_thin,
-  graduate_headrule_gap: graduate_style_defaults.headrule_gap,
-  graduate_keywords_above: graduate_style_defaults.keywords_above,
-  graduate_heading_leading: graduate_style_defaults.heading_leading,
-  graduate_heading_above: graduate_style_defaults.heading_above,
-  graduate_heading_below: graduate_style_defaults.heading_below,
+  graduate_leading: body-format.graduate.leading,
+  graduate_spacing: body-format.graduate.spacing,
+  graduate_header_ascent: header-format.graduate.ascent,
+  graduate_headsep: header-format.graduate.headsep,
+  graduate_headrule_offset: header-format.graduate.headrule-offset,
+  graduate_headrule_thick: header-format.graduate.headrule-thick,
+  graduate_headrule_thin: header-format.graduate.headrule-thin,
+  graduate_headrule_gap: header-format.graduate.headrule-gap,
+  graduate_keywords_above: preface-format.keywords.above,
+  graduate_heading_leading: heading-format.graduate.leading,
+  graduate_heading_above: heading-format.graduate.above,
+  graduate_heading_below: heading-format.graduate.below,
   fonts: (:),
   title: ("基于 Typst 的", "西北工业大学学位论文"),
   title-en: "NPU Thesis Template for Typst",
@@ -286,23 +266,23 @@
   nl-cover: false, // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: true, // 双面模式，会加入空白页，便于打印
   english-writing: false, // 是否使用英文论文标签
-  graduate_leading: 0.9em, // 研究生摘要与正文统一行距
-  graduate_spacing: 1.0em, // 研究生摘要与正文统一段间距
-  graduate_header_ascent: graduate_style_defaults.header_ascent, // 研究生页眉高度
-  graduate_headsep: graduate_style_defaults.headsep, // 研究生页眉标题与双线之间的垂直间距
-  graduate_headrule_offset: graduate_style_defaults.headrule_offset, // 研究生页眉双线整体垂直偏移
-  graduate_headrule_thick: graduate_style_defaults.headrule_thick, // 研究生页眉粗线线宽
-  graduate_headrule_thin: graduate_style_defaults.headrule_thin, // 研究生页眉细线线宽
-  graduate_headrule_gap: graduate_style_defaults.headrule_gap, // 研究生页眉粗细线之间的垂直间距
-  graduate_keywords_above: graduate_style_defaults.keywords_above, // 研究生摘要正文与关键词之间的垂直间距
-  graduate_heading_leading: graduate_style_defaults.heading_leading, // 研究生正文各级标题行距
-  graduate_heading_above: graduate_style_defaults.heading_above, // 研究生正文各级标题段前距
-  graduate_heading_below: graduate_style_defaults.heading_below, // 研究生正文各级标题段后距
-  bachelor_leading: bachelor_style_defaults.leading, // 本科论文统一行距增量
-  bachelor_spacing: bachelor_style_defaults.spacing, // 本科论文统一段间距
-  bachelor_heading_leading: bachelor_style_defaults.heading_leading, // 本科正文各级标题行距
-  bachelor_heading_above: bachelor_style_defaults.heading_above, // 本科正文各级标题段前距
-  bachelor_heading_below: bachelor_style_defaults.heading_below, // 本科正文各级标题段后距
+  graduate_leading: body-format.graduate.leading, // 研究生摘要与正文统一行距
+  graduate_spacing: body-format.graduate.spacing, // 研究生摘要与正文统一段间距
+  graduate_header_ascent: header-format.graduate.ascent, // 研究生页眉高度
+  graduate_headsep: header-format.graduate.headsep, // 研究生页眉标题与双线之间的垂直间距
+  graduate_headrule_offset: header-format.graduate.headrule-offset, // 研究生页眉双线整体垂直偏移
+  graduate_headrule_thick: header-format.graduate.headrule-thick, // 研究生页眉粗线线宽
+  graduate_headrule_thin: header-format.graduate.headrule-thin, // 研究生页眉细线线宽
+  graduate_headrule_gap: header-format.graduate.headrule-gap, // 研究生页眉粗细线之间的垂直间距
+  graduate_keywords_above: preface-format.keywords.above, // 研究生摘要正文与关键词之间的垂直间距
+  graduate_heading_leading: heading-format.graduate.leading, // 研究生正文各级标题行距
+  graduate_heading_above: heading-format.graduate.above, // 研究生正文各级标题段前距
+  graduate_heading_below: heading-format.graduate.below, // 研究生正文各级标题段后距
+  bachelor_leading: body-format.bachelor.leading, // 本科论文统一行距增量
+  bachelor_spacing: body-format.bachelor.spacing, // 本科论文统一段间距
+  bachelor_heading_leading: heading-format.bachelor.leading, // 本科正文各级标题行距
+  bachelor_heading_above: heading-format.bachelor.above, // 本科正文各级标题段前距
+  bachelor_heading_below: heading-format.bachelor.below, // 本科正文各级标题段后距
   colored-cover: false, // 是否开启彩色封面封底
   anonymous: false, // 盲审模式
   bibliography: none, // 传入 none 时按文档类型自动选择默认参考文献
@@ -679,23 +659,23 @@
   nl-cover: false,
   twoside: true,
   english-writing: false,
-  graduate_leading: 0.9em,
-  graduate_spacing: 1.0em,
-  graduate_header_ascent: graduate_style_defaults.header_ascent,
-  graduate_headsep: graduate_style_defaults.headsep,
-  graduate_headrule_offset: graduate_style_defaults.headrule_offset,
-  graduate_headrule_thick: graduate_style_defaults.headrule_thick,
-  graduate_headrule_thin: graduate_style_defaults.headrule_thin,
-  graduate_headrule_gap: graduate_style_defaults.headrule_gap,
-  graduate_keywords_above: graduate_style_defaults.keywords_above,
-  graduate_heading_leading: graduate_style_defaults.heading_leading,
-  graduate_heading_above: graduate_style_defaults.heading_above,
-  graduate_heading_below: graduate_style_defaults.heading_below,
-  bachelor_leading: bachelor_style_defaults.leading,
-  bachelor_spacing: bachelor_style_defaults.spacing,
-  bachelor_heading_leading: bachelor_style_defaults.heading_leading,
-  bachelor_heading_above: bachelor_style_defaults.heading_above,
-  bachelor_heading_below: bachelor_style_defaults.heading_below,
+  graduate_leading: body-format.graduate.leading,
+  graduate_spacing: body-format.graduate.spacing,
+  graduate_header_ascent: header-format.graduate.ascent,
+  graduate_headsep: header-format.graduate.headsep,
+  graduate_headrule_offset: header-format.graduate.headrule-offset,
+  graduate_headrule_thick: header-format.graduate.headrule-thick,
+  graduate_headrule_thin: header-format.graduate.headrule-thin,
+  graduate_headrule_gap: header-format.graduate.headrule-gap,
+  graduate_keywords_above: preface-format.keywords.above,
+  graduate_heading_leading: heading-format.graduate.leading,
+  graduate_heading_above: heading-format.graduate.above,
+  graduate_heading_below: heading-format.graduate.below,
+  bachelor_leading: body-format.bachelor.leading,
+  bachelor_spacing: body-format.bachelor.spacing,
+  bachelor_heading_leading: heading-format.bachelor.leading,
+  bachelor_heading_above: heading-format.bachelor.above,
+  bachelor_heading_below: heading-format.bachelor.below,
   colored-cover: false,
   anonymous: false,
   fonts: (:),
@@ -734,7 +714,7 @@
   )
   let has-graduate-appendices = graduate-appendix-items.len() > 0
   if outline-depth == auto {
-    outline-depth = if doctype == "bachelor" { 2 } else { 3 }
+    outline-depth = 3
   }
   let close-backmatter-section = has-more-content => {
     if effective_twoside {

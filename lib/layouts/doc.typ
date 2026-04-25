@@ -2,6 +2,7 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../utils/header.typ": bachelor-header-config, graduate-header-config
 #import "../utils/custom-cuti.typ": show-cn-fakebold
+#import "../format.typ": page-format, header-format
 
 #let doc(
   // documentclass 传入参数
@@ -9,7 +10,7 @@
   doctype: "bachelor",
   degree: "academic",
   colored-cover: false,
-  graduate_header_ascent: 0.93cm,
+  graduate_header_ascent: header-format.graduate.ascent,
   fonts: (:),
   // 其他参数
   fallback: false, // 字体缺失时使用 fallback，帮助诊断字体问题
@@ -35,11 +36,9 @@
   // 2.2 设置页面边距
   let page-margin = if margin == auto {
     if doctype == "master" or doctype == "doctor" {
-      // 研究生：上下2.54cm，左右2.5cm
-      (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
+      page-format.graduate-margin
     } else {
-      // 本科生：上下2.54cm，左右3.18cm
-      (top: 2.54cm, bottom: 2.54cm, left: 3.18cm, right: 3.18cm)
+      page-format.bachelor-margin
     }
   } else {
     margin
