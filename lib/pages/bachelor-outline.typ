@@ -80,7 +80,7 @@
     font = (fonts.宋体, fonts.宋体)
   }
   if size == auto {
-    size = (字号.四号, 字号.小四)
+    size = (字号.小四, 字号.小四)
   }
   if weight == auto {
     weight = ("bold", "regular", "regular")
