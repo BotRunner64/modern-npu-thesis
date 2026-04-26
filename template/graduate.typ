@@ -90,9 +90,6 @@
   #figure(
     table(
       columns: (1fr, 1fr, 1fr, 1fr),
-      stroke: none,
-      inset: (x: 0.3em, y: 0.4em),
-      align: center + horizon,
 
       table.hline(y: 0, stroke: 1.5pt),
       table.header([t], [1], [2], [3]),
@@ -102,13 +99,10 @@
     ),
     caption: [三线表],
   ) <timing-tlt>
-  
+
   #figure(
     table(
       columns: (1.25fr, 1fr, 1fr, 1fr, 1fr),
-      stroke: none,
-      inset: (x: 0.3em, y: 0.4em),
-      align: center + horizon,
 
       table.hline(y: 0, stroke: 1.5pt),
       table.cell(rowspan: 2)[材料],

@@ -59,27 +59,21 @@
   #figure(
     table(
       columns: (1fr, 1fr, 1fr, 1fr),
-      stroke: none,
-      inset: (x: 0.3em, y: 0.4em),
-      align: center + horizon,
 
-      table.hline(y: 0, stroke: 1.5pt),
+      table.hline(y: 0, stroke: 0.5pt),
       table.header([t], [1], [2], [3]),
       table.hline(y: 1, stroke: 0.5pt),
       [y], [0.3s], [0.4s], [0.8s],
-      table.hline(y: 2, stroke: 1.5pt),
+      table.hline(y: 2, stroke: 0.5pt),
     ),
-    caption: [三线表],
+    caption: [表],
   ) <timing-tlt>
 
   #figure(
     table(
       columns: (1.25fr, 1fr, 1fr, 1fr, 1fr),
-      stroke: none,
-      inset: (x: 0.3em, y: 0.4em),
-      align: center + horizon,
 
-      table.hline(y: 0, stroke: 1.5pt),
+      table.hline(y: 0, stroke: 0.5pt),
       table.cell(rowspan: 2)[材料],
       table.cell(colspan: 2)[碳/环氧],
       table.cell(colspan: 2)[玻璃/环氧],
@@ -89,9 +83,9 @@
       [模量，GPa], [181], [10.3], [38.6], [8.3],
       [压缩强度，MPa], [1500], [246], [610], [118],
       [拉伸强度，MPa], [1500], [40], [1062], [31],
-      table.hline(y: 5, stroke: 1.5pt),
+      table.hline(y: 5, stroke: 0.5pt),
     ),
-    caption: [复杂三线表示例：聚合物基复合材料的性能],
+    caption: [复杂表示例：聚合物基复合材料的性能],
   ) <composite-performance>
 
   #figure(

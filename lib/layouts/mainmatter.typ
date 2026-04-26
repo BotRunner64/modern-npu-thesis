@@ -4,7 +4,7 @@
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
-#import "../format.typ": body-format, heading-format, caption-format, header-format
+#import "../format.typ": body-format, heading-format, caption-format, header-format, table-format
 
 // 一级标题间距，用于二级三级标题间距计算
 #let level1-heading-above = heading-format.graduate.above.first()
@@ -231,6 +231,11 @@
   }
   // 表格内容使用五号字体
   show table: set text(font: fonts.宋体, size: 字号.五号)
+  set table(
+    stroke: if is-graduate { none } else { 0.5pt },
+    inset: (x: 0.3em, y: if is-graduate { 0.5em } else { 0.7em }),
+    align: center + horizon,
+  )
   // 4.6 优化列表显示
   //     术语列表 terms 不应该缩进
   show terms: set par(first-line-indent: 0pt)
