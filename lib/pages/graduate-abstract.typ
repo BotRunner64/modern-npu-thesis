@@ -1,6 +1,5 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../format.typ": body-format, heading-format
-#import "../utils/header.typ": header-render
 #import "../layouts/preface.typ": preface-heading-style, preface-body-first-line-indent, preface-keywords-above
 
 #let master-abstract(

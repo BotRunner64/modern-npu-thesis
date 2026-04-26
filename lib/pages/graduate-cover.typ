@@ -48,8 +48,7 @@
       major: "某专业",
       supervisor: ("李四", "教授"),
       submit-date: datetime.today(),
-      clc: "",
-      udc: "",
+      class-no: "",
     )
       + info
   )
@@ -197,7 +196,7 @@
       inset: (x: 8pt, y: 3pt),
       align: center,
       [学校代码], [#info.school-code],
-      [分 类 号], [#info.clc],
+      [分#h(0.5em)类#h(0.5em)号], [#info.class-no],
       [密　　级], [#info.secret-level],
       [学　　号], [#anonymous-text("student-id", info.student-id)],
     )

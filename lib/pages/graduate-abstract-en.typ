@@ -1,6 +1,5 @@
 #import "../utils/style.typ": 字体, 字号
 #import "../format.typ": body-format, heading-format
-#import "../utils/header.typ": header-render
 #import "../layouts/preface.typ": (
   preface-heading-style, preface-body-first-line-indent,
   preface-keywords-above,
@@ -11,11 +10,9 @@
   degree: "academic",
   twoside: false,
   fonts: (:),
-  info: (:),
   keywords: (),
   outline-title: "Abstract",
   outlined: true,
-
   leading: auto,
   spacing: auto,
   body-font: auto,
@@ -35,23 +32,8 @@
   if title-leading == auto { title-leading = heading-format.graduate.leading.first() }
   if title-above == auto { title-above = heading-format.graduate.above.first() }
   if title-below == auto { title-below = heading-format.graduate.below.first() }
-  info = (
-    (
-      title-en: "NPU Thesis Template for Typst",
-      author-en: "Zhang San",
-      department-en: "XX School",
-      major-en: "XX",
-      supervisor-en: "Li Si",
-    )
-      + info
-  )
-
-  if type(info.title-en) == str {
-    info.title-en = info.title-en.split("\n")
-  }
 
   pagebreak(weak: true, to: if twoside { "odd" })
-
 
   [
     #set par(leading: leading, spacing: spacing, justify: true)

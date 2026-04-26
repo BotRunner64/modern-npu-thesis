@@ -1,25 +1,24 @@
 #import "layouts/doc.typ": doc
-#import "utils/algorithm.typ": algorithm, algorithm-ref, reset-algorithm-counter, with-english-writing
+#import "utils/algorithm.typ": algorithm, algorithm-ref, with-english-writing
 #import "utils/equation-note.typ": equation-note
 #import "layouts/preface.typ": preface
 #import "layouts/mainmatter.typ": mainmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
 #import "utils/header.typ": graduate-header-title, header-render
 #import "pages/bachelor-cover.typ": bachelor-cover
-#import "pages/master-cover.typ": master-cover
+#import "pages/graduate-cover.typ": master-cover
 #import "pages/bachelor-abstract.typ": bachelor-abstract
-#import "pages/master-abstract.typ": master-abstract
+#import "pages/graduate-abstract.typ": master-abstract
 #import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
-#import "pages/master-abstract-en.typ": master-abstract-en
+#import "pages/graduate-abstract-en.typ": master-abstract-en
 #import "pages/bachelor-outline.typ": bachelor-outline
 #import "pages/graduate-outline.typ": graduate-outline
 #import "pages/acknowledgement.typ": acknowledgement
-#import "pages/design-summary.typ": design-summary as design-summary-page
-#import "pages/academic-achievements.typ": academic-achievements
+#import "pages/bachelor-design-summary.typ": design-summary as design-summary-page
+#import "pages/graduate-academic-achievements.typ": academic-achievements
 #import "@preview/gb7714-bilingual:0.2.3": init-gb7714
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
-#import "utils/custom-numbering.typ": custom-numbering
-#import "utils/custom-heading.typ": active-heading, current-heading, heading-display
+#import "utils/custom-heading.typ": active-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "utils/style.typ": 字体, 字号
 #import "format.typ": body-format, heading-format, header-format
@@ -170,7 +169,7 @@
   title: ("基于 Typst 的", "西北工业大学学位论文"),
   title-en: "NPU Thesis Template for Typst",
   student-id: "1234567890",
-  clc: "O643.12",
+  class-no: "O643.12",
   author: "张三",
   author-en: "Zhang San",
   department: "某学院",
@@ -235,7 +234,7 @@
         title: title,
         title-en: title-en,
         student-id: student-id,
-        clc: clc,
+        class-no: class-no,
         author: author,
         author-en: author-en,
         department: department,
@@ -340,8 +339,7 @@
       bottom-date: datetime.today(),
       chairman: "某某某 教授",
       reviewer: ("某某某 教授", "某某某 教授"),
-      clc: "O643.12",
-      udc: "544.4",
+      class-no: "O643.12",
       secret-level: "公开",
       supervisor-contact: "西北工业大学 陕西省西安市长安区东大街道",
       email: "xxx@mail.nwpu.edu.cn",
@@ -567,7 +565,6 @@
           keywords-above: graduate_keywords_above,
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
         )
       } else {
         bachelor-abstract-en(
@@ -579,7 +576,6 @@
           title-below: bachelor-first-level-value(bachelor_heading_below),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
-          info: info + args.named().at("info", default: (:)),
         )
       }
     },
@@ -633,7 +629,6 @@
     // 致谢页
     acknowledgement: (..args) => {
       acknowledgement(
-        anonymous: anonymous,
         twoside: twoside,
         doctype: doctype,
         english-writing: english-writing,
@@ -657,7 +652,6 @@
     // 学术成果页（西工大研究生特有）
     academic-achievements: (..args) => {
       academic-achievements(
-        anonymous: anonymous,
         twoside: twoside,
         english-writing: english-writing,
         body-font: graduate_body_font,

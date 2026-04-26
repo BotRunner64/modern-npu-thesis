@@ -42,11 +42,6 @@
   }
 }
 
-#let reset-algorithm-counter = it => {
-  counter(algorithm-figure).update(0)
-  it
-}
-
 #let algorithm-numbering(number) = context algorithm-label(number, here())
 
 #let algorithm-step-rows(steps) = {

@@ -7,7 +7,6 @@
   // documentclass 传入的参数
   twoside: false,
   fonts: (:),
-  info: (:),
   // 其他参数
   keywords: (),
   outline-title: "ABSTRACT",
@@ -31,19 +30,6 @@
   if title-leading == auto { title-leading = heading-format.bachelor.leading.first() }
   if title-above == auto { title-above = heading-format.bachelor.above.first() }
   if title-below == auto { title-below = heading-format.bachelor.below.first() }
-  info = (
-    title-en: "NPU Thesis Template for Typst",
-    author-en: "Zhang San",
-    department-en: "XX School",
-    major-en: "XX",
-    supervisor-en: "Li Si",
-  ) + info
-
-  // 2.  对参数进行处理
-  // 2.1 如果是字符串，则使用换行符将标题分隔为列表
-  if type(info.title-en) == str {
-    info.title-en = info.title-en.split("\n")
-  }
 
   // 3.  正式渲染
   [

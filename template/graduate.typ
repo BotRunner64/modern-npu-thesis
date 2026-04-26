@@ -10,7 +10,7 @@
   title: ("基于 Typst 的", "西北工业大学论文模板"),
   title-en: "First Line \nSecond Line",
   student-id: "2023123456",
-  clc: "TP311.1",
+  class-no: "TP311.1",
   author: "航小天",
   author-en: "Xiaotian Hang",
   department: "计算机学院",

@@ -4,7 +4,6 @@
 // 西北工业大学研究生学术成果页
 #let academic-achievements(
   // documentclass 传入参数
-  anonymous: false,
   twoside: false,
   english-writing: false,
   leading: auto,
@@ -46,30 +45,28 @@
     spacing = preface-body-spacing
   }
 
-  if not anonymous {
-    pagebreak(weak: true, to: if twoside { "odd" })
-    [
-      #set text(font: body-font, size: body-size)
-      #set par(
-        leading: leading,
-        spacing: spacing,
-        justify: true,
-        first-line-indent: preface-body-first-line-indent,
-      )
+  pagebreak(weak: true, to: if twoside { "odd" })
+  [
+    #set text(font: body-font, size: body-size)
+    #set par(
+      leading: leading,
+      spacing: spacing,
+      justify: true,
+      first-line-indent: preface-body-first-line-indent,
+    )
 
-      // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
-      #show heading: it => {
-        if it.level == 1 and it.numbering == none {
-          preface-heading-style(it, fonts, leading: title-leading, below: title-below)
-        } else {
-          it
-        }
+    // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
+    #show heading: it => {
+      if it.level == 1 and it.numbering == none {
+        preface-heading-style(it, fonts, leading: title-leading, below: title-below)
+      } else {
+        it
       }
+    }
 
-      #v(title-above)
-      #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
+    #v(title-above)
+    #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
 
-      #body
-    ]
-  }
+    #body
+  ]
 }

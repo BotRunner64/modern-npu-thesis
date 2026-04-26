@@ -5,7 +5,6 @@
 // 致谢页
 #let acknowledgement(
   // documentclass 传入参数
-  anonymous: false,
   twoside: false,
   doctype: "master",
   english-writing: false,
@@ -45,42 +44,40 @@
     title-below = if is-graduate { preface-heading-below } else { 0pt }
   }
   if leading == auto {
-    leading = if doctype == "bachelor" { 2.4pt } else { preface-body-leading }
+    leading = preface-body-leading
   }
   if spacing == auto {
-    spacing = if doctype == "bachelor" { 0pt } else { preface-body-spacing }
+    spacing = preface-body-spacing
   }
 
-  if not anonymous {
-    pagebreak(weak: true, to: if twoside { "odd" })
-    [
-      #set text(font: body-font, size: body-size)
-      #set par(
-        leading: leading,
-        spacing: spacing,
-        justify: true,
-        first-line-indent: if doctype == "bachelor" { (amount: 26pt, all: true) } else { preface-body-first-line-indent },
-      )
+  pagebreak(weak: true, to: if twoside { "odd" })
+  [
+    #set text(font: body-font, size: body-size)
+    #set par(
+      leading: leading,
+      spacing: spacing,
+      justify: true,
+      first-line-indent: if doctype == "bachelor" { (amount: 26pt, all: true) } else { preface-body-first-line-indent },
+    )
 
-      // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
-      #show heading: it => {
-        if it.level == 1 and it.numbering == none {
-          preface-heading-style(
-            it,
-            fonts,
-            leading: title-leading,
-            above: 0pt,
-            below: title-below,
-          )
-        } else {
-          it
-        }
+    // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
+    #show heading: it => {
+      if it.level == 1 and it.numbering == none {
+        preface-heading-style(
+          it,
+          fonts,
+          leading: title-leading,
+          above: 0pt,
+          below: title-below,
+        )
+      } else {
+        it
       }
+    }
 
-      #v(title-above)
-      #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
+    #v(title-above)
+    #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
 
-      #body
-    ]
-  }
+    #body
+  ]
 }

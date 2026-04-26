@@ -17,7 +17,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: "基于 Typst 的西北工业大学毕业论文",
+    title: "基于 Typst 的西北工业大学毕业设计（论文）",
     author: "张三",
     major: "某专业",
     supervisor: ("李四", "教授"),
@@ -25,11 +25,7 @@
   ) + info
 
   // 2.  对参数进行处理
-  // 2.1 如果是字符串，则使用换行符将标题分隔为列表
-  if type(info.title) == str {
-    info.title = info.title.split("\n")
-  }
-  // 2.2 处理提交日期
+  // 2.1 处理提交日期
   // submit-date 支持 datetime 或 (year: 2026, month: 3) 格式
   if type(info.submit-date) == dictionary {
     info.submit-date = datetime(year: info.submit-date.year, month: info.submit-date.month, day: 1)
@@ -81,7 +77,7 @@
   }
 
   block(width: 100%)[
-    #underline-field("题　　目", mask-value((("",) + info.title).join(" ")), width: title-line-width, label-size: 字号.三号, value-size: 字号.三号)
+    #underline-field("题　　目", mask-value(info.title), width: title-line-width, label-size: 字号.三号, value-size: 字号.三号)
     #v(1.5cm)
     #underline-field("专业名称", info.major)
     #v(0.8cm)
