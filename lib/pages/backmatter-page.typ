@@ -39,7 +39,6 @@
       leading: leading,
       spacing: spacing,
       justify: true,
-      first-line-indent: fmt.first-line-indent,
     )
 
     // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
@@ -60,6 +59,9 @@
     #v(title-above)
     #heading(level: 1, numbering: none, outlined: outlined, title) <no-auto-pagebreak>
 
-    #body
+    #[
+      #set par(first-line-indent: fmt.first-line-indent)
+      #body
+    ]
   ]
 }

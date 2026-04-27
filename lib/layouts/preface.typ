@@ -112,7 +112,7 @@
             graduate_headrule_gap: graduate_headrule_gap,
           )
         } else {
-          bachelor-header-render()
+          bachelor-header-render(offset: header-format.bachelor.offset)
         }
       },
     )
