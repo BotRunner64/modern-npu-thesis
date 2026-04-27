@@ -268,30 +268,12 @@
     spacing = if is-graduate { preface-body-spacing } else { auto }
   }
 
-  pagebreak(weak: true, to: if twoside { "odd" })
-
   set text(lang: "zh")
   set par(first-line-indent: preface-body-first-line-indent)
 
-  if is-graduate {
-    set text(font: body-font, size: body-size)
-    set par(leading: leading, spacing: spacing, justify: true, first-line-indent: preface-body-first-line-indent)
-    show heading.where(level: 1, numbering: none): it => preface-heading-style(
-      it,
-      fonts,
-      leading: title-leading,
-      above: 0pt,
-      below: title-below,
-    )
-    v(title-above)
-    heading(level: 1, numbering: none, outlined: true)[#title]
-  } else {
-    set text(font: body-font, size: body-size)
-    set par(leading: leading, spacing: spacing, justify: true)
-    if title != none {
-      heading(level: 1, numbering: none, outlined: true)[#title]
-    }
-  }
+  set text(font: body-font, size: body-size)
+  set par(leading: leading, spacing: spacing, justify: true, first-line-indent: preface-body-first-line-indent)
+  heading(level: 1, numbering: none, outlined: true)[#title]
 
   gb7714-bibliography(
     title: none,

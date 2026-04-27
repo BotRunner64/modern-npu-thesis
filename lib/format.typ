@@ -66,8 +66,8 @@
     size: (字号.三号, 字号.四号, 字号.小四),
     weight: ("regular", "regular", "regular"),
     leading: (12pt, 12pt, 12pt),
-    above: (2 * 14pt - 0.7em, 16pt, 16pt),
-    below: (2 * 17pt - 0.7em, 12pt, 12pt),
+    above: (16pt, 16pt, 16pt),
+    below: (22pt, 12pt, 12pt),
   ),
   bachelor: (
     size: (字号.三号, 字号.四号, 字号.小四),

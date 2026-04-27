@@ -251,16 +251,10 @@
   // 5.  处理标题
   // 5.1 设置标题的 Numbering
   set heading(numbering: heading-numbering)
-  // 5.2 设置字体、字号、换页及段前段后间距
+  // 5.2 设置字体、字号、换页及段后段后间距
   show heading: it => {
     if it.level == 1 {
       counter(figure.where(kind: "algorithm")).update(0)
-    }
-
-    // 无编号一级标题（如致谢、参考文献、成果页等）不应继续沿用正文标题版式，
-    // 否则会把正文的段前距和换页规则叠加到后置部分页面上。
-    if is-graduate and it.level == 1 and it.numbering == none {
-      return it
     }
 
     set text(
@@ -271,6 +265,7 @@
     )
     set par(leading: array-at(heading_leading, it.level), spacing: 0pt)
 
+    // 所有符合 heading-pagebreak 配置的一级标题统一换页（包括无编号标题）
     let needs-pagebreak = false
     if array-at(heading-pagebreak, it.level) {
       if "label" not in it.fields() or str(it.label) != "no-auto-pagebreak" {
@@ -280,16 +275,13 @@
 
     if needs-pagebreak {
       if it.level == 1 {
-        // 如果是双面打印，一级标题换页需要跳转到奇数页
         pagebreak(weak: true, to: if twoside { "odd" })
       } else {
         pagebreak(weak: true)
       }
-      // 手动添加页首被忽略的顶部间距
       v(array-at(heading-above, it.level))
     }
 
-    // 设置段前段后间距。如果有换页，则 block() 的 above 设为 0pt 防止双倍间距
     let current-block-above = if needs-pagebreak { 0pt } else { array-at(heading-above, it.level) }
     let current-block-below = array-at(heading-below, it.level)
 
