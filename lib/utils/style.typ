@@ -25,7 +25,4 @@
     (name: "Arial", covers: "latin-in-cjk"),
     "SimHei",
   ),
-  楷体: ((name: "Times New Roman", covers: "latin-in-cjk"), "KaiTi"),
-  仿宋: ((name: "Times New Roman", covers: "latin-in-cjk"), "FangSong"),
-  等宽: ((name: "Courier New", covers: "latin-in-cjk"), "SimHei"),
 )

@@ -84,7 +84,15 @@
     }
 
     show heading: i-figured.reset-counters
-    show figure: i-figured.show-figure.with(numbering: appendix-prefix + "-1")
+    let is-graduate = doctype == "master" or doctype == "doctor"
+    let figure-show-handler = i-figured.show-figure.with(numbering: appendix-prefix + "-1")
+    show figure: it => {
+      if it.kind == image or (is-graduate and it.kind == table) {
+        it
+      } else {
+        figure-show-handler(it)
+      }
+    }
     set figure(supplement: if english-writing { [Figure] } else { [图] })
     show figure.where(kind: table): set figure(supplement: if english-writing { [Table] } else { [表] })
     set math.equation(supplement: if english-writing { [Equation] } else { [式] })

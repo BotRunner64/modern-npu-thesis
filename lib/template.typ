@@ -13,9 +13,7 @@
 #import "pages/graduate-abstract-en.typ": master-abstract-en
 #import "pages/bachelor-outline.typ": bachelor-outline
 #import "pages/graduate-outline.typ": graduate-outline
-#import "pages/acknowledgement.typ": acknowledgement
-#import "pages/bachelor-design-summary.typ": design-summary as design-summary-page
-#import "pages/graduate-academic-achievements.typ": academic-achievements
+#import "pages/backmatter-page.typ": backmatter-page
 #import "@preview/gb7714-bilingual:0.2.3": init-gb7714
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-heading.typ": active-heading, heading-display
@@ -293,7 +291,7 @@
   colored-cover: false, // 是否开启彩色封面封底
   anonymous: false, // 盲审模式
   bibliography: none, // 传入 none 时按文档类型自动选择默认参考文献
-  fonts: (:), // 字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
+  fonts: (:), // 字体，应传入「宋体」、「黑体」
   info: (:),
 ) = {
   if bibliography == none {
@@ -627,40 +625,37 @@
     },
     // 致谢页
     acknowledgement: (..args) => {
-      acknowledgement(
+      backmatter-page(
         twoside: twoside,
         doctype: doctype,
         english-writing: english-writing,
         body-font: if doctype == "bachelor" { bachelor_body_font } else { graduate_body_font },
         body-size: if doctype == "bachelor" { bachelor_body_size } else { graduate_body_size },
-        leading: if doctype == "bachelor" { bachelor_leading } else { graduate_leading },
-        spacing: if doctype == "bachelor" { bachelor_spacing } else { graduate_spacing },
-        title-leading: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_leading) } else {
-          bachelor-first-level-value(graduate_heading_leading)
-        },
-        title-above: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_above) } else {
-          bachelor-first-level-value(graduate_heading_above)
-        },
-        title-below: if doctype == "bachelor" { bachelor-first-level-value(bachelor_heading_below) } else {
-          bachelor-first-level-value(graduate_heading_below)
-        },
         fonts: fonts + args.named().at("fonts", default: (:)),
+        title: if english-writing {
+          "Acknowledgements"
+        } else if doctype == "bachelor" {
+          "致 谢"
+        } else {
+          "致　谢"
+        },
         ..args,
       )
     },
     // 学术成果页（西工大研究生特有）
     academic-achievements: (..args) => {
-      academic-achievements(
+      backmatter-page(
         twoside: twoside,
+        doctype: "master",
         english-writing: english-writing,
         body-font: graduate_body_font,
         body-size: graduate_body_size,
-        leading: graduate_leading,
-        spacing: graduate_spacing,
-        title-leading: bachelor-first-level-value(graduate_heading_leading),
-        title-above: bachelor-first-level-value(graduate_heading_above),
-        title-below: bachelor-first-level-value(graduate_heading_below),
         fonts: fonts + args.named().at("fonts", default: (:)),
+        title: if english-writing {
+          "Academic Achievements and Research Experience"
+        } else {
+          "在学期间取得的学术成果和参加科研情况"
+        },
         ..args,
       )
     },
@@ -843,17 +838,14 @@
     }
 
     if design_summary != none {
-      design-summary-page(
+      backmatter-page(
         twoside: effective_twoside,
+        doctype: "bachelor",
         english-writing: english-writing,
         fonts: fonts,
         body-font: cls.bachelor_body_font,
         body-size: cls.bachelor_body_size,
-        leading: bachelor_leading,
-        spacing: bachelor_spacing,
-        title-leading: bachelor-first-level-value(bachelor_heading_leading),
-        title-above: bachelor-first-level-value(bachelor_heading_above),
-        title-below: bachelor-first-level-value(bachelor_heading_below),
+        title: if english-writing { "Design Summary" } else { "毕业设计小结" },
       )[#design_summary]
       close-backmatter-section(appendix != none or scan-declaration != none)
     }

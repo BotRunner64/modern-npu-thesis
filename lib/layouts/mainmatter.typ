@@ -188,7 +188,6 @@
     first-line-indent: first-line-indent,
     spacing: spacing,
   )
-  show raw: set text(font: fonts.等宽)
   // 4.2 脚注样式
   show footnote.entry: set text(font: fonts.宋体, size: 字号.五号)
   // 4.3 设置 figure 的编号

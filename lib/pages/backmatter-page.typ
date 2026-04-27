@@ -1,12 +1,12 @@
-
 #import "../utils/style.typ": 字号, 字体
-#import "../layouts/preface.typ": preface-heading-style, preface-heading-above, preface-heading-below, preface-heading-leading, preface-body-leading, preface-body-spacing, preface-body-first-line-indent, bachelor-body-first-line-indent
+#import "../format.typ": body-format, heading-format
+#import "../layouts/preface.typ": preface-heading-style
 
-// 致谢页
-#let acknowledgement(
-  // documentclass 传入参数
+// 后置部分通用页面（致谢、毕业设计小结、学术成果等）
+// 根据 doctype 自动选择对应的 format 默认值
+#let backmatter-page(
   twoside: false,
-  doctype: "master",
+  doctype: "bachelor",
   english-writing: false,
   leading: auto,
   spacing: auto,
@@ -16,7 +16,6 @@
   title-above: auto,
   title-below: auto,
   fonts: (:),
-  // 其他参数
   title: auto,
   outlined: true,
   body,
@@ -24,31 +23,14 @@
   fonts = 字体 + fonts
   if body-font == auto { body-font = fonts.宋体 }
   if body-size == auto { body-size = 字号.小四 }
-  let is-graduate = doctype == "master" or doctype == "doctor"
-  if title == auto {
-    title = if english-writing {
-      "Acknowledgements"
-    } else if doctype == "bachelor" {
-      "致 谢"
-    } else {
-      "致　谢"
-    }
-  }
-  if title-leading == auto {
-    title-leading = preface-heading-leading
-  }
-  if title-above == auto {
-    title-above = if is-graduate { preface-heading-above } else { 0pt }
-  }
-  if title-below == auto {
-    title-below = if is-graduate { preface-heading-below } else { 0pt }
-  }
-  if leading == auto {
-    leading = preface-body-leading
-  }
-  if spacing == auto {
-    spacing = preface-body-spacing
-  }
+
+  let fmt = if doctype == "bachelor" { body-format.bachelor } else { body-format.graduate }
+  let hfmt = if doctype == "bachelor" { heading-format.bachelor } else { heading-format.graduate }
+  if title-leading == auto { title-leading = hfmt.leading.first() }
+  if title-above == auto { title-above = hfmt.above.first() }
+  if title-below == auto { title-below = hfmt.below.first() }
+  if leading == auto { leading = fmt.leading }
+  if spacing == auto { spacing = fmt.spacing }
 
   pagebreak(weak: true, to: if twoside { "odd" })
   [
@@ -57,7 +39,7 @@
       leading: leading,
       spacing: spacing,
       justify: true,
-      first-line-indent: if doctype == "bachelor" { bachelor-body-first-line-indent } else { preface-body-first-line-indent },
+      first-line-indent: fmt.first-line-indent,
     )
 
     // 覆盖正文阶段遗留的 heading show 规则，避免无编号一级标题被重复叠加段前距
