@@ -314,7 +314,6 @@
     (
       title: ("基于 Typst 的", "西北工业大学学位论文"),
       title-en: "NPU Thesis Template for Typst",
-      grade: "20XX",
       student-id: "1234567890",
       author: "张三",
       author-en: "Zhang San",
@@ -322,22 +321,14 @@
       department-en: "XX School",
       major: "某专业",
       major-en: "XX",
-      field: "某方向",
-      field-en: "XX Field",
       supervisor: ("李四", "教授"),
       supervisor-en: "Li Si",
-      supervisor-ii-en: "",
       submit-date: datetime.today(),
       // 以下为研究生项
-      defend-date: datetime.today(),
-      confer-date: datetime.today(),
-      bottom-date: datetime.today(),
-      chairman: "某某某 教授",
       reviewer: ("某某某 教授", "某某某 教授"),
+      defend-date: datetime.today(),
       class-no: "O643.12",
       secret-level: "公开",
-      supervisor-contact: "西北工业大学 陕西省西安市长安区东大街道",
-      email: "xxx@mail.nwpu.edu.cn",
       school-code: "10699",
       degree: auto,
       degree-en: auto,
@@ -471,7 +462,6 @@
           anonymous: anonymous,
           twoside: twoside,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
       } else {
@@ -479,7 +469,6 @@
           anonymous: anonymous,
           twoside: twoside,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
           info: info + args.named().at("info", default: (:)),
         )
       }
@@ -490,7 +479,6 @@
         abstract-page(
           keywords-above: graduate_keywords_above,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         abstract-page(
@@ -501,7 +489,6 @@
           outline-title: "摘 要",
           outlined: false,
           funding: none,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }
     },
@@ -516,7 +503,6 @@
           outline-title: "Abstract",
           heading-metadata: true,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         abstract-page(
@@ -528,7 +514,6 @@
           outline-title: "ABSTRACT",
           outlined: false,
           funding: none,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }
     },
@@ -538,13 +523,11 @@
         bachelor-outline(
           english-writing: english-writing,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         graduate-outline(
           english-writing: english-writing,
           ..args,
-          fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }
     },

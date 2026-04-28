@@ -6,7 +6,6 @@
   // documentclass 传入的参数
   anonymous: false,
   twoside: false,
-  fonts: (:),
   info: (:),
   // 其他参数
   stroke-width: 0.5pt,
@@ -15,7 +14,6 @@
   datetime-display: datetime-year-month,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
   info = (
     title: "基于 Typst 的西北工业大学毕业设计（论文）",
     author: "张三",
@@ -41,12 +39,12 @@
 
   let underline-field(label, body, width: line-width, label-size: 字号.四号, value-size: 字号.四号) = {
     align(center)[
-      #text(font: fonts.宋体, size: label-size)[#label]
+      #text(font: 字体.宋体, size: label-size)[#label]
       #box(width: 0.2cm)
       #box(width: width)[
         #set par(leading: 0em, spacing: 0em)
         #align(center)[
-          #text(font: fonts.宋体, size: value-size, bottom-edge: "descender")[#body]
+          #text(font: 字体.宋体, size: value-size, bottom-edge: "descender")[#body]
         ]
         #line(length: 100%, stroke: stroke-width + black)
       ]
@@ -68,7 +66,7 @@
   }
 
   // 论文类型标题
-  text(size: 字号.小初, font: fonts.宋体, weight: "bold")[本科毕业设计（论文）]
+  text(size: 字号.小初, font: 字体.宋体, weight: "bold")[本科毕业设计（论文）]
 
   if anonymous {
     v(180pt)

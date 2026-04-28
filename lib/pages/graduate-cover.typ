@@ -12,7 +12,6 @@
   colored-cover: false,
   anonymous: false,
   twoside: false,
-  fonts: (:),
   info: (:),
   // 其他参数
   stroke-width: 0.5pt,
@@ -36,7 +35,6 @@
   datetime-display: datetime-display,
 ) = {
   // 1.  默认参数
-  fonts = 字体 + fonts
   info = (
     (
       title: ("基于 Typst 的", "西北工业大学学位论文"),
@@ -105,7 +103,7 @@
     rect(
       inset: defence-info-inset,
       stroke: none,
-      text(font: fonts.宋体, size: 字号.三号, weight: "bold", body),
+      text(font: 字体.宋体, size: 字号.三号, weight: "bold", body),
     )
   }
   
@@ -116,7 +114,7 @@
       inset: defence-info-inset,
       stroke: if no-stroke { none } else { (bottom: stroke-width + black) },
       text(
-        font: fonts.宋体,
+        font: 字体.宋体,
         size: 字号.三号,
         bottom-edge: "descender",
         if anonymous and (key in anonymous-info-keys) {
@@ -183,11 +181,11 @@
   set page(background: bg)
   
   // 设置外封页默认字体
-  set text(font: fonts.宋体, size: 字号.五号)
+  set text(font: 字体.宋体, size: 字号.五号)
   
   // 右上角元信息表格（学校代码、分类号、密级、学号）
   align(right)[
-    #set text(font: fonts.黑体, size: 字号.五号, weight: "bold")
+    #set text(font: 字体.黑体, size: 字号.五号, weight: "bold")
     #table(
       columns: (2.05cm, 2.4cm),
       rows: 0.55cm,
@@ -205,7 +203,7 @@
   v(21 * 10.5pt * 1.05)
   
   align(center)[
-    #set text(font: fonts.黑体, size: 字号.二号, weight: "bold")
+    #set text(font: 字体.黑体, size: 字号.二号, weight: "bold")
     #table(
       columns: (2.34cm, 12.13cm),
       rows: (1.45cm, 1.45cm),
@@ -226,11 +224,11 @@
     let author-display = anonymous-text("author", info.author)
     let author-width = calc.max(
       3.72cm,
-      measure(text(font: fonts.宋体, size: 字号.三号, weight: "bold", author-display)).width,
+      measure(text(font: 字体.宋体, size: 字号.三号, weight: "bold", author-display)).width,
     )
     
     align(center)[
-      #set text(font: fonts.宋体, size: 字号.三号, weight: "bold")
+      #set text(font: 字体.宋体, size: 字号.三号, weight: "bold")
       #table(
         columns: (1.56cm, author-width),
         rows: 1.28cm,
@@ -250,7 +248,7 @@
   let major-row-label = if degree == "professional" { "专 业 领 域" } else { "学 科 专 业" }
   
   align(center)[
-    #set text(font: fonts.宋体, size: 字号.三号, weight: "bold")
+    #set text(font: 字体.宋体, size: 字号.三号, weight: "bold")
     #table(
       columns: (3.59cm, 9cm),
       rows: (1cm, 1cm, 1cm, 1cm),
@@ -286,21 +284,21 @@
   v(6 * 10.5pt * 1.4) // 约 15pt
   
   // 校名
-  text(size: 字号.三号, font: fonts.宋体, weight: "regular")[
+  text(size: 字号.三号, font: 字体.宋体, weight: "regular")[
     西 北 工 业 大 学
   ]
   
   v(0mm)
   
   // 学位论文类型
-  text(size: 字号.一号, font: fonts.宋体, weight: "regular")[
+  text(size: 字号.一号, font: 字体.宋体, weight: "regular")[
     #if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" }
   ]
   
   v(6 * 14pt * 1.5) // 约 126pt
   
   // 论文信息（简洁格式）
-  set text(font: fonts.宋体, size: 字号.二号)
+  set text(font: 字体.宋体, size: 字号.二号)
   
   align(center)[
     #table(
@@ -329,18 +327,18 @@
   v(5 * 10.5pt * 1.4) // 约 94pt
   
   // 其他信息
-  set text(font: fonts.宋体, size: 字号.三号)
+  set text(font: 字体.宋体, size: 字号.三号)
   
   context {
     let info-column-width = calc.max(
       5cm,
-      measure(text(font: fonts.宋体, size: 字号.三号, info.major)).width,
-      measure(text(font: fonts.宋体, size: 字号.三号, author-display-name)).width,
-      measure(text(font: fonts.宋体, size: 字号.三号, supervisor-display-name)).width,
+      measure(text(font: 字体.宋体, size: 字号.三号, info.major)).width,
+      measure(text(font: 字体.宋体, size: 字号.三号, author-display-name)).width,
+      measure(text(font: 字体.宋体, size: 字号.三号, supervisor-display-name)).width,
     )
     
     align(center)[
-      #set text(font: fonts.宋体, size: 字号.三号)
+      #set text(font: 字体.宋体, size: 字号.三号)
       #table(
         columns: (3.59cm, info-column-width),
         rows: 1.2cm,
@@ -368,7 +366,7 @@
   v(2 * 10.5pt * 1.6) // 约 31pt
   
   // 日期
-  text(font: fonts.宋体, size: 字号.三号, datetime-year-month(info.submit-date))
+  text(font: 字体.宋体, size: 字号.三号, datetime-year-month(info.submit-date))
   
   // 双面打印时，在中文标题页后显式插入一页空白页。
   if twoside {
@@ -382,13 +380,13 @@
   // ========================================
   pagebreak(weak: true)
   
-  set text(font: fonts.宋体, size: 字号.小四)
+  set text(font: 字体.宋体, size: 字号.小四)
   set par(leading: 0.7em)
   
   v(5 * 14pt * 1.4) // 约 59pt
   
   // 标题
-  set text(font: fonts.宋体, size: 字号.二号)
+  set text(font: 字体.宋体, size: 字号.二号)
   align(center)[
     #text(font: "Times New Roman", weight: "bold")[Title: ]
     #text(font: "Times New Roman", size: 字号.三号, info.title-en.at(0, default: ""))
@@ -465,19 +463,19 @@
   // ========================================
   pagebreak(weak: true)
   
-  set text(font: fonts.宋体, size: 字号.小四)
+  set text(font: 字体.宋体, size: 字号.小四)
   
   v(2 * 18pt * 1.2) // 约 26pt
   
   // 页面标题
-  align(center, text(font: fonts.黑体, size: 字号.三号)[学位论文评阅人和答辩委员会名单])
+  align(center, text(font: 字体.黑体, size: 字号.三号)[学位论文评阅人和答辩委员会名单])
   
   // 评阅人表格
   v(1 * 22pt * 1.2) // 约 26pt
   
   align(center)[
-    #set text(font: fonts.宋体, size: 字号.小四)
-    #text(font: fonts.黑体, size: 字号.四号)[学位论文评阅人名单]
+    #set text(font: 字体.宋体, size: 字号.小四)
+    #text(font: 字体.黑体, size: 字号.四号)[学位论文评阅人名单]
     
     #v(-5pt)
     
@@ -545,8 +543,8 @@
   }
   
   align(center)[
-    #set text(font: fonts.宋体, size: 字号.小四)
-    #text(font: fonts.黑体, size: 字号.四号)[答辩委员会名单]
+    #set text(font: 字体.宋体, size: 字号.小四)
+    #text(font: 字体.黑体, size: 字号.四号)[答辩委员会名单]
 
     #v(-5pt)
     
