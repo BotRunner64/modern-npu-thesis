@@ -1,10 +1,15 @@
-﻿# 西北工业大学学位论文 `modern-npu-thesis`
+﻿<div align="center">
+
+**西北工业大学本硕博论文 Typst 模板**
+
+***modern-npu-thesis***
+
 [![CI](https://github.com/1195343015/modern-npu-thesis/actions/workflows/test.yml/badge.svg)](https://github.com/1195343015/modern-npu-thesis/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-西北工业大学本硕博毕业论文（设计）的 Typst 模板，能够简洁、快速、持续生成 PDF 格式的毕业论文。
+</div>
 
-> 如果你想使用 LaTeX 版本，请参考 [nwputhesis](https://github.com/1195343015/nwputhesis)。
+> 如果你想使用 LaTeX 模板，请移步 [nwputhesis](https://github.com/1195343015/nwputhesis)。
 
 ## 优势与特性
 
