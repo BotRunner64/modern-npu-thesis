@@ -166,7 +166,11 @@
     major-en: major-en,
     supervisor: supervisor,
     supervisor-en: supervisor-en,
-    submit-date: submit-date,
+    submit-date: if type(submit-date) == dictionary {
+      datetime(year: submit-date.year, month: submit-date.month, day: 1)
+    } else {
+      submit-date
+    },
     secret-level: secret-level,
     school-code: school-code,
     degree: auto,
@@ -179,10 +183,7 @@
       doc(
         ..args,
         doctype: doctype,
-        degree: degree,
-        colored-cover: colored-cover,
         graduate_header_ascent: header-format.graduate.ascent,
-        info: info + args.named().at("info", default: (:)),
       )
     },
     mainmatter: (..args) => {
@@ -225,7 +226,6 @@
           degree: degree,
           colored-cover: colored-cover,
           anonymous: anonymous,
-          twoside: effective_twoside,
           ..args,
           info: info + args.named().at("info", default: (:)),
         )

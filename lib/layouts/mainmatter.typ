@@ -57,11 +57,11 @@
   let table-kinds = (table, "i-figured-table")
   let show-equation-handler = if is-graduate {
     i-figured.show-equation.with(
-      numbering: (..nums) => text(font: "Times New Roman")[#numbering("(1-1)", ..nums)],
+      numbering: (..nums) => numbering("(1-1)", ..nums),
     )
   } else {
     i-figured.show-equation.with(
-      numbering: (..nums) => text(font: fonts.宋体)[（#text(font: "Times New Roman")[#numbering("1-1", ..nums)]）],
+      numbering: (..nums) => [（#numbering("1-1", ..nums)）],
     )
   }
   if first-line-indent == auto {

@@ -41,6 +41,6 @@
   if funding != none [
     #v(1fr)
     #set par(leading: 1.4em)
-    #text(font: 字体.宋体, size: 字号.五号)[#funding]
+    #text(size: 字号.五号)[#funding]
   ]
 }

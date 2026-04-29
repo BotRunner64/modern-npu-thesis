@@ -100,7 +100,7 @@
       i-figured.show-equation.with(
         numbering: (..nums) => {
           let eq-number = numbering(appendix-prefix + "-1", ..nums)
-          text(font: fonts.宋体)[（#text(font: "Times New Roman")[#eq-number]）]
+          [（#eq-number）]
         },
       )
     } else {

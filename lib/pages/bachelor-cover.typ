@@ -1,39 +1,31 @@
-#import "../utils/datetime-display.typ": datetime-display, datetime-year-month
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/datetime-display.typ": datetime-year-month
+#import "../utils/style.typ": 字号
 
 // 本科生封面
 #let bachelor-cover(
   anonymous: false,
   info: (:),
-  // 其他参数
-  stroke-width: 0.5pt,
-  line-width: 5.5cm,
-  title-line-width: 8cm,
-  datetime-display: datetime-year-month,
 ) = {
-  // 参数处理
-  // 处理提交日期
-  // submit-date 支持 datetime 或 (year: 2026, month: 3) 格式
-  if type(info.submit-date) == dictionary {
-    info.submit-date = datetime(year: info.submit-date.year, month: info.submit-date.month, day: 1)
-  }
-  if type(info.submit-date) == datetime {
-    info.submit-date = datetime-display(info.submit-date)
-  }
+  let stroke-width = 0.5pt
+  let line-width = 5.5cm
+  let title-line-width = 8cm
 
-  // 3.  内置辅助函数
+  // 参数处理
+  info.submit-date = datetime-year-month(info.submit-date)
+
+  // 内置辅助函数
   let mask-value(body) = {
     if anonymous { "████████" } else { body }
   }
 
   let underline-field(label, body, width: line-width, label-size: 字号.四号, value-size: 字号.四号) = {
     align(center)[
-      #text(font: 字体.宋体, size: label-size)[#label]
+      #text(size: label-size)[#label]
       #box(width: 0.2cm)
       #box(width: width)[
         #set par(leading: 0em, spacing: 0em)
         #align(center)[
-          #text(font: 字体.宋体, size: value-size, bottom-edge: "descender")[#body]
+          #text(size: value-size, bottom-edge: "descender")[#body]
         ]
         #line(length: 100%, stroke: stroke-width + black)
       ]
@@ -49,7 +41,7 @@
   v(1.3cm)
 
   // 论文类型标题
-  text(size: 字号.小初, font: 字体.宋体, weight: "bold")[本科毕业设计（论文）]
+  text(size: 字号.小初, weight: "bold")[本科毕业设计（论文）]
 
   v(3.5cm)
 

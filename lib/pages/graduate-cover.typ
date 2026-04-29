@@ -6,24 +6,21 @@
 // 研究生封面
 // 包含：外封（表格形式）、内封（简洁居中）、英文封面、评阅人名单
 #let master-cover(
-  // documentclass 传入的参数
   doctype: "master",
   degree: "academic",
   colored-cover: false,
   anonymous: false,
-  twoside: false,
   info: (:),
-  // 其他参数
-  stroke-width: 0.5pt,
-  min-title-lines: 2,
-
-  info-inset: (x: 0pt, bottom: 0.5pt),
-  meta-info-inset: (x: 0pt, bottom: 2pt),
-  defence-info-inset: (x: 0pt, bottom: 0pt),
-  defence-info-key-width: 110pt,
-  defence-info-column-gutter: 2pt,
-  defence-info-row-gutter: 12pt,
-  anonymous-info-keys: (
+) = {
+  let stroke-width = 0.5pt
+  let min-title-lines = 2
+  let info-inset = (x: 0pt, bottom: 0.5pt)
+  let meta-info-inset = (x: 0pt, bottom: 2pt)
+  let defence-info-inset = (x: 0pt, bottom: 0pt)
+  let defence-info-key-width = 110pt
+  let defence-info-column-gutter = 2pt
+  let defence-info-row-gutter = 12pt
+  let anonymous-info-keys = (
     "student-id",
     "author",
     "author-en",
@@ -31,9 +28,7 @@
     "supervisor-en",
     "chairman",
     "reviewer",
-  ),
-  datetime-display: datetime-display,
-) = {
+  )
   // 对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
   if type(info.title) == str {
@@ -44,12 +39,7 @@
   }
   // 2.2 根据 min-title-lines 填充标题
   info.title = info.title + range(min-title-lines - info.title.len()).map(it => "　")
-  // 2.3 处理日期
-  // submit-date 支持 datetime 或 (year: 2026, month: 3) 格式
-  if type(info.submit-date) == dictionary {
-    info.submit-date = datetime(year: info.submit-date.year, month: info.submit-date.month, day: 1)
-  }
-  assert(type(info.submit-date) == datetime, message: "submit-date must be datetime or (year, month) dictionary.")
+
   // 2.4 处理 degree
   if info.degree == auto {
     if doctype == "doctor" {
@@ -68,22 +58,11 @@
     }
   }
   
-  let insert-blank-page() = {
-    page(
-      margin: 0pt,
-      background: none,
-      header: none,
-      footer: none,
-    )[
-      #box(width: 1pt, height: 1pt)
-    ]
-  }
-  
   let defence-info-key(body) = {
     rect(
       inset: defence-info-inset,
       stroke: none,
-      text(font: 字体.宋体, size: 字号.三号, weight: "bold", body),
+      text(size: 字号.三号, weight: "bold", body),
     )
   }
   
@@ -94,7 +73,6 @@
       inset: defence-info-inset,
       stroke: if no-stroke { none } else { (bottom: stroke-width + black) },
       text(
-        font: 字体.宋体,
         size: 字号.三号,
         bottom-edge: "descender",
         if anonymous and (key in anonymous-info-keys) {
@@ -161,7 +139,7 @@
   set page(background: bg)
   
   // 设置外封页默认字体
-  set text(font: 字体.宋体, size: 字号.五号)
+  set text(size: 字号.五号)
   
   // 右上角元信息表格（学校代码、分类号、密级、学号）
   align(right)[
@@ -204,11 +182,11 @@
     let author-display = anonymous-text("author", info.author)
     let author-width = calc.max(
       3.72cm,
-      measure(text(font: 字体.宋体, size: 字号.三号, weight: "bold", author-display)).width,
+      measure(text(size: 字号.三号, weight: "bold", author-display)).width,
     )
     
     align(center)[
-      #set text(font: 字体.宋体, size: 字号.三号, weight: "bold")
+      #set text(size: 字号.三号, weight: "bold")
       #table(
         columns: (1.56cm, author-width),
         rows: 1.28cm,
@@ -228,7 +206,7 @@
   let major-row-label = if degree == "professional" { "专 业 领 域" } else { "学 科 专 业" }
   
   align(center)[
-    #set text(font: 字体.宋体, size: 字号.三号, weight: "bold")
+    #set text(size: 字号.三号, weight: "bold")
     #table(
       columns: (3.59cm, 9cm),
       rows: (1cm, 1cm, 1cm, 1cm),
@@ -252,33 +230,32 @@
     )
   ]
   
-  
   // ========================================
   // 第二页 - 内封（简洁居中形式）
   // ========================================
   set page(background: none)
-  pagebreak(weak: true, to: if twoside { "odd" })
+  pagebreak(weak: true, to: "odd")
   
   set align(center)
   
   v(6 * 10.5pt * 1.4) // 约 15pt
   
   // 校名
-  text(size: 字号.三号, font: 字体.宋体, weight: "regular")[
+  text(size: 字号.三号, weight: "regular")[
     西 北 工 业 大 学
   ]
-  
+
   v(0mm)
-  
+
   // 学位论文类型
-  text(size: 字号.一号, font: 字体.宋体, weight: "regular")[
+  text(size: 字号.一号, weight: "regular")[
     #if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" }
   ]
   
   v(6 * 14pt * 1.5) // 约 126pt
   
   // 论文信息（简洁格式）
-  set text(font: 字体.宋体, size: 字号.二号)
+  set text(size: 字号.二号)
   
   align(center)[
     #table(
@@ -307,18 +284,18 @@
   v(5 * 10.5pt * 1.4) // 约 94pt
   
   // 其他信息
-  set text(font: 字体.宋体, size: 字号.三号)
+  set text(size: 字号.三号)
   
   context {
     let info-column-width = calc.max(
       5cm,
-      measure(text(font: 字体.宋体, size: 字号.三号, info.major)).width,
-      measure(text(font: 字体.宋体, size: 字号.三号, author-display-name)).width,
-      measure(text(font: 字体.宋体, size: 字号.三号, supervisor-display-name)).width,
+      measure(text(size: 字号.三号, info.major)).width,
+      measure(text(size: 字号.三号, author-display-name)).width,
+      measure(text(size: 字号.三号, supervisor-display-name)).width,
     )
     
     align(center)[
-      #set text(font: 字体.宋体, size: 字号.三号)
+      #set text(size: 字号.三号)
       #table(
         columns: (3.59cm, info-column-width),
         rows: 1.2cm,
@@ -346,40 +323,35 @@
   v(2 * 10.5pt * 1.6) // 约 31pt
   
   // 日期
-  text(font: 字体.宋体, size: 字号.三号, datetime-year-month(info.submit-date))
+  text(size: 字号.三号, datetime-year-month(info.submit-date))
   
-  // 双面打印时，在中文标题页后显式插入一页空白页。
-  if twoside {
-    pagebreak(weak: true)
-    insert-blank-page()
-  }
-  
+  // 中文标题页后插入空白页
+  pagebreak(weak: true, to: "odd")
   
   // ========================================
   // 第三页 - 英文封面
   // ========================================
-  pagebreak(weak: true)
-  
-  set text(font: 字体.宋体, size: 字号.小四)
+
+  set text(size: 字号.小四)
   set par(leading: 0.7em)
   
   v(5 * 14pt * 1.4) // 约 59pt
   
   // 标题
-  set text(font: 字体.宋体, size: 字号.二号)
+  set text(size: 字号.二号)
   align(center)[
-    #text(font: "Times New Roman", weight: "bold")[Title: ]
-    #text(font: "Times New Roman", size: 字号.三号, info.title-en.at(0, default: ""))
+    #text(weight: "bold")[Title: ]
+    #text(size: 字号.三号, info.title-en.at(0, default: ""))
     #for line in info.title-en.slice(1) [
       #linebreak()
-      #text(font: "Times New Roman", size: 字号.三号, line)
+      #text(size: 字号.三号, line)
     ]
   ]
   
   v((if info.title-en.len() >= 2 { 2 } else { 3 }) * 14pt * 1.4)
   
   // 作者信息
-  set text(font: "Times New Roman", size: 字号.小三)
+  set text(size: 字号.小三)
   text(weight: "bold")[By]
   
   linebreak()
@@ -405,7 +377,7 @@
   v(5 * 14pt * 1.4) // 约 78pt
   
   // 学位信息
-  set text(font: "Times New Roman", size: 字号.小三)
+  set text(size: 字号.小三)
   [A Dissertation Submitted to]
   linebreak()
   [Northwestern Polytechnical University]
@@ -429,21 +401,16 @@
   // 地点和日期
   [Xi'an, P.R. China]
   linebreak()
-  text(font: "Times New Roman", datetime-year-month-en(info.submit-date))
+  text(datetime-year-month-en(info.submit-date))
   
-  // 双面打印时，在英文标题页后显式插入一页空白页。
-  if twoside {
-    pagebreak(weak: true)
-    insert-blank-page()
-  }
-  
+  // 英文标题页后插入空白页
+  pagebreak(weak: true, to: "odd")
   
   // ========================================
   // 第四页 - 评阅人和答辩委员会名单
   // ========================================
-  pagebreak(weak: true)
   
-  set text(font: 字体.宋体, size: 字号.小四)
+  set text(size: 字号.小四)
   
   v(2 * 18pt * 1.2) // 约 26pt
   
@@ -454,7 +421,7 @@
   v(1 * 22pt * 1.2) // 约 26pt
   
   align(center)[
-    #set text(font: 字体.宋体, size: 字号.小四)
+    #set text(size: 字号.小四)
     #text(font: 字体.黑体, size: 字号.四号)[学位论文评阅人名单]
     
     #v(-5pt)
@@ -473,57 +440,24 @@
   v(3 * 22pt * 1.2) // 约 26pt
   
   // 处理答辩日期
-  let defence-date-display = if type(info.defence-committee.date) == datetime {
-    datetime-display(info.defence-committee.date)
-  } else {
-    info.defence-committee.date
-  }
+  let defence-date-display = datetime-display(info.defence-committee.date)
   let defence-committee = info.defence-committee
   let defence-members = {
-    let chairman = defence-committee.at("chairman", default: none)
-    let secretary = defence-committee.at("secretary", default: none)
-    let members = defence-committee.at("members", default: ())
-    
-    if chairman != none or secretary != none {
-      let chairman-row = if chairman != none {
-        (
-          (
-            role: "主席",
-            name: chairman.at("name", default: ""),
-            title: chairman.at("title", default: ""),
-            unit: chairman.at("unit", default: ""),
-          ),
-        )
-      } else {
-        ()
-      }
-      let member-rows = members.map(member => (
-        role: "委员",
-        name: member.at("name", default: ""),
-        title: member.at("title", default: ""),
-        unit: member.at("unit", default: ""),
-      ))
-      let secretary-row = if secretary != none {
-        (
-          (
-            role: "秘书",
-            name: secretary.at("name", default: ""),
-            title: secretary.at("title", default: ""),
-            unit: secretary.at("unit", default: ""),
-          ),
-        )
-      } else {
-        ()
-      }
-      
-      chairman-row + member-rows + secretary-row
-    } else {
-      members
+    let entries = ()
+    if defence-committee.chairman != none {
+      entries.push((role: "主席", ..defence-committee.chairman))
     }
+    for m in defence-committee.members {
+      entries.push((role: "委员", ..m))
+    }
+    if defence-committee.secretary != none {
+      entries.push((role: "秘书", ..defence-committee.secretary))
+    }
+    entries
   }
   
   align(center)[
-    #set text(font: 字体.宋体, size: 字号.小四)
+    #set text(size: 字号.小四)
     #text(font: 字体.黑体, size: 字号.四号)[答辩委员会名单]
 
     #v(-5pt)
