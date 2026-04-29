@@ -1,9 +1,8 @@
 #import "layouts/doc.typ": doc
 #import "utils/algorithm.typ": algorithm, algorithm-ref, indent, no-number, pseudocode-list, with-english-writing
 #import "utils/equation-note.typ": equation-note
-#import "layouts/mainmatter.typ": mainmatter
+#import "layouts/mainmatter.typ": mainmatter, frontmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
-#import "utils/header.typ": graduate-header-title, header-render
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/graduate-cover.typ": master-cover
 #import "pages/abstract.typ": abstract as abstract-page
@@ -11,59 +10,8 @@
 #import "pages/backmatter-page.typ": backmatter-page
 #import "@preview/gb7714-bilingual:0.2.3": init-gb7714, multicite
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
-#import "utils/custom-heading.typ": active-heading, heading-display
-#import "@preview/i-figured:0.2.4": show-equation, show-figure
 #import "@preview/cap-able:0.0.2": capfig, capfig-style, capsubfig, captab, captab-style, captnote
-#import "utils/style.typ": 字体, 字号
 #import "format.typ": body-format, header-format, heading-format
-
-#let appendix(title: auto, body) = (
-  title: title,
-  body: body,
-)
-#let appendices(..items) = items.pos()
-#let bachelor-first-level-value(value) = if type(value) == array {
-  value.at(0, default: value.last())
-} else {
-  value
-}
-
-#let normalize-graduate-appendix-items(legacy-appendix: none, appendices: none) = {
-  if appendices != none {
-    if type(appendices) == array {
-      appendices
-    } else {
-      (appendices,)
-    }
-  } else if legacy-appendix != none {
-    ((title: auto, body: legacy-appendix),)
-  } else {
-    ()
-  }
-}
-
-#let render-graduate-appendices(legacy-appendix: none, appendices: none) = {
-  let items = normalize-graduate-appendix-items(legacy-appendix: legacy-appendix, appendices: appendices)
-  items
-    .map(item => {
-      let appendix-title = auto
-      let appendix-body = item
-      if type(item) == dictionary {
-        appendix-title = item.at("title", default: auto)
-        appendix-body = item.at("body", default: [])
-      }
-
-      [
-        #heading(level: 1)[
-          #if appendix-title != auto {
-            appendix-title
-          }
-        ]
-        #appendix-body
-      ]
-    })
-    .join()
-}
 
 #let default-bibliography(doctype) = {
   if doctype == "bachelor" {
@@ -122,7 +70,6 @@
   acknowledgement: none,
   academic-achievements: none,
   appendix: none,
-  appendices: none,
   scan-declaration: none,
   design_summary: none,
   bibliography: none,
@@ -136,11 +83,6 @@
 
   let effective_twoside = doctype != "bachelor"
   let is-graduate = doctype == "master" or doctype == "doctor"
-  let graduate-appendix-items = normalize-graduate-appendix-items(
-    legacy-appendix: appendix,
-    appendices: appendices,
-  )
-  let has-graduate-appendices = graduate-appendix-items.len() > 0
   // 默认参数
   info = (
     (
@@ -209,14 +151,8 @@
     display-header: true,
   )
 
-  // 4. 前置部分（摘要、目录）：覆盖页码和标题编号
-  [
-    #set page(footer: context align(center)[
-      #set text(size: 字号.小五)
-      #counter(page).display("I")
-    ])
-    #set heading(numbering: none)
-    #counter(page).update(1)
+  // 4. 前置部分（摘要、目录）
+  frontmatter[
     #if abstract != none {
       if is-graduate {
         abstract-page(
@@ -295,17 +231,15 @@
   }
 
   if is-graduate {
-    if has-graduate-appendices {
+    if appendix != none {
       show: appendix-layout.with(
-        twoside: effective_twoside,
         doctype: doctype,
         english-writing: english-writing,
-        body-font: 字体.宋体,
-        body-size: 字号.小四,
-        leading: body-format.graduate.leading,
-        spacing: body-format.graduate.spacing,
       )
-      render-graduate-appendices(legacy-appendix: appendix, appendices: appendices)
+      [
+        #heading(level: 1)[]
+        #appendix
+      ]
     }
 
     if acknowledgement != none {
@@ -334,13 +268,8 @@
 
     if appendix != none {
       show: appendix-layout.with(
-        twoside: effective_twoside,
         doctype: doctype,
         english-writing: english-writing,
-        body-font: 字体.宋体,
-        body-size: 字号.小四,
-        leading: body-format.bachelor.leading,
-        spacing: body-format.bachelor.spacing,
       )
       [
         #heading(level: 1)[]

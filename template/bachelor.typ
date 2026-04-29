@@ -20,7 +20,13 @@
   ],
   keywords-en: ("virtual auditory", "HRTF", "neural network"),
   appendix: [
+    == Test
     附录内容……
+    #capfig(
+      image("figures/博士论文封面.jpg", width: 45%),
+      caption: [图片测试],
+      label: <test1>,
+    )
   ],
   acknowledgement: [
     致谢内容……

@@ -1,121 +1,61 @@
 #import "@preview/i-figured:0.2.4"
-#import "../utils/style.typ": 字体, 字号
+#import "@preview/cap-able:0.0.2": captab-style, capfig-style
+#import "../utils/style.typ": 字号
 #import "../utils/custom-numbering.typ": custom-numbering
 
 // 附录布局
 #let appendix(
-  twoside: false,
   doctype: "bachelor",
   english-writing: false,
-  body-font: auto,
-  body-size: auto,
-  leading: auto,
-  spacing: auto,
-  fonts: (:),
-  // 重置计数
-  reset-counter: true,
   it,
 ) = {
-  fonts = 字体 + fonts
-  if body-font == auto { body-font = fonts.宋体 }
-  if body-size == auto { body-size = 字号.小四 }
-
-  pagebreak(weak: true, to: if twoside { "odd" })
-
-  set text(font: body-font, size: body-size)
-  if leading != auto {
-    set par(leading: leading, spacing: spacing)
+  let appendix-label = if english-writing {
+    "Appendix "
+  } else if doctype == "bachelor" {
+    "附 录"
+  } else {
+    "附录"
   }
 
-  context {
-    let appendix-headings = query(
-      selector(heading.where(level: 1)).after(selector(<appendix-start>)).before(selector(<appendix-end>)),
+  set heading(numbering: if doctype == "bachelor" {
+    custom-numbering.with(
+      first-level: n => [#appendix-label],
+      depth: 4,
+      "A.1 ",
     )
-    let appendix-label = if english-writing {
-      "Appendix "
-    } else if doctype == "bachelor" {
-      "附 录"
-    } else {
-      "附录"
-    }
-    let has-appendix = appendix-headings.len() > 0
-    let auto-appendix-title = if doctype == "bachelor" {
-      appendix-label
-    } else {
-      [#appendix-label#numbering("A", 1)]
-    }
-    let appendix-prefix = if has-appendix {
-      numbering("A", 1)
-    } else {
-      "A"
-    }
+  } else {
+    custom-numbering.with(
+      first-level: n => [#appendix-label#numbering("A", n)],
+      depth: 4,
+      "A.1 ",
+    )
+  })
+  counter(heading).update(0)
 
-    let appendix-numbering = if not has-appendix {
-      custom-numbering.with(
-        first-level: n => [],
-        depth: 4,
-        "1 ",
-      )
-    } else if appendix-headings.len() > 1 {
-      custom-numbering.with(
-        first-level: n => if doctype == "bachelor" {
-          [#appendix-label#numbering("A", n)]
-        } else {
-          [#appendix-label#numbering("A", n)]
-        },
-        depth: 4,
-        "A.1 ",
-      )
+  let is-graduate = doctype == "master" or doctype == "doctor"
+
+  show: captab-style.with(numbering-format: "A-1", use-chapter: true)
+  show: capfig-style.with(numbering-format: "A-1", use-chapter: true)
+  let figure-show-handler = i-figured.show-figure.with(numbering: "A-1")
+  show figure: it => {
+    if it.kind == image or (is-graduate and it.kind == table) {
+      it
     } else {
-      custom-numbering.with(
-        first-level: n => if doctype == "bachelor" {
-          [#appendix-label]
-        } else {
-          [#appendix-label#numbering("A", n)]
-        },
-        depth: 4,
-        "1 ",
-      )
+      figure-show-handler(it)
     }
-
-    set heading(numbering: appendix-numbering)
-    if reset-counter {
-      counter(heading).update(0)
-    }
-
-    show heading: i-figured.reset-counters
-    let is-graduate = doctype == "master" or doctype == "doctor"
-    let figure-show-handler = i-figured.show-figure.with(numbering: appendix-prefix + "-1")
-    show figure: it => {
-      if it.kind == image or (is-graduate and it.kind == table) {
-        it
-      } else {
-        figure-show-handler(it)
-      }
-    }
-    set figure(supplement: if english-writing { [Figure] } else { [图] })
-    show figure.where(kind: table): set figure(supplement: if english-writing { [Table] } else { [表] })
-    set math.equation(supplement: if english-writing { [Equation] } else { [式] })
-    show math.equation.where(block: true): if doctype == "bachelor" {
-      i-figured.show-equation.with(
-        numbering: (..nums) => {
-          let eq-number = numbering(appendix-prefix + "-1", ..nums)
-          [（#eq-number）]
-        },
-      )
-    } else {
-      i-figured.show-equation.with(
-        numbering: "(" + appendix-prefix + "-1)",
-      )
-    }
-
-    [
-      #metadata(none) <appendix-start>
-      #if not has-appendix [
-        #heading(level: 1)[#auto-appendix-title]
-      ]
-      #it
-      #metadata(none) <appendix-end>
-    ]
   }
+  show math.equation.where(block: true): if doctype == "bachelor" {
+    i-figured.show-equation.with(
+      numbering: (..nums) => {
+        let eq-number = numbering("A-1", ..nums)
+        [（#eq-number）]
+      },
+    )
+  } else {
+    i-figured.show-equation.with(
+      numbering: "(A-1)",
+    )
+  }
+
+  it
 }

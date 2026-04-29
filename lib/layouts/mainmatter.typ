@@ -174,9 +174,6 @@
     inset: (x: 0.3em, y: if is-graduate { 0.5em } else { 0.7em }),
     align: center + horizon,
   )
-  // 4.6 优化列表显示
-  //     术语列表 terms 不应该缩进
-  show terms: set par(first-line-indent: 0pt)
 
   // 5.  处理标题
   // 5.1 设置标题的 Numbering
@@ -185,6 +182,9 @@
   show heading: it => {
     if it.level == 1 {
       counter(figure.where(kind: "algorithm")).update(0)
+      counter(figure.where(kind: image)).update(0)
+      counter(figure.where(kind: table)).update(0)
+      counter(figure.where(kind: "i-figured-table")).update(0)
     }
 
     set text(
@@ -304,4 +304,15 @@
   )
 
   it
+}
+
+// 前置部分（摘要、目录）：罗马数字页码 + 标题不编号
+#let frontmatter(body) = {
+  set page(footer: context align(center)[
+    #set text(size: 字号.小五)
+    #counter(page).display("I")
+  ])
+  set heading(numbering: none)
+  counter(page).update(1)
+  body
 }
