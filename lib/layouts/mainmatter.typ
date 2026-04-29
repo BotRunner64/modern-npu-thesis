@@ -4,6 +4,7 @@
 #import "../utils/custom-numbering.typ": custom-numbering
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/unpairs.typ": unpairs
+#import "../utils/chinese-number.typ": chinese-chapter-number
 #import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
 #import "../format.typ": body-format, heading-format, caption-format, header-format, table-format
 
@@ -63,18 +64,6 @@
       numbering: (..nums) => text(font: fonts.宋体)[（#text(font: "Times New Roman")[#numbering("1-1", ..nums)]）],
     )
   }
-  let chinese_chapter_number(n) = {
-    let digits = ("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
-    if n <= 10 {
-      if n == 10 { "十" } else { digits.at(n) }
-    } else if n < 20 {
-      "十" + digits.at(calc.rem(n, 10))
-    } else if calc.rem(n, 10) == 0 {
-      digits.at(calc.floor(n / 10)) + "十"
-    } else {
-      digits.at(calc.floor(n / 10)) + "十" + digits.at(calc.rem(n, 10))
-    }
-  }
   if first-line-indent == auto {
     first-line-indent = if is-graduate {
       body-format.graduate.first-line-indent
@@ -97,7 +86,7 @@
       )
     } else {
       custom-numbering.with(
-        first-level: n => [第#chinese_chapter_number(n)章　],
+        first-level: n => [第#chinese-chapter-number(n)章　],
         depth: 4,
         "1.1 ",
       )

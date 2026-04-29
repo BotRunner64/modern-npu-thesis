@@ -3,7 +3,7 @@
 )
 #import "../utils/style.typ": 字体, 字号
 
-// 西北工业大学研究生封面（硕士/博士）
+// 研究生封面
 // 包含：外封（表格形式）、内封（简洁居中）、英文封面、评阅人名单
 #let master-cover(
   // documentclass 传入的参数

@@ -7,8 +7,7 @@
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/graduate-cover.typ": master-cover
 #import "pages/abstract.typ": abstract as abstract-page
-#import "pages/bachelor-outline.typ": bachelor-outline
-#import "pages/graduate-outline.typ": graduate-outline
+#import "pages/outline.typ": outline-page
 #import "pages/backmatter-page.typ": backmatter-page
 #import "@preview/gb7714-bilingual:0.2.3": init-gb7714, multicite
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
@@ -263,8 +262,7 @@
           keyword-label: "Key words",
           keyword-weight: "bold",
           keyword-sep: "; ",
-          outline-title: "Abstract",
-          heading-metadata: true,
+          outline-title: "ABSTRACT",
           ..args,
         )
       } else {
@@ -282,13 +280,18 @@
     },
     outline-page: (..args) => {
       if doctype == "bachelor" {
-        bachelor-outline(
-          english-writing: english-writing,
+        outline-page(
+          title: if english-writing { "Contents" } else { "目 录" },
+          indent: (0pt, 24pt, 18pt),
+          weight: ("bold", "regular", "regular"),
+          fill: (repeat([#move(dy: -0.1em, text(size: 0.4em)[·])], gap: -0.1em),),
+          title-weight: "bold",
+          entry-spacing: (1.5em, 1em, 0.1em),
           ..args,
         )
       } else {
-        graduate-outline(
-          english-writing: english-writing,
+        outline-page(
+          title: if english-writing { "Contents" } else { "目　录" },
           ..args,
         )
       }

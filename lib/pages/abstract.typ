@@ -10,19 +10,20 @@
   outline-title: "摘　要",
   outlined: true,
   keywords-above: 1em,
-  heading-metadata: false,
   funding: none,
   body,
 ) = {
-  if heading-metadata {
-    [
-      #metadata(none) <__nwpu_master_abstract_en_heading_start__>
-      #heading(level: 1, outlined: outlined, outline-title)
-      #metadata(none) <__nwpu_master_abstract_en_heading_end__>
-    ]
-  } else {
-    heading(level: 1, outlined: outlined, outline-title)
-  }
+  [
+    // 目录显示 "ABSTRACT"，页面显示 "Abstract"
+    #show heading.where(level: 1): it => {
+      if it.body == [ABSTRACT] {
+        heading(level: it.level, outlined: false)[Abstract]
+      } else {
+        it
+      }
+    }
+    #heading(level: 1, outlined: outlined, outline-title)
+  ]
 
   body
 
