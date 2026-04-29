@@ -1,5 +1,5 @@
 #import "layouts/doc.typ": doc
-#import "utils/algorithm.typ": algorithm, algorithm-ref, with-english-writing, indent, no-number, pseudocode-list
+#import "utils/algorithm.typ": algorithm, algorithm-ref, indent, no-number, pseudocode-list, with-english-writing
 #import "utils/equation-note.typ": equation-note
 #import "layouts/mainmatter.typ": mainmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
@@ -13,9 +13,9 @@
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-heading.typ": active-heading, heading-display
 #import "@preview/i-figured:0.2.4": show-equation, show-figure
-#import "@preview/cap-able:0.0.2": captab, captnote, captab-style, capfig, capsubfig, capfig-style
+#import "@preview/cap-able:0.0.2": capfig, capfig-style, capsubfig, captab, captab-style, captnote
 #import "utils/style.typ": 字体, 字号
-#import "format.typ": body-format, heading-format, header-format
+#import "format.typ": body-format, header-format, heading-format
 
 #let appendix(title: auto, body) = (
   title: title,
@@ -135,210 +135,81 @@
   }
 
   let effective_twoside = doctype != "bachelor"
+  let is-graduate = doctype == "master" or doctype == "doctor"
   let graduate-appendix-items = normalize-graduate-appendix-items(
     legacy-appendix: appendix,
     appendices: appendices,
   )
   let has-graduate-appendices = graduate-appendix-items.len() > 0
-  let close-backmatter-section = has-more-content => {
-    if effective_twoside {
-      if has-more-content {
-        pagebreak(to: "odd")
-      } else if colored-cover and (doctype == "master" or doctype == "doctor") {
-        []
-      } else {
-        pagebreak(to: "even")
-      }
-    }
-  }
-
   // 默认参数
-  let fonts = 字体
   info = (
-    title: title,
-    title-en: title-en,
-    student-id: student-id,
-    class-no: class-no,
-    author: author,
-    author-en: author-en,
-    department: department,
-    major: major,
-    major-en: major-en,
-    supervisor: supervisor,
-    supervisor-en: supervisor-en,
-    submit-date: if type(submit-date) == dictionary {
-      datetime(year: submit-date.year, month: submit-date.month, day: 1)
-    } else {
-      submit-date
-    },
-    secret-level: secret-level,
-    school-code: school-code,
-    degree: auto,
-    reviewers: reviewers,
-    defence-committee: defence-committee,
-  ) + info
-
-  let cls = (
-    doc: (..args) => {
-      doc(
-        ..args,
-        doctype: doctype,
-        graduate_header_ascent: header-format.graduate.ascent,
-      )
-    },
-    mainmatter: (..args) => {
-      let is-graduate = doctype == "master" or doctype == "doctor"
-      mainmatter(
-        twoside: effective_twoside,
-        doctype: doctype,
-        english-writing: english-writing,
-        heading-pagebreak: (true, false, false),
-        leading: if is-graduate { body-format.graduate.leading } else { body-format.bachelor.leading },
-        spacing: if is-graduate { body-format.graduate.spacing } else { body-format.bachelor.spacing },
-        heading_leading: if is-graduate { heading-format.graduate.leading } else { heading-format.bachelor.leading },
-        heading-above: if is-graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
-        heading-below: if is-graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
-        graduate_headsep: header-format.graduate.headsep,
-        graduate_headrule_offset: header-format.graduate.headrule-offset,
-        graduate_headrule_thick: header-format.graduate.headrule-thick,
-        graduate_headrule_thin: header-format.graduate.headrule-thin,
-        graduate_headrule_gap: header-format.graduate.headrule-gap,
-        display-header: true,
-        ..args,
-      )
-    },
-    appendix: (..args) => {
-      appendix-layout(
-        twoside: effective_twoside,
-        doctype: doctype,
-        english-writing: english-writing,
-        body-font: 字体.宋体,
-        body-size: 字号.小四,
-        leading: if doctype == "bachelor" { body-format.bachelor.leading } else { body-format.graduate.leading },
-        spacing: if doctype == "bachelor" { body-format.bachelor.spacing } else { body-format.graduate.spacing },
-        ..args,
-      )
-    },
-    cover: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
-        master-cover(
-          doctype: doctype,
-          degree: degree,
-          colored-cover: colored-cover,
-          anonymous: anonymous,
-          ..args,
-          info: info + args.named().at("info", default: (:)),
-        )
+    (
+      title: title,
+      title-en: title-en,
+      student-id: student-id,
+      class-no: class-no,
+      author: author,
+      author-en: author-en,
+      department: department,
+      major: major,
+      major-en: major-en,
+      supervisor: supervisor,
+      supervisor-en: supervisor-en,
+      submit-date: if type(submit-date) == dictionary {
+        datetime(year: submit-date.year, month: submit-date.month, day: 1)
       } else {
-        bachelor-cover(
-          anonymous: anonymous,
-          ..args,
-          info: info + args.named().at("info", default: (:)),
-        )
-      }
-    },
-    abstract: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
-        abstract-page(
-          keywords-above: body-format.graduate.keywords-above,
-          ..args,
-        )
-      } else {
-        abstract-page(
-          ..args,
-          keyword-label: "关键词",
-          keyword-sep: "，",
-          keyword-indent: 0pt,
-          outline-title: "摘 要",
-          outlined: false,
-          funding: none,
-        )
-      }
-    },
-    abstract-en: (..args) => {
-      if doctype == "master" or doctype == "doctor" {
-        abstract-page(
-          keywords-above: body-format.graduate.keywords-above,
-          keyword-label: "Key words",
-          keyword-weight: "bold",
-          keyword-sep: "; ",
-          outline-title: "ABSTRACT",
-          ..args,
-        )
-      } else {
-        abstract-page(
-          ..args,
-          keyword-label: "KEY WORDS",
-          keyword-weight: "bold",
-          keyword-sep: ", ",
-          keyword-indent: 0pt,
-          outline-title: "ABSTRACT",
-          outlined: false,
-          funding: none,
-        )
-      }
-    },
-    outline-page: (..args) => {
-      if doctype == "bachelor" {
-        outline-page(
-          title: if english-writing { "Contents" } else { "目 录" },
-          indent: (0pt, 24pt, 18pt),
-          weight: ("bold", "regular", "regular"),
-          fill: (repeat([#move(dy: -0.1em, text(size: 0.4em)[·])], gap: -0.1em),),
-          title-weight: "bold",
-          entry-spacing: (1.5em, 1em, 0.1em),
-          ..args,
-        )
-      } else {
-        outline-page(
-          title: if english-writing { "Contents" } else { "目　录" },
-          ..args,
-        )
-      }
-    },
-    bilingual-bibliography: (..args) => {
-      bilingual-bibliography(
-        doctype: doctype,
-        english-writing: english-writing,
-        fonts: 字体 + args.named().at("fonts", default: (:)),
-        ..args,
-      )
-    },
-    acknowledgement: (..args) => {
-      backmatter-page(
-        title: if english-writing {
-          "Acknowledgements"
-        } else if doctype == "bachelor" {
-          "致 谢"
-        } else {
-          "致　谢"
-        },
-        ..args,
-      )
-    },
-    academic-achievements: (..args) => {
-      backmatter-page(
-        title: if english-writing {
-          "Academic Achievements and Research Experience"
-        } else {
-          "在学期间取得的学术成果和参加科研情况"
-        },
-        ..args,
-      )
-    },
+        submit-date
+      },
+      secret-level: secret-level,
+      school-code: school-code,
+      degree: auto,
+      reviewers: reviewers,
+      defence-committee: defence-committee,
+    )
+      + info
   )
 
-  show: cls.doc
+  // 1. 文稿设置
+  show: doc.with(doctype: doctype, graduate_header_ascent: header-format.graduate.ascent)
 
-  // 1. 封面
-  (cls.cover)()
+  // 2. 封面
+  if is-graduate {
+    master-cover(
+      doctype: doctype,
+      degree: degree,
+      colored-cover: colored-cover,
+      anonymous: anonymous,
+      info: info,
+    )
+  } else {
+    bachelor-cover(
+      anonymous: anonymous,
+      info: info,
+    )
+  }
 
   show: init-gb7714.with(read(bibliography), style: "numeric", version: "2015")
 
-  // mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
-  show: cls.mainmatter
+  // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
+  show: mainmatter.with(
+    twoside: effective_twoside,
+    doctype: doctype,
+    english-writing: english-writing,
+    heading-pagebreak: (true, false, false),
+    leading: if is-graduate { body-format.graduate.leading } else { body-format.bachelor.leading },
+    spacing: if is-graduate { body-format.graduate.spacing } else { body-format.bachelor.spacing },
+    heading_leading: if is-graduate { heading-format.graduate.leading } else { heading-format.bachelor.leading },
+    heading-above: if is-graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
+    heading-below: if is-graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
+    graduate_headsep: header-format.graduate.headsep,
+    graduate_headrule_offset: header-format.graduate.headrule-offset,
+    graduate_headrule_thick: header-format.graduate.headrule-thick,
+    graduate_headrule_thin: header-format.graduate.headrule-thin,
+    graduate_headrule_gap: header-format.graduate.headrule-gap,
+    display-header: true,
+  )
 
-  // 2. 前置部分（摘要、目录）：覆盖页码和标题编号
+  // 4. 前置部分（摘要、目录）：覆盖页码和标题编号
   [
     #set page(footer: context align(center)[
       #set text(size: 字号.小五)
@@ -347,21 +218,61 @@
     #set heading(numbering: none)
     #counter(page).update(1)
     #if abstract != none {
-      if doctype == "bachelor" {
-        (cls.abstract)(keywords: keywords)[#abstract]
+      if is-graduate {
+        abstract-page(
+          keywords: keywords,
+          funding: funding,
+          keywords-above: body-format.graduate.keywords-above,
+        )[#abstract]
       } else {
-        (cls.abstract)(keywords: keywords, funding: funding)[#abstract]
+        abstract-page(
+          keywords: keywords,
+          keyword-label: "关键词",
+          keyword-sep: "，",
+          keyword-indent: 0pt,
+          outline-title: "摘 要",
+          outlined: false,
+          funding: none,
+        )[#abstract]
       }
     }
     #if abstract-en != none {
-      if doctype == "bachelor" {
-        (cls.abstract-en)(keywords: keywords-en)[#abstract-en]
+      if is-graduate {
+        abstract-page(
+          keywords: keywords-en,
+          funding: funding-en,
+          keywords-above: body-format.graduate.keywords-above,
+          keyword-label: "Key words",
+          keyword-weight: "bold",
+          keyword-sep: "; ",
+          outline-title: "ABSTRACT",
+        )[#abstract-en]
       } else {
-        (cls.abstract-en)(keywords: keywords-en, funding: funding-en)[#abstract-en]
+        abstract-page(
+          keywords: keywords-en,
+          keyword-label: "KEY WORDS",
+          keyword-weight: "bold",
+          keyword-sep: ", ",
+          keyword-indent: 0pt,
+          outline-title: "ABSTRACT",
+          outlined: false,
+          funding: none,
+        )[#abstract-en]
       }
     }
 
-    #(cls.outline-page)()
+    #if is-graduate {
+      outline-page(title: if english-writing { "Contents" } else { "目　录" })
+    } else {
+      outline-page(
+        title: if english-writing { "Contents" } else { "目 录" },
+        indent: (0pt, 24pt, 18pt),
+        weight: ("bold", "regular", "regular"),
+        fill: (repeat([#move(dy: -0.1em, text(size: 0.4em)[·])], gap: -0.1em),),
+        title-weight: "bold",
+        entry-spacing: (1.5em, 1em, 0.1em),
+      )
+    }
 
     #if effective_twoside {
       pagebreak(weak: true, to: "odd")
@@ -371,85 +282,89 @@
   [#metadata(none) <__nwpu_mainmatter_start__>]
   counter(page).update(1)
 
-  // 3. 正文
+  // 5. 正文
   with-english-writing(english-writing, body)
 
-  // 4. 后置部分
+  // 6. 后置部分
   if bibliography != none {
-    (cls.bilingual-bibliography)()
-    close-backmatter-section(
-      if doctype == "bachelor" {
-        (
-          acknowledgement != none or design_summary != none or appendix != none or scan-declaration != none
-        )
-      } else {
-        (
-          has-graduate-appendices
-            or acknowledgement != none
-            or academic-achievements != none
-            or scan-declaration != none
-        )
-      },
+    bilingual-bibliography(
+      doctype: doctype,
+      english-writing: english-writing,
+      fonts: (:),
     )
   }
 
-  if doctype == "bachelor" {
+  if is-graduate {
+    if has-graduate-appendices {
+      show: appendix-layout.with(
+        twoside: effective_twoside,
+        doctype: doctype,
+        english-writing: english-writing,
+        body-font: 字体.宋体,
+        body-size: 字号.小四,
+        leading: body-format.graduate.leading,
+        spacing: body-format.graduate.spacing,
+      )
+      render-graduate-appendices(legacy-appendix: appendix, appendices: appendices)
+    }
+
     if acknowledgement != none {
-      (cls.acknowledgement)(acknowledgement)
-      close-backmatter-section(design_summary != none or appendix != none or scan-declaration != none)
+      backmatter-page(title: if english-writing { "Acknowledgements" } else { "致　谢" })[#acknowledgement]
+    }
+
+    if academic-achievements != none {
+      backmatter-page(
+        title: if english-writing {
+          "Academic Achievements and Research Experience"
+        } else {
+          "在学期间取得的学术成果和参加科研情况"
+        },
+      )[#academic-achievements]
+    }
+  } else {
+    if acknowledgement != none {
+      backmatter-page(title: if english-writing { "Acknowledgements" } else { "致 谢" })[#acknowledgement]
     }
 
     if design_summary != none {
       backmatter-page(
         title: if english-writing { "Design Summary" } else { "毕业设计小结" },
       )[#design_summary]
-      close-backmatter-section(appendix != none or scan-declaration != none)
     }
 
     if appendix != none {
-      show: cls.appendix
+      show: appendix-layout.with(
+        twoside: effective_twoside,
+        doctype: doctype,
+        english-writing: english-writing,
+        body-font: 字体.宋体,
+        body-size: 字号.小四,
+        leading: body-format.bachelor.leading,
+        spacing: body-format.bachelor.spacing,
+      )
       [
         #heading(level: 1)[]
         #appendix
       ]
-      close-backmatter-section(scan-declaration != none)
-    }
-  } else {
-    if has-graduate-appendices {
-      show: cls.appendix
-      render-graduate-appendices(legacy-appendix: appendix, appendices: appendices)
-      close-backmatter-section(
-        acknowledgement != none or academic-achievements != none or scan-declaration != none,
-      )
-    }
-
-    if acknowledgement != none {
-      (cls.acknowledgement)(acknowledgement)
-      close-backmatter-section(
-        academic-achievements != none or scan-declaration != none,
-      )
-    }
-
-    if academic-achievements != none {
-      (cls.academic-achievements)(academic-achievements)
-      close-backmatter-section(scan-declaration != none)
     }
   }
 
-  if scan-declaration != none and doctype != "bachelor" {
+  if effective_twoside {
+    pagebreak(weak: true, to: "odd")
+  }
+
+  if scan-declaration != none and is-graduate {
     page(
       margin: 0pt,
       header: none,
       footer: none,
     )[
       #scan-declaration
-      #box(width: 0pt, height: 0pt) <__nwpu_backmatter_end__>
+      #box(width: 0pt, height: 0pt)
     ]
-  } else {
-    [#box(width: 0pt, height: 0pt) <__nwpu_backmatter_end__>]
   }
 
-  if colored-cover and (doctype == "master" or doctype == "doctor") {
+  if colored-cover and is-graduate {
     let bg = if doctype == "doctor" {
       "../template/figures/博士论文封底.jpg"
     } else if degree == "professional" {
@@ -457,29 +372,14 @@
     } else {
       "../template/figures/学硕论文封底.jpg"
     }
-    let back-margin = (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
-    let parity-blank-page = page(
-      margin: back-margin,
-      header: header-render(
-        graduate-header-title(doctype),
-        fonts: 字体,
-        graduate_headsep: header-format.graduate.headsep,
-        graduate_headrule_offset: header-format.graduate.headrule-offset,
-        graduate_headrule_thick: header-format.graduate.headrule-thick,
-        graduate_headrule_thin: header-format.graduate.headrule-thin,
-        graduate_headrule_gap: header-format.graduate.headrule-gap,
-      ),
-      footer: context align(center)[
-        #set text(size: 字号.小五)
-        #counter(page).display("1")
-      ],
+    page(
+      margin: 0pt,
+      header: none,
+      footer: none,
     )[
-      #box(width: 1pt, height: 1pt)
+      #box(width: 0pt, height: 0pt)
     ]
-    let blank-back-page = page(margin: back-margin, background: none, header: none, footer: none)[
-      #box(width: 1pt, height: 1pt)
-    ]
-    let cover-back-page = page(
+    page(
       margin: 0pt,
       background: image(bg, width: 100%, height: 100%),
       header: none,
@@ -487,20 +387,5 @@
     )[
       #box(width: 1pt, height: 1pt)
     ]
-
-    context {
-      let end-page = counter(page).at(<__nwpu_backmatter_end__>).first()
-
-      if calc.rem(end-page, 2) == 1 {
-        if scan-declaration != none {
-          blank-back-page
-        } else {
-          parity-blank-page
-        }
-      }
-      blank-back-page
-      cover-back-page
-    }
   }
 }
-

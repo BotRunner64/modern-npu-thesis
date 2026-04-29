@@ -13,16 +13,12 @@
   twoside: false,
   doctype: "bachelor",
   english-writing: false,
-  fonts: (:),
   // 正文段落格式
   leading: body-format.bachelor.leading,
   spacing: body-format.bachelor.spacing,
   justify: true,
   first-line-indent: auto,
   heading-numbering: auto,
-  // 正文字体与字号
-  body-font: 字体.宋体,
-  body-size: 字号.小四,
   // 标题字体与字号
   heading-font: auto,
   heading-size: (字号.三号, 字号.四号, 字号.小四),
@@ -51,8 +47,6 @@
   ..args,
   it,
 ) = {
-  // 1.  默认参数（提前初始化 fonts）
-  fonts = 字体 + fonts
   let is-graduate = doctype == "master" or doctype == "doctor"
   let table-kinds = (table, "i-figured-table")
   let show-equation-handler = if is-graduate {
@@ -92,10 +86,10 @@
       )
     }
   }
-  let bachelor-figure-gap = body-size + leading
+  let bachelor-figure-gap = 字号.小四 + leading
   // 1.1 字体与字号
   if heading-font == auto {
-    heading-font = (fonts.黑体,)
+    heading-font = (字体.黑体,)
   }
 
   // 重置页码为阿拉伯数字从1开始（由调用方在正文开始位置处理 pagebreak 和 counter reset）
@@ -120,7 +114,6 @@
 
   // 4.  设置基本样式
   // 4.1 文本和段落样式
-  set text(font: body-font, size: body-size)
   set par(
     leading: leading,
     justify: justify,
@@ -163,7 +156,7 @@
   show figure.caption: caption-style
   show figure.caption: it => {
     if not is-graduate and it.kind in table-kinds {
-      text(font: fonts.黑体, size: 字号.五号)[
+      text(font: 字体.黑体, size: 字号.五号)[
         #it.supplement
         #h(0.08em)
         #context it.counter.display(it.numbering)
@@ -171,11 +164,11 @@
         #it.body
       ]
     } else {
-      text(font: fonts.宋体, size: 字号.五号)[#it]
+      text(size: 字号.五号)[#it]
     }
   }
   // 表格内容使用五号字体
-  show table: set text(font: fonts.宋体, size: 字号.五号)
+  show table: set text(size: 字号.五号)
   set table(
     stroke: if is-graduate { none } else { 0.5pt },
     inset: (x: 0.3em, y: if is-graduate { 0.5em } else { 0.7em }),
@@ -254,7 +247,6 @@
           if is-graduate {
             header-render(
               header-content,
-              fonts: fonts,
               graduate_headsep: graduate_headsep,
               graduate_headrule_offset: graduate_headrule_offset,
               graduate_headrule_thick: graduate_headrule_thick,

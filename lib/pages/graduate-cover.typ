@@ -241,14 +241,14 @@
   v(6 * 10.5pt * 1.4) // 约 15pt
   
   // 校名
-  text(size: 字号.三号, weight: "regular")[
+  text(size: 字号.三号)[
     西 北 工 业 大 学
   ]
 
   v(0mm)
 
   // 学位论文类型
-  text(size: 字号.一号, weight: "regular")[
+  text(size: 字号.一号)[
     #if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" }
   ]
   
@@ -356,7 +356,7 @@
   
   linebreak()
   
-  text(weight: "regular", anonymous-text("author-en", info.author-en))
+  text(anonymous-text("author-en", info.author-en))
   
   linebreak()
   

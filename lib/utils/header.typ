@@ -1,4 +1,4 @@
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": 字号
 #import "../format.typ": header-format
 
 // ============================================
@@ -18,17 +18,15 @@
 // 页眉渲染函数
 #let header-render(
   content,
-  fonts: (:),
   graduate_headsep: header-format.graduate.headsep,
   graduate_headrule_offset: header-format.graduate.headrule-offset,
   graduate_headrule_thick: header-format.graduate.headrule-thick,
   graduate_headrule_thin: header-format.graduate.headrule-thin,
   graduate_headrule_gap: header-format.graduate.headrule-gap,
 ) = {
-  fonts = 字体 + fonts
   [
     #set par(leading: 0pt, spacing: 0pt)
-    #set text(font: fonts.宋体, size: 字号.小五)
+    #set text(size: 字号.小五)
     #align(center)[#content]
     #v(graduate_headsep)
     #move(dy: graduate_headrule_offset)[

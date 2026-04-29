@@ -26,7 +26,7 @@
   // 3.  基本的样式设置
   // 启用中文伪粗体（模拟 Word 的加粗效果）
   show: show-cn-fakebold
-  set text(font: 字体.宋体, lang: lang)
+  set text(font: 字体.宋体, size: 字号.小四, lang: lang)
   set page(
     paper: "a4",
     margin: page-margin,
