@@ -29,13 +29,15 @@
 1. 保留你自己的 [template](template) 目录。
 2. 用新版本仓库中的其他文件替换当前项目内对应文件。
 
+由于目前模板仍在建设初期，使用方法可能会有变化。如果替换后编译报错，可查阅 [CHANGELOG.md](CHANGELOG.md) 了解最新变动，或参照新版本中的 `graduate.typ` / `bachelor.typ` 进行相应修改。
+
 ### 依赖包
 
 本模板依赖以下 Typst 包，具体用法有疑惑可直接查阅相关文档：
 
-- [`gb7714-bilingual`](https://typst.app/universe/package/gb7714-bilingual) — GB/T 7714 双语参考文献格式
-- [`lovelace`](https://typst.app/universe/package/lovelace) — 伪代码/算法排版
-- [`cap-able`](https://typst.app/universe/package/cap-able) — 图，三线表
+- [`gb7714-bilingual`](https://typst.app/universe/package/gb7714-bilingual) `0.2.3` — GB/T 7714 双语参考文献格式
+- [`lovelace`](https://typst.app/universe/package/lovelace) `0.3.1` — 伪代码/算法排版
+- [`cap-able`](https://typst.app/universe/package/cap-able) `0.0.2` — 图，三线表
 
 参考文献方面，模板针对西北工业大学本科、研究生论文格式要求做了少量微调。用户通常只需要维护 [template/bib](template/bib) 目录下的 BibTeX 文件，模板会自动处理文献引用和参考文献列表。目前 `gb7714-bilingual` 包仍有一些细节问题会影响个别文献类型的输出效果，相关问题已向上游作者提交 issue，待上游修复发布后模板会尽快同步调整。
 
