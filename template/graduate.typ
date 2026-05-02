@@ -1,6 +1,5 @@
 #import "/template.typ": (
-  algorithm, algorithm-ref, capfig, capsubfig, captab, equation-note,
-  indent, multicite, nwpu-thesis,
+  algorithm, algorithm-ref, blind-review, capfig, capsubfig, captab, equation-note, indent, multicite, nwpu-thesis,
 )
 
 #show: nwpu-thesis.with(
@@ -18,13 +17,13 @@
   author-en: "Xiaotian Hang",
   department: "计算机学院",
   major: "计算机科学与技术",
-  major-en: "Computer Science and Technology",
+  // major-en: "Computer Science and Technology", // 一般情况下模板会自动填充英文专业名称，如果发现不正确或未自动填充可以在这里手动指定，并提出 issue 反馈
   supervisor: ("张三", "教授"),
   supervisor-en: "San Zhang",
   submit-date: (year: 2026, month: 3),
   reviewers: (
-    (name: "xxx", title: "教授", unit: "西北工业大学（明评示例）"),
-    (name: "全盲评阅", title: "无", unit: "无（盲评示例）"),
+    (name: "xxx", title: "教授", unit: "西北工业大学"),
+    blind-review,
   ),
   defence-committee: (
     date: datetime(year: 2026, month: 3, day: 9),
@@ -37,7 +36,7 @@
   ),
   abstract: [
     中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
-
+    
     内容一般包括：从事这项研究工作的目的和意义；完成的工作（作者独立进行的研究工作及相应结果的概括性叙述）；获得的主要结论（这是摘要的中心内容）。
   ],
   keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
@@ -50,12 +49,12 @@
   appendix: [
     == Test
     附录是学位论文主体的补充，并不是必需的。
-
+    
     $ phi.alt := (1 + sqrt(5)) / 2 $ <rat>
-
+    
     =
     附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
-
+    
     $ phi.alt := (1 + sqrt(5)) / 2 $ <ra>
   ],
   acknowledgement: [

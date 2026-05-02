@@ -1,10 +1,11 @@
-// 展示一个标题
+// 展示一个标题（页眉使用，剥离加粗）
 #let heading-display(it) = {
   if it != none {
     if it.has("numbering") and it.numbering != none {
       numbering(it.numbering, ..counter(heading).at(it.location()))
       [ ]
     }
+    show strong: it => it.body
     it.body
   } else {
     ""
