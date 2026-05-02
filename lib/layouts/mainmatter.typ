@@ -97,6 +97,7 @@
   }
   // 表格内容使用五号字体
   show table: set text(size: 字号.五号)
+  show table: set par(justify: false)
   set table(
     inset: (x: 0.3em, y: if is-graduate { 0.5em } else { 0.7em }),
     align: center + horizon,
