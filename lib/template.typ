@@ -11,12 +11,12 @@
 #import "@preview/gb7714-bilingual:0.2.3": init-gb7714, multicite
 #import "pages/references.typ": bilingual-bibliography
 #import "@preview/cap-able:0.0.2": capfig, capfig-style, capsubfig, captab, captab-style, captnote
-#import "format.typ": body-format, header-format, heading-format
+#import "format.typ": body-format, heading-format
 #import "utils/chinese-number.typ": chinese-chapter-number
 #import "utils/cover-utils.typ": blind-review
 
-#let default-bibliography(doctype) = {
-  if doctype == "bachelor" {
+#let default-bibliography(graduate) = {
+  if not graduate {
     "../template/bib/bachelor.bib"
   } else {
     "../template/bib/graduate.bib"
@@ -26,7 +26,7 @@
 // 主配置函数
 #let nwpu-thesis(
   // 文档类型
-  doctype: "bachelor", // "bachelor" | "graduate"
+  graduate: false,
   degree: "master", // "master" | "doctor"（仅研究生）
   track: "academic", // "academic" | "professional"（仅研究生）
   anonymous: false,
@@ -78,10 +78,9 @@
   body,
 ) = {
   if bibliography == none {
-    bibliography = default-bibliography(doctype)
+    bibliography = default-bibliography(graduate)
   }
 
-  let is-graduate = doctype == "graduate"
   // 默认参数
   info = (
     (
@@ -111,10 +110,10 @@
   )
 
   // 1. 文稿设置
-  show: doc.with(doctype: doctype, graduate_header_ascent: header-format.graduate.ascent)
+  show: doc.with(graduate: graduate)
 
   // 2. 封面
-  if is-graduate {
+  if graduate {
     master-cover(
       degree: degree,
       track: track,
@@ -133,17 +132,18 @@
 
   // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
   show: mainmatter.with(
-    doctype: doctype,
+    graduate: graduate,
+    degree: degree,
     english-writing: english-writing,
-    leading: if is-graduate { body-format.graduate.leading } else { body-format.bachelor.leading },
-    spacing: if is-graduate { body-format.graduate.spacing } else { body-format.bachelor.spacing },
-    first-line-indent: if is-graduate { body-format.graduate.first-line-indent } else { body-format.bachelor.first-line-indent },
+    leading: if graduate { body-format.graduate.leading } else { body-format.bachelor.leading },
+    spacing: if graduate { body-format.graduate.spacing } else { body-format.bachelor.spacing },
+    first-line-indent: if graduate { body-format.graduate.first-line-indent } else { body-format.bachelor.first-line-indent },
     heading-numbering: (..nums) => {
       let nums = nums.pos()
       if nums.len() == 1 {
         if english-writing {
           [Chapter #nums.at(0)#h(0.7em)]
-        } else if is-graduate {
+        } else if graduate {
           [第 #nums.at(0) 章#h(0.7em)]
         } else {
           [第#chinese-chapter-number(nums.at(0))章　]
@@ -152,20 +152,15 @@
         numbering("1.1", ..nums)
       }
     },
-    heading_leading: if is-graduate { heading-format.graduate.leading } else { heading-format.bachelor.leading },
-    heading-above: if is-graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
-    heading-below: if is-graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
-    graduate_headsep: header-format.graduate.headsep,
-    graduate_headrule_offset: header-format.graduate.headrule-offset,
-    graduate_headrule_thick: header-format.graduate.headrule-thick,
-    graduate_headrule_thin: header-format.graduate.headrule-thin,
-    graduate_headrule_gap: header-format.graduate.headrule-gap,
+    heading_leading: if graduate { heading-format.graduate.leading } else { heading-format.bachelor.leading },
+    heading-above: if graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
+    heading-below: if graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
   )
 
   // 4. 前置部分（摘要、目录）
   frontmatter[
     #if abstract != none {
-      if is-graduate {
+      if graduate {
         abstract-page(
           keywords: keywords,
           funding: funding,
@@ -184,7 +179,7 @@
       }
     }
     #if abstract-en != none {
-      if is-graduate {
+      if graduate {
         abstract-page(
           keywords: keywords-en,
           funding: funding-en,
@@ -209,7 +204,7 @@
       }
     }
 
-    #if is-graduate {
+    #if graduate {
       outline-page(title: if english-writing { "Contents" } else { "目　录" })
     } else {
       outline-page(
@@ -222,7 +217,7 @@
       )
     }
 
-    #if is-graduate {
+    #if graduate {
       pagebreak(weak: true, to: "odd")
     }
   ]
@@ -236,15 +231,15 @@
   // 6. 后置部分
   if bibliography != none {
     bilingual-bibliography(
-      doctype: doctype,
+      graduate: graduate,
       english-writing: english-writing,
     )
   }
 
-  if is-graduate {
+  if graduate {
     if appendix != none {
       show: appendix-layout.with(
-        doctype: doctype,
+        graduate: graduate,
         english-writing: english-writing,
       )
       [
@@ -279,7 +274,7 @@
 
     if appendix != none {
       show: appendix-layout.with(
-        doctype: doctype,
+        graduate: graduate,
         english-writing: english-writing,
       )
       [
@@ -289,21 +284,21 @@
     }
   }
 
-  if is-graduate {
+  if graduate {
     pagebreak(weak: true, to: "odd")
   }
 
   // 尾部独立页面（声明、封底）：统一无页眉页脚、无边距
   set page(margin: 0pt, header: none, footer: none)
 
-  if scan-declaration != none and is-graduate {
+  if scan-declaration != none and graduate {
     page[
       #scan-declaration
       #box(width: 0pt, height: 0pt)
     ]
   }
 
-  if colored-cover and is-graduate {
+  if colored-cover and graduate {
     let bg = if degree == "doctor" {
       "assets/doctor-back-cover.jpg"
     } else if track == "professional" {

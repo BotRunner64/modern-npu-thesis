@@ -15,6 +15,12 @@
   header-ascent: header-format.bachelor.ascent,
 )
 
+// 页码渲染函数
+#let page-footer(fmt) = context align(center)[
+  #set text(size: 字号.小五)
+  #counter(page).display(fmt)
+]
+
 // 页眉渲染函数
 #let header-render(
   content,
@@ -37,20 +43,18 @@
   ]
 }
 
-#let graduate-header-title(doctype) = {
-  if doctype == "doctor" {
+#let graduate-header-title(degree) = {
+  if degree == "doctor" {
     "西北工业大学博士学位论文"
   } else {
     "西北工业大学硕士学位论文"
   }
 }
 
-#let bachelor-header-render(
-  offset: 0pt,
-) = {
+#let bachelor-header-render() = {
   [
     #set par(leading: 0pt, spacing: 0pt)
-    #pad(left: offset)[
+    #pad(left: header-format.bachelor.offset)[
       #image("../assets/nwpu-header.png", width: 7.5cm)
     ]
     #v(header-format.bachelor.headsep)

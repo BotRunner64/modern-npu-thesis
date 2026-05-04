@@ -3,41 +3,27 @@
 #import "../utils/custom-numbering.typ": show-equation-handler
 #import "../utils/custom-heading.typ": active-heading, heading-display
 #import "../utils/chinese-number.typ": chinese-chapter-number
-#import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render
-#import "../format.typ": body-format, caption-format, header-format, heading-format, table-format
+#import "../utils/header.typ": bachelor-header-render, graduate-header-title, header-render, page-footer
+#import "../format.typ": body-format, caption-format, heading-format, table-format
 
 #let mainmatter(
-  // documentclass 传入参数
-  doctype: "bachelor",
+  graduate: false,
+  degree: "master",
   english-writing: false,
-  // 正文段落格式
   leading: body-format.bachelor.leading,
   spacing: body-format.bachelor.spacing,
   first-line-indent: body-format.bachelor.first-line-indent,
   heading-numbering: none,
-  // 标题格式
   heading_leading: heading-format.bachelor.leading,
   heading-above: heading-format.bachelor.above,
   heading-below: heading-format.bachelor.below,
-  // 页眉
-  graduate_headsep: header-format.graduate.headsep,
-  graduate_headrule_offset: header-format.graduate.headrule-offset,
-  graduate_headrule_thick: header-format.graduate.headrule-thick,
-  graduate_headrule_thin: header-format.graduate.headrule-thin,
-  graduate_headrule_gap: header-format.graduate.headrule-gap,
   ..args,
   it,
 ) = {
-  let is-graduate = doctype == "graduate"
-  let equation-handler = show-equation-handler("1-1", is-graduate)
+  let equation-handler = show-equation-handler("1-1", graduate)
 
   // 重置页码为阿拉伯数字从1开始（由调用方在正文开始位置处理 pagebreak 和 counter reset）
-  set page(
-    footer: context align(center)[
-      #set text(size: 字号.小五)
-      #counter(page).display("1")
-    ],
-  )
+  set page(footer: page-footer("1"))
 
   // 3.  辅助函数
   let array-at(arr, pos) = {
@@ -53,8 +39,6 @@
     first-line-indent: first-line-indent,
     spacing: spacing,
   )
-  // 4.2 设置 figure 的编号（由 cap-able 处理）
-  set figure(supplement: if english-writing { [Figure] } else { [图] })
   // 4.4 设置 equation 的编号和假段落首行缩进
   set math.equation(supplement: if english-writing { [Equation] } else { [式] })
   show math.equation.where(block: true): equation-handler
@@ -83,7 +67,7 @@
 
     // 一级标题统一换页
     if it.level == 1 {
-      pagebreak(weak: true, to: if is-graduate { "odd" })
+      pagebreak(weak: true, to: if graduate { "odd" })
       v(array-at(heading-above, it.level))
     }
 
@@ -104,25 +88,18 @@
   set page(header: context {
     let loc = here()
     // 页眉内容
-    let header-content = if is-graduate and calc.rem(loc.page(), 2) == 0 {
+    let header-content = if graduate and calc.rem(loc.page(), 2) == 0 {
       // 偶数页：显示论文标题
-      graduate-header-title(doctype)
+      graduate-header-title(degree)
     } else {
       // 奇数页或单面打印：显示当前章标题
       heading-display(active-heading(level: 1, prev: false))
     }
     // 使用统一的页眉格式
-    if is-graduate {
-      header-render(
-        header-content,
-        graduate_headsep: graduate_headsep,
-        graduate_headrule_offset: graduate_headrule_offset,
-        graduate_headrule_thick: graduate_headrule_thick,
-        graduate_headrule_thin: graduate_headrule_thin,
-        graduate_headrule_gap: graduate_headrule_gap,
-      )
+    if graduate {
+      header-render(header-content)
     } else {
-      bachelor-header-render(offset: header-format.bachelor.offset)
+      bachelor-header-render()
     }
   })
   
@@ -138,7 +115,7 @@
   show: captab-style.with(
     supplement: if english-writing { "Table" } else { "表" },
     body-size: 字号.五号,
-    cell-inset: (x: 0.3em, y: if is-graduate { 0.55em } else { 0.7em }),
+    cell-inset: (x: 0.3em, y: if graduate { 0.55em } else { 0.7em }),
     middle-rule: (paint: black, thickness: 1pt),
   )
 
@@ -155,10 +132,7 @@
 
 // 前置部分（摘要、目录）：罗马数字页码 + 标题不编号
 #let frontmatter(body) = {
-  set page(footer: context align(center)[
-    #set text(size: 字号.小五)
-    #counter(page).display("I")
-  ])
+  set page(footer: page-footer("I"))
   set heading(numbering: none)
   counter(page).update(1)
   body

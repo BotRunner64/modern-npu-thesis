@@ -3,7 +3,7 @@
 )
 
 #show: nwpu-thesis.with(
-  doctype: "graduate", // "graduate"
+  graduate: true,
   degree: "master", // "master" | "doctor"，研究生学位级别
   track: "professional", // "academic" | "professional"，培养类型
   anonymous: false, // 是否开启盲审模式

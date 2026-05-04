@@ -80,7 +80,7 @@
   body
 }
 
-#let render-custom-conference(entry, doctype: "master") = {
+#let render-custom-conference(entry, graduate: false) = {
   let fields = entry.fields
   let lang = entry.lang
   let author = normalize-biblio-names(fields.at("author", default: ""), lang: lang)
@@ -94,7 +94,6 @@
   let publisher = fields.at("publisher", default: fields.at("institution", default: ""))
   let year = str(fields.at("year", default: fields.at("date", default: "")))
   let pages = str(fields.at("pages", default: "")).replace("--", "-")
-  let is-graduate = doctype == "graduate"
   let in-prefix = if lang == "zh" { "见：" } else { "In: " }
   let pub-sep = if lang == "zh" { "：" } else { ": " }
   let year-sep = if lang == "zh" { "，" } else { ", " }
@@ -104,7 +103,7 @@
     body += [#author. ]
   }
   body += [#title]
-  if is-graduate {
+  if graduate {
     body += [[C]. ]
   } else {
     body += [[A]. ]
@@ -130,7 +129,7 @@
     body += [#year]
   }
   if pages != "" {
-    if is-graduate {
+    if graduate {
       body += [: #pages. #entry.ref-label]
     } else {
       body += [. #pages. #entry.ref-label]
@@ -230,17 +229,15 @@
 }
 
 #let bilingual-bibliography(
-  doctype: "graduate",
+  graduate: false,
   english-writing: false,
   title: auto,
   full: false,
 ) = {
-  let is-graduate = doctype == "graduate"
   if title == auto {
     title = if english-writing { "References" } else { "参考文献" }
   }
 
-  set text(lang: "zh")
   heading(level: 1, numbering: none, outlined: true)[#title]
 
   gb7714-bibliography(
@@ -249,13 +246,13 @@
     full-control: entries => {
       set par(
         hanging-indent: 0em,
-        first-line-indent: if is-graduate { (amount: 2em, all: true) } else { (amount: 0em, all: true) },
+        first-line-indent: if graduate { (amount: 2em, all: true) } else { (amount: 0em, all: true) },
       )
       for entry in entries {
         if entry.entry-type == "patent" {
           [[#entry.order]#h(0.5em)#render-custom-patent(entry)]
         } else if entry.entry-type == "inproceedings" or entry.entry-type == "conference" {
-          [[#entry.order]#h(0.5em)#render-custom-conference(entry, doctype: doctype)]
+          [[#entry.order]#h(0.5em)#render-custom-conference(entry, graduate: graduate)]
         } else if is-custom-other-entry(entry) {
           [[#entry.order]#h(0.5em)#render-custom-other(entry)]
         } else if is-custom-standard-entry(entry) {

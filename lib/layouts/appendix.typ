@@ -3,13 +3,13 @@
 
 // 附录布局
 #let appendix(
-  doctype: "bachelor",
+  graduate: false,
   english-writing: false,
   it,
 ) = {
   let appendix-label = if english-writing {
     "Appendix "
-  } else if doctype == "bachelor" {
+  } else if not graduate {
     "附 录"
   } else {
     "附录"
@@ -18,7 +18,7 @@
   set heading(numbering: (..nums) => {
     let nums = nums.pos()
     if nums.len() == 1 {
-      if doctype == "bachelor" {
+      if not graduate {
         [#appendix-label]
       } else {
         [#appendix-label#numbering("A", nums.at(0))]
@@ -29,11 +29,9 @@
   })
   counter(heading).update(0)
 
-  let is-graduate = doctype == "graduate"
-
   show: captab-style.with(numbering-format: "A-1")
   show: capfig-style.with(numbering-format: "A-1")
-  show math.equation.where(block: true): show-equation-handler("A-1", is-graduate)
+  show math.equation.where(block: true): show-equation-handler("A-1", graduate)
 
   it
 }
