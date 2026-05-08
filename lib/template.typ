@@ -9,7 +9,7 @@
 #import "pages/abstract.typ": abstract as abstract-page
 #import "pages/outline.typ": outline-page
 #import "pages/backmatter-page.typ": backmatter-page
-#import "@preview/gb7714-bilingual:0.2.3": init-gb7714, multicite
+#import "gb7714-bilingual/lib.typ": init-gb7714, multicite
 #import "pages/references.typ": bilingual-bibliography
 #import "@preview/cap-able:0.1.0": capfig, capfig-style, capsubfig, captab, captab-style, captnote
 #import "format.typ": body-format, heading-format
@@ -129,7 +129,7 @@
     )
   }
 
-  show: init-gb7714.with(read(bibliography), style: "numeric", version: "2015")
+  show: init-gb7714.with(read(bibliography), style: "numeric", version: "2025")
 
   // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
   show: mainmatter.with(

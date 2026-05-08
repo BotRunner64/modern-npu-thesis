@@ -122,11 +122,12 @@
     supplement: if english-writing { "Table" } else { "表" },
     body-size: caption-format.size,
     cell-inset: (x: 1em, y: if graduate { 0.55em } else { 0.7em }),
-    middle-rule: (paint: black, thickness: 1pt),
+    middle-rule: 1pt,
     caption-text: if graduate {(font: 字体.宋体)} else {(font: 字体.黑体)},
     caption-below: if graduate {auto} else {10pt},
     table-below: if graduate {leading} else {20pt},
     caption-above: if graduate {auto} else {20pt},
+    breakable: false
   )
   // 图片独有配置
   show: capfig-style.with(

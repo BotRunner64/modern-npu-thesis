@@ -1,4 +1,6 @@
-#import "/template.typ": algorithm, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis, Assign, While, IfElseChain, Return
+#import "/template.typ": (
+  Assign, IfElseChain, Return, While, algorithm, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis,
+)
 
 #show: nwpu-thesis.with(
   anonymous: false, // 是否开启盲审模式
@@ -9,13 +11,13 @@
   submit-date: (year: 2026, month: 3),
   abstract: [
     听觉虚拟又可称为可听化，是近年来随着声学仿真技术的发展而出现的新概念，即通过对包含单个（或多个）声源的声场进行物理或数学建模，以达到模拟空间听音效果的目的。若考虑双耳效应，则可称为双耳听觉虚拟（Binaural Modeling）。
-    
+
     ……
   ],
   keywords: ("听觉虚拟", "HRTF", "神经网络"),
   abstract-en: [
     Virtual auditory technology is also called auralization. It is brought forward as a new concept with the development of acoustic simulation techniques in recent years and can be implemented by establishing the physical or mathematical models of a sound field to achieve sound effects simulation. If we consider the binaural effect, it can be called binaural virtual auditory.
-    
+
     ……..
   ],
   keywords-en: ("virtual auditory", "HRTF", "neural network"),
@@ -153,4 +155,4 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 
 == 参考文献
 
-可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("伍蠡甫", "图书馆")，引用三个以上的文献 #multicite("张筑生", "gbt16159-1996", "冯西桥1998", "姜锡洲", "中国大学学报论文文摘")。
+可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("伍蠡甫", "图书馆")，引用三个以上的文献 #multicite("张筑生", "gbt16159-1996", "冯西桥1998", "姜锡洲", "中国大学学报论文文摘", "DUBAR2013--", "FOURNEY")。
