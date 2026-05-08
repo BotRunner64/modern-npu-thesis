@@ -15,6 +15,7 @@
 #import "format.typ": body-format, heading-format
 #import "utils/chinese-number.typ": chinese-chapter-number
 #import "utils/cover-utils.typ": blind-review
+#import "utils/style.typ": 字号
 
 #let default-bibliography(graduate) = {
   if not graduate {

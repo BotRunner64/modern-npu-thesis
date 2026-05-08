@@ -1,6 +1,6 @@
 #import "/template.typ": (
-  algorithm, blind-review, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis,
-  Assign, While, IfElseChain, Return,
+  Assign, IfElseChain, Return, While, algorithm, blind-review, capfig, capsubfig, captab, equation-note, multicite,
+  nwpu-thesis, 字号,
 )
 
 #show: nwpu-thesis.with(
@@ -37,7 +37,7 @@
   ),
   abstract: [
     中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
-    
+
     内容一般包括：从事这项研究工作的目的和意义；完成的工作（作者独立进行的研究工作及相应结果的概括性叙述）；获得的主要结论（这是摘要的中心内容）。
   ],
   keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
@@ -48,27 +48,10 @@
   keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
   funding-en: "The present work is supported by the XXX（Project No.xxx）",
   appendix: [
-    == Test
     附录是学位论文主体的补充，并不是必需的。
-    
-    $ phi.alt := (1 + sqrt(5)) / 2 $ <rat>
 
-    #capfig(
-      image("figures/example.jpg", width: 45%),
-      caption: [图片测试],
-      label: <test11>,
-    )
-    
     =
     附录编号依次编为附录A、附录B。附录标题各占一行，按一级标题编排。每一个附录一般应另起一页编排，如果有多个较短的附录，也可接排。
-    
-    $ phi.alt := (1 + sqrt(5)) / 2 $ <ra>
-
-    #capfig(
-      image("figures/example.jpg", width: 45%),
-      caption: [图片测试],
-      label: <test111>,
-    )
   ],
   acknowledgement: [
     致谢是作者对该文章的形成作过贡献的组织或个人予以感谢的文字记载，语言要诚恳、恰当、简短。致谢内容可以包括但不限于：国家科学基金、资助研究工作的奖学金基金、合同单位、资助或支持的企业、组织或个人；协助完成研究工作和提供便利条件的组织或个人；在研究工作中提出建议和提供帮助的人；给予转载和引用权的资料、图片、文献、研究和调查的所有者；其他应感谢的组织和个人。
@@ -79,29 +62,64 @@
   scan-declaration: image("figures/硕博论文签字版声明.pdf"),
 )
 
-= 绪论
+= 图、表、公式、算法示例
 
-XXX
+== 图示例
 
-== 研究背景
+=== 单张图
 
-XXX
+可以使用 `capfig()` 来创建图，支持图标题、标签等功能。如@test 所示。
 
-=== 研究意义
+#capfig(
+  image("figures/example.jpg", width: 20%),
+  caption: [图片测试],
+  label: <test>,
+)
 
-研究意义内容。
+=== 多张图
 
-=== 研究现状
+可以使用 `capsubfig()` 来创建多子图，支持子图标题、标签，以及总图标题和标签。下面是两列的两张图示例，以及两列的四张图示例。
 
-研究现状内容。
+#capsubfig(
+  (
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第一个子图说明], label: <fig-sub1>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第二个子图说明], label: <fig-sub2>),
+  ),
+  columns: 2,
+  caption: [总图标题],
+  label: <fig-main>,
+)
 
-== 研究内容
+#capsubfig(
+  (
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第一个子图说明], label: <fig-sub3>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第二个子图说明], label: <fig-sub4>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第三个子图说明], label: <fig-sub5>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第四个子图说明], label: <fig-sub6>),
+  ),
+  columns: 2,
+  caption: [总图标题],
+  label: <fig-2x2>,
+  placement: top
+)
 
-研究内容概述。
+== 表示例
 
-== 图表测试
+=== 三线表
 
-引用@timing-tlt，以及@test。使用 `captab()` 创建三线表时，引用直接使用标签名；`capfig()` 同样直接使用标签名。
+可以使用 `captab()` 来创建表格，支持表格标题、标签、列宽、横线等功能。下面是一个简单的三线表示例@timing-tlt，以及一个复杂的三线表示例@composite-performance。
+
+可以使用 `placement` 参数来设置表格位置，支持 `none`、 `top`、`bottom` 和 `auto`。其中，`none` 是默认值，表示位于本来的位置；`auto` 只是 `top` 和 `bottom` 的简单增强版，会自动选择到顶部/底部。
+
+#captab(
+  caption: [三线表],
+  label: <timing-tlt>,
+  placement: top,
+)[
+  | t   | 1    | 2    | 3    |
+  | --- | ---- | ---- | ---- |
+  | y   | 0.3s | 0.4s | 0.8s |
+]
 
 #captab(
   caption: [复杂三线表示例：聚合物基复合材料的性能（captab 渲染）],
@@ -118,71 +136,34 @@ XXX
   | 拉伸强度，MPa  | 1500    | 40   | 1062      | 31   |
 ]
 
-表格之间的文字
+可以通过 `breakable` 参数来设置表格是否允许分页，默认为 `false`。`continued-caption` 参数来设置分页后续页的标题显示，以及 `size` 参数来设置表格内文字的字号，默认为小五号。
 
 #captab(
   caption: [三线表],
-  label: <timing-tlt>,
-  placement: bottom   // 表格位置，支持 top | bottom | none
+  label: <timing>,
+  breakable: true,
+  continued-caption: true,
+  size: 字号.六号,
 )[
   | t   | 1    | 2    | 3    |
   | --- | ---- | ---- | ---- |
-  | y   | 0.3s | 0.4s | 0.8s |
+  | a   | 0.3s | 0.4s | 0.8s |
+  | b   | 0.3s | 0.4s | 0.8s |
+  | c   | 0.3s | 0.4s | 0.8s |
+  | d   | 0.3s | 0.4s | 0.8s |
+  | e   | 0.3s | 0.4s | 0.8s |
+  | f   | 0.3s | 0.4s | 0.8s |
 ]
 
-表格后的文字
+== 公式示例
 
-#capfig(
-  image("figures/example.jpg", width: 45%),
-  caption: [图片测试],
-  label: <test>,
-)
+可以像 Markdown 一样写行内公式 $x + y$。
 
-图片之间的文字
+引用数学公式需要加上 `eqt:` 前缀，如@eqt:energy-mass。
 
-#capsubfig(
-  (
-    (content: image("figures/example.jpg", width: 60%), subcaption: [第一个子图说明]),
-    (content: image("figures/example.jpg", width: 60%), subcaption: [第二个子图说明]),
-  ),
-  columns: 2,
-  caption: [总图标题],
-  label: <fig-main>,
-)
+如果需要在公式下方给出变量含义说明，可以使用 `equation-note` ：
 
-#capsubfig(
-  (
-    (content: image("figures/example.jpg", width: 50%), subcaption: [第一个子图说明]),
-    (content: image("figures/example.jpg", width: 50%), subcaption: [第二个子图说明]),
-    (content: image("figures/example.jpg", width: 50%), subcaption: [第三个子图说明]),
-    (content: image("figures/example.jpg", width: 50%), subcaption: [第四个子图说明]),
-  ),
-  columns: 2,
-  caption: [总图标题],
-  label: <fig-2x2>,
-)
-
-== 数学公式
-
-可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
-
-$ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
-
-引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
-
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
-
-我们也可以通过 `<->` 标签来标识该行间公式不需要编号
-
-$ y = integral_1^2 x^2 dif x $ <->
-
-而后续数学公式仍然能正常编号。
-
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
-
-如果需要在公式下方给出变量含义说明，可以使用统一的辅助宏：
-
-$ E = m c^2 $
+$ E = m c^2 $ <energy-mass>
 #equation-note[$E$ 为能量，$m$ 为质量，$c$ 为光速。]
 
 == 算法示例
@@ -211,7 +192,7 @@ $ E = m c^2 $
   },
 ) <alg:binary-search>
 
-== 参考文献
+= 参考文献引用示例
 
 可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("图书馆", "李大伦1998")，引用三个以上的文献 #multicite(
   "伍蠡甫",
@@ -224,28 +205,3 @@ $ E = m c^2 $
   "DUBAR2013--",
   "FOURNEY",
 )。
-
-= 研究方法
-
-== 方法概述
-
-方法概述内容。
-
-#capfig(
-  image("figures/example.jpg", width: 45%),
-  caption: [图片测试],
-  label: <test1>,
-)
-
-#algorithm(
-  title: [二分查找算法],
-  {
-    Assign[left][$0$]
-    Return[$-1$]
-  },
-) <alg:bi>
-
-
-== 实验设计
-
-实验设计内容。

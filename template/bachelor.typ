@@ -1,5 +1,5 @@
 #import "/template.typ": (
-  Assign, IfElseChain, Return, While, algorithm, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis,
+  Assign, IfElseChain, Return, While, algorithm, capfig, capsubfig, captab, multicite, nwpu-thesis, 字号
 )
 
 #show: nwpu-thesis.with(
@@ -22,13 +22,7 @@
   ],
   keywords-en: ("virtual auditory", "HRTF", "neural network"),
   appendix: [
-    == Test
     附录内容……
-    #capfig(
-      image("figures/example.jpg", width: 45%),
-      caption: [图片测试],
-      label: <test1>,
-    )
   ],
   acknowledgement: [
     致谢内容……
@@ -38,94 +32,105 @@
   ],
 )
 
-= 绪论
+= 图、表、公式、算法示例
 
-XXX
+== 图示例
 
-== 研究背景
+=== 单张图
 
-XXX
-
-=== 研究意义
-
-研究意义内容。
-
-=== 研究现状
-
-研究现状内容。
-
-== 研究内容
-
-研究内容概述。
-
-== 图表测试
-
-引用@timing-tlt，以及@test。
-
-#captab(
-  caption: [聚合物基复合材料的性能（captab 渲染）],
-  label: <composite-performance>,
-  cols: (1.25fr, 1fr, 1fr, 1fr, 1fr),
-  hlines: (
-    (row: 2, stroke: 1pt),
-  ),
-)[
-  | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
-  | ^              | 纵向    | 横向 | 纵向      | 横向 |
-  | 模量，GPa      | 181     | 10.3 | 38.6      | 8.3  |
-  | 压缩强度，MPa  | 1500    | 246  | 610       | 118  |
-  | 拉伸强度，MPa  | 1500    | 40   | 1062      | 31   |
-]
-
-表格之间的文字
-
-#captab(
-  caption: [三线表],
-  label: <timing-tlt>,
-  placement: bottom, // 表格位置，支持 top | bottom | none
-)[
-  | t   | 1    | 2    | 3    |
-  | --- | ---- | ---- | ---- |
-  | y   | 0.3s | 0.4s | 0.8s |
-]
-
-表格后的文字
+可以使用 `capfig()` 来创建图，支持图标题、标签等功能。如@test 所示。
 
 #capfig(
-  image("figures/example.jpg", width: 45%),
+  image("figures/example.jpg", width: 20%),
   caption: [图片测试],
   label: <test>,
 )
 
-图片之间的文字
+=== 多张图
+
+可以使用 `capsubfig()` 来创建多子图，支持子图标题、标签，以及总图标题和标签。下面是两列的两张图示例，以及两列的四张图示例。
 
 #capsubfig(
   (
-    (content: image("figures/example.jpg", width: 60%), subcaption: [第一个子图说明]),
-    (content: image("figures/example.jpg", width: 60%), subcaption: [第二个子图说明]),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第一个子图说明], label: <fig-sub1>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第二个子图说明], label: <fig-sub2>),
   ),
   columns: 2,
   caption: [总图标题],
   label: <fig-main>,
 )
 
-== 数学公式
+#capsubfig(
+  (
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第一个子图说明], label: <fig-sub3>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第二个子图说明], label: <fig-sub4>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第三个子图说明], label: <fig-sub5>),
+    (content: image("figures/example.jpg", width: 40%), subcaption: [第四个子图说明], label: <fig-sub6>),
+  ),
+  columns: 2,
+  caption: [总图标题],
+  label: <fig-2x2>,
+  placement: top,
+)
 
-可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
+== 表示例
 
-$ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
+=== 表
 
-引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
+可以使用 `captab()` 来创建表格，支持表格标题、标签、列宽、横线等功能。下面是一个简单的三线表示例@timing-tlt，以及一个复杂的三线表示例@composite-performance。
 
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
+可以使用 `placement` 参数来设置表格位置，支持 `none`、 `top`、`bottom` 和 `auto`。其中，`none` 是默认值，表示位于本来的位置；`auto` 只是 `top` 和 `bottom` 的简单增强版，会自动选择到顶部/底部。
 
-我们也可以通过 `<->` 标签来标识该行间公式不需要编号
+#captab(
+  caption: [表],
+  label: <timing-tlt>,
+  placement: top,
+)[
+  | t   | 1    | 2    | 3    |
+  | --- | ---- | ---- | ---- |
+  | y   | 0.3s | 0.4s | 0.8s |
+]
 
-$ y = integral_1^2 x^2 dif x $ <->
+#captab(
+  caption: [复杂表示例：聚合物基复合材料的性能（captab 渲染）],
+  label: <composite-performance>,
+  cols: (1.25fr, 1fr, 1fr, 1fr, 1fr),
+  hlines: (
+    (row: 2),
+  ),
+)[
+  | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
+  | ^              | 纵向    | 横向 | 纵向      | 横向 |
+  | 模量，GPa      | 181     | 10.3 | 38.6      | 8.3  |
+  | 压缩强度，MPa  | 1500    | 246  | 610       | 118  |
+]
 
-而后续数学公式仍然能正常编号。
+可以通过 `breakable` 参数来设置表格是否允许分页，默认为 `false`。`continued-caption` 参数来设置分页后续页的标题显示，以及 `size` 参数来设置表格内文字的字号，默认为小五号。
 
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
+#captab(
+  caption: [三线表],
+  label: <timing>,
+  breakable: true,
+  continued-caption: true,
+  size: 字号.六号,
+)[
+  | t   | 1    | 2    | 3    |
+  | --- | ---- | ---- | ---- |
+  | a   | 0.3s | 0.4s | 0.8s |
+  | b   | 0.3s | 0.4s | 0.8s |
+  | c   | 0.3s | 0.4s | 0.8s |
+  | d   | 0.3s | 0.4s | 0.8s |
+  | e   | 0.3s | 0.4s | 0.8s |
+  | f   | 0.3s | 0.4s | 0.8s |
+]
+
+== 公式示例
+
+可以像 Markdown 一样写行内公式 $x + y$。
+
+引用数学公式需要加上 `eqt:` 前缀，如@eqt:energy-mass。
+
+$ E = m c^2 $ <energy-mass>
 
 == 算法示例
 
@@ -153,6 +158,6 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   },
 ) <alg:binary-search>
 
-== 参考文献
+= 参考文献引用示例
 
 可以像这样引用参考文献@周融2003，引用两个的文献 #multicite("伍蠡甫", "图书馆")，引用三个以上的文献 #multicite("张筑生", "gbt16159-1996", "冯西桥1998", "姜锡洲", "中国大学学报论文文摘", "DUBAR2013--", "FOURNEY")。
