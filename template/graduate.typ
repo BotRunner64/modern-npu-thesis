@@ -18,7 +18,6 @@
   author-en: "Xiaotian Hang",
   department: "计算机学院",
   major: "计算机科学与技术",
-  // major-en: "Computer Science and Technology", // 一般情况下模板会自动填充英文专业名称，如果发现不正确或未自动填充可以在这里手动指定，并提出 issue 反馈
   supervisor: ("张三", "教授"),
   supervisor-en: "San Zhang",
   submit-date: (year: 2026, month: 3),
@@ -27,7 +26,7 @@
     blind-review,
   ),
   defence-committee: (
-    date: datetime(year: 2026, month: 3, day: 9),
+    date: (year: 2026, month: 3, day: 9),
     chairman: (name: "赵某某", title: "教授", unit: "西北工业大学"),
     members: (
       (name: "周某某", title: "教授", unit: "西北工业大学"),

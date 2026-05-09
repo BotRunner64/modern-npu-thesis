@@ -41,7 +41,7 @@
   author: "张三",
   major: "某专业",
   supervisor: ("李四", "教授"),
-  submit-date: datetime.today(),
+  submit-date: (year: 2026, month: 1),
   // 研究生额外信息
   title-en: "NPU Thesis Template for Typst",
   student-id: "1234567890",
@@ -56,7 +56,7 @@
     (name: "", title: "", unit: ""),
   ),
   defence-committee: (
-    date: datetime.today(),
+    date: (year: 2026, month: 3, day: 9),
     chairman: (name: "", title: "", unit: ""),
     members: (
       (name: "", title: "", unit: ""),
@@ -99,11 +99,7 @@
       major-en: major-en,
       supervisor: supervisor,
       supervisor-en: supervisor-en,
-      submit-date: if type(submit-date) == dictionary {
-        datetime(year: submit-date.year, month: submit-date.month, day: 1)
-      } else {
-        submit-date
-      },
+      submit-date: submit-date,
       secret-level: secret-level,
       school-code: school-code,
       degree: if degree == "doctor" { "工学博士" } else { "工学硕士" },
