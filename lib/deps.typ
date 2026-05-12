@@ -21,3 +21,6 @@
 
 // outrageous（目录条目排版）
 #import "@preview/outrageous:0.4.1"
+
+// pointless-size（中文字号）
+#import "@preview/pointless-size:0.1.2": zh

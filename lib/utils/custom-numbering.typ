@@ -1,5 +1,4 @@
-#import "../deps.typ": cap-style, i-figured
-#import "style.typ": 字号
+#import "../deps.typ": cap-style, i-figured, zh
 
 // 统一编号格式状态：正文 "1-1"，附录 "A-1"
 #let numbering-format = state("nwpu-numbering-format", "1-1")

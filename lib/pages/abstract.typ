@@ -1,4 +1,5 @@
-#import "../utils/style.typ": 字号, 字体
+#import "../utils/style.typ": 字体
+#import "../deps.typ": zh
 
 // 摘要页
 // title: 页面和页眉显示的标题（默认使用 outline-title）
@@ -27,16 +28,16 @@
     #let indent = if keyword-indent { 2em } else { 0pt }
     #{
       let label = if keyword-weight == "bold" {
-        text(font: 字体.黑体, weight: "bold")[#keyword-label：]
+        text(font: 字体.黑体混排, weight: "bold")[#keyword-label：]
       } else {
-        [#h(indent)#text(font: 字体.黑体)[#keyword-label]：]
+        [#h(indent)#text(font: 字体.黑体混排)[#keyword-label]：]
       }
       label + (("",) + keywords.intersperse(keyword-sep)).sum()
     }
 
     #if funding != none [
       #v(1fr)
-      #text(size: 字号.五号)[#h(indent)#funding]
+      #text(size: zh(5))[#h(indent)#funding]
     ]
   ]
 }

@@ -1,5 +1,5 @@
 #import "/template.typ": (
-  Assign, IfElseChain, Return, While, algorithm, capfig, capsubfig, captab, multicite, nwpu-thesis, 字号
+  Assign, IfElseChain, Return, While, algorithm, capfig, capsubfig, captab, multicite, nwpu-thesis, zh
 )
 
 #show: nwpu-thesis.with(
@@ -94,7 +94,6 @@
 #captab(
   caption: [复杂表示例：聚合物基复合材料的性能],
   label: <composite-performance>,
-  hlines: (2,),
 )[
   | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
   | ^              | 纵向    | 横向 | 纵向      | 横向 |
@@ -109,7 +108,7 @@
   caption: [表标题],
   label: <timing>,
   breakable: true,
-  size: 字号.小五,
+  size: zh(5.5),  // 手动设置为小五号
 )[
   | t   | 1    | 2    | 3    |
   | --- | ---- | ---- | ---- |

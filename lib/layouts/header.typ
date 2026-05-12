@@ -1,4 +1,4 @@
-#import "../utils/style.typ": 字号
+#import "../deps.typ": zh
 
 // ============================================
 // 页眉统一配置
@@ -6,7 +6,7 @@
 
 // 页码渲染函数
 #let page-footer(fmt) = context align(center)[
-  #set text(size: 字号.小五)
+  #set text(size: zh(5.5))
   #counter(page).display(fmt)
 ]
 
@@ -14,7 +14,7 @@
 #let header-render(content) = {
   [
     #set par(leading: 0pt, spacing: 0pt)
-    #set text(size: 字号.小五)
+    #set text(size: zh(5.5))
     #align(center)[#content]
     #v(0.5em)
     #line(length: 100%, stroke: 3.2pt + black)

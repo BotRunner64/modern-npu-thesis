@@ -46,6 +46,7 @@
 - [`gb7714-bilingual`](https://typst.app/universe/package/gb7714-bilingual) `基于 Github main 分支的修改版本` — GB/T 7714 双语参考文献格式
 - [`algorithmic`](https://typst.app/universe/package/algorithmic) `1.0.7` — 伪代码/算法排版
 - [`cap-able`](https://typst.app/universe/package/cap-able) `Github dev分支` — 图/表
+- [`pointless-size`](https://typst.app/universe/package/pointless-size) `0.1.2` — 中文字号
 
 参考文献方面，模板针对西北工业大学本科、研究生论文格式要求做了对应调整。用户通常只需要维护 [template/bib](template/bib) 目录下的 BibTeX 文件，模板会自动处理文献引用和参考文献列表。
 

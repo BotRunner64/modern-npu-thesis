@@ -1,5 +1,4 @@
-#import "../deps.typ": algo-render
-#import "style.typ": 字号
+#import "../deps.typ": algo-render, zh
 #import "custom-numbering.typ": numbering-format
 
 #let algorithm-figure = figure.where(kind: "algorithm")
@@ -31,7 +30,7 @@
     caption: title,
     outlined: false,
     {
-      set text(size: 字号.五号)
+      set text(size: zh(5))
       algo-render(
         line-numbers: true,
         line-numbers-format: x => [#x],

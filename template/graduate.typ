@@ -1,6 +1,5 @@
 #import "/template.typ": (
-  Assign, IfElseChain, Return, While, algorithm, blind-review, capfig, capsubfig, captab, equation-note, multicite,
-  nwpu-thesis, 字号,
+  Assign, IfElseChain, Return, While, algorithm, blind-review, capfig, capsubfig, captab, equation-note, multicite, nwpu-thesis, zh,
 )
 
 #show: nwpu-thesis.with(
@@ -123,7 +122,7 @@
 #captab(
   caption: [复杂三线表示例：聚合物基复合材料的性能],
   label: <composite-performance>,
-  hlines: (2,),
+  hlines: (2,),   // 额外线条
 )[
   | 材料           | 碳/环氧 | <    | 玻璃/环氧 | <    |
   | ^              | 纵向    | 横向 | 纵向      | 横向 |
@@ -140,7 +139,7 @@
   caption: [三线表标题],
   label: <timing>,
   breakable: true,
-  size: 字号.小五,
+  size: zh(5.5),  // 手动设置为小五号
 )[
   | t   | 1    | 2    | 3    |
   | --- | ---- | ---- | ---- |

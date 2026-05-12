@@ -1,4 +1,5 @@
-#import "../utils/style.typ": 字体, 字号
+#import "../utils/style.typ": 字体
+#import "../deps.typ": zh
 #import "../utils/cover-utils.typ": (
   datetime-display, datetime-year-month, datetime-year-month-en, distribute, half-space, info-row, major-en-map, mask-value,
   title-en-map,
@@ -46,7 +47,7 @@
 
   // 右上角元信息表格（学校代码、分类号、密级、学号）
   align(right)[
-    #set text(font: 字体.黑体, size: 字号.五号, weight: "bold")
+    #set text(font: 字体.黑体混排, size: zh(5), weight: "bold")
     #table(
       columns: (2.05cm, 2.4cm),
       rows: 0.55cm,
@@ -61,7 +62,7 @@
 
   v(231pt)
 
-  text(font: 字体.黑体, size: 字号.二号, weight: "bold")[
+  text(font: 字体.黑体混排, size: zh(2), weight: "bold")[
     #table(
       columns: (2.34cm, 12.13cm),
       rows: (1.45cm, 1.45cm),
@@ -77,9 +78,9 @@
     let author-display = anonymous-text("author", info.author)
     let author-width = calc.max(
       3.72cm,
-      measure(text(size: 字号.三号, weight: "bold", author-display)).width,
+      measure(text(size: zh(3), weight: "bold", author-display)).width,
     )
-    set text(size: 字号.三号, weight: "bold")
+    set text(size: zh(3), weight: "bold")
     table(
       columns: (1.56cm, author-width),
       rows: 1.28cm,
@@ -91,7 +92,7 @@
 
   let major-label = if track == "professional" { "专业领域" } else { "学科专业" }
 
-  text(size: 字号.三号, weight: "bold")[
+  text(size: zh(3), weight: "bold")[
     #table(
       columns: (3.59cm, 9cm),
       rows: (1cm,),
@@ -111,16 +112,16 @@
   set page(background: none)
   pagebreak(weak: true, to: "odd")
   v(88pt)
-  text(size: 字号.三号)[
+  text(size: zh(3))[
     #half-space("西北工业大学")
   ]
   v(10pt)
   let degree-label = if degree == "doctor" { "博士学位论文" } else { "硕士学位论文" }
-  text(size: 字号.一号)[
+  text(size: zh(1))[
     #half-space(degree-label)
   ]
   v(140pt)
-  text(size: 字号.二号)[
+  text(size: zh(2))[
     #table(
       columns: (2.34cm, 9.13cm),
       rows: (1.45cm, 1.45cm),
@@ -136,11 +137,11 @@
 
   v(94pt)
 
-  text(size: 字号.三号)[
+  text(size: zh(3))[
     #context {
       let info-column-width = calc.max(
         5cm,
-        measure(text(size: 字号.三号, info.major)).width,
+        measure(text(size: zh(3), info.major)).width,
       )
 
       table(
@@ -170,14 +171,14 @@
 
   v(95pt)
 
-  text(size: 字号.二号, weight: "bold")[Title: ]
+  text(size: zh(2), weight: "bold")[Title: ]
 
-  text(size: 字号.三号)[
+  text(size: zh(3))[
     #text(info.title-en)
     #v(65pt)
   ]
 
-  text(size: 字号.小三)[
+  text(size: zh(3.5))[
     #text(weight: "bold")[By]
     #linebreak()
     #text(anonymous-text("author-en", info.author-en))
@@ -213,10 +214,10 @@
   // 第四页 - 评阅人和答辩委员会名单
   // ========================================
   v(50pt)
-  text(font: 字体.黑体, size: 字号.三号)[学位论文评阅人和答辩委员会名单]
+  text(font: 字体.黑体混排, size: zh(3))[学位论文评阅人和答辩委员会名单]
   v(40pt)
 
-  text(font: 字体.黑体, size: 字号.四号)[学位论文评阅人名单]
+  text(font: 字体.黑体混排, size: zh(4))[学位论文评阅人名单]
   table(
     columns: (3.71cm, 2.83cm, 8.73cm),
     inset: (x: 4pt, y: 8pt),
@@ -239,7 +240,7 @@
 
   v(10pt)
 
-  text(font: 字体.黑体, size: 字号.四号)[答辩委员会名单]
+  text(font: 字体.黑体混排, size: zh(4))[答辩委员会名单]
   table(
     columns: (3.76cm, 2.68cm, 2.25cm, 6.75cm),
     inset: (x: 4pt, y: 8pt),

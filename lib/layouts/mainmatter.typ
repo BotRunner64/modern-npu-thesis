@@ -1,5 +1,5 @@
-#import "../deps.typ": cap-style, capfig-style, captab-style, style-algorithm, hydra
-#import "../utils/style.typ": 字体, 字号
+#import "../deps.typ": cap-style, capfig-style, captab-style, hydra, style-algorithm, zh
+#import "../utils/style.typ": 字体
 #import "../utils/custom-numbering.typ": show-equation-handler
 #import "../utils/chinese-number.typ": chinese-chapter-number
 #import "header.typ": bachelor-header-render, graduate-header-title, header-render, page-footer
@@ -19,7 +19,7 @@
 ) = {
   // 算法三线表样式
   show: style-algorithm.with(
-    caption-style: body => text(size: 字号.五号, strong(body)),
+    caption-style: body => text(size: zh(5), strong(body)),
     hlines: (
       grid.hline(stroke: 1.5pt + black),
       grid.hline(stroke: 1pt + black),
@@ -56,8 +56,8 @@
     }
 
     set text(
-      font: 字体.黑体,
-      size: (字号.三号, 字号.四号, 字号.小四).at(calc.min(it.level, 3) - 1),
+      font: 字体.黑体混排,
+      size: (zh(3), zh(4), zh(4.5)).at(calc.min(it.level, 3) - 1),
       weight: "regular",
     )
     set par(first-line-indent: (amount: 0pt))
@@ -119,7 +119,7 @@
     body-size: caption-format.size,
     cell-inset: (x: if graduate { 0.5em } else { 0.8em }, y: if graduate { 0.55em } else { 0.7em }),
     middle-rule: 1pt,
-    caption-text: if graduate { (font: 字体.宋体) } else { (font: 字体.纯黑体) },
+    caption-text: if graduate { (font: 字体.宋体混排) } else { (font: 字体.黑体) },
     caption-below: if graduate { auto } else { 10pt },
     table-below: if graduate { leading } else { 20pt },
     caption-above: if graduate { auto } else { 20pt },

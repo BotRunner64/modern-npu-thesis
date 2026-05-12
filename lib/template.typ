@@ -2,6 +2,7 @@
   init-gb7714, multicite,
   capfig, capfig-style, capsubfig, captab, captab-style, captnote,
   If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate,
+  zh,
 )
 #import "layouts/doc.typ": doc
 #import "utils/algorithm.typ": algorithm, with-english-writing
@@ -17,7 +18,6 @@
 #import "format.typ": body-format, heading-format, page-format
 #import "utils/chinese-number.typ": chinese-chapter-number
 #import "utils/cover-utils.typ": blind-review, distribute, page-title
-#import "utils/style.typ": 字号
 
 #let default-bibliography(graduate) = {
   if not graduate {
