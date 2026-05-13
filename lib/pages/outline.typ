@@ -37,7 +37,10 @@
         body-transform: (level, prefix, body) => {
           if is-abstract { [ABSTRACT] }
         },
-        page-transform: (level, page) => page-display,
+        page-transform: (level, page) => {
+          set text(weight: "regular")
+          page-display
+        },
       )
     }
 
