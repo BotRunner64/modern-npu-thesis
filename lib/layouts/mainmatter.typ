@@ -14,7 +14,6 @@
   heading-above: (),
   heading-below: (),
   heading-numbering: none,
-  ..args,
   it,
 ) = {
   // 算法三线表样式

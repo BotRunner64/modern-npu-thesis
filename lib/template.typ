@@ -1,17 +1,15 @@
 #import "deps.typ": (
-  init-gb7714, multicite,
-  capfig, capfig-style, capsubfig, captab, captab-style, captnote,
-  If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate,
-  zh,
+  Assign, Break, Comment, Else, ElseIf, For, Function, If, IfElseChain, Line, LineBreak, Procedure, Return, Terminate,
+  While, capfig, capfig-style, capsubfig, captab, captab-style, init-gb7714, multicite, zh,
 )
 #import "layouts/doc.typ": doc
 #import "utils/algorithm.typ": algorithm, with-english-writing
 #import "utils/equation-note.typ": equation-note
-#import "layouts/mainmatter.typ": mainmatter, frontmatter
+#import "layouts/mainmatter.typ": frontmatter, mainmatter
 #import "layouts/appendix.typ": appendix as appendix-layout
 #import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/graduate-cover.typ": master-cover
-#import "pages/abstract.typ": abstract as abstract-page
+#import "pages/abstract.typ": abstract-page
 #import "pages/outline.typ": outline-page
 #import "pages/backmatter-page.typ": backmatter-page
 #import "pages/references.typ": bilingual-bibliography
@@ -27,79 +25,28 @@
   }
 }
 
-// 主配置函数
 #let nwpu-thesis(
-  // 文档类型
   graduate: false,
   degree: "master", // "master" | "doctor"（仅研究生）
   track: "academic", // "academic" | "professional"（仅研究生）
   anonymous: false,
   english-writing: false,
   colored-cover: false,
-  // 基本信息（本科 & 研究生共用）
-  title: ("基于 Typst 的", "西北工业大学学位论文"),
-  author: "张三",
-  major: "某专业",
-  supervisor: ("李四", "教授"),
-  submit-date: (year: 2026, month: 1),
-  // 研究生额外信息
-  title-en: "NPU Thesis Template for Typst",
-  student-id: "1234567890",
-  class-no: "O643.12",
-  author-en: "Zhang San",
-  department: "某学院",
-  major-en: "XX",
-  supervisor-en: "Li Si",
-  reviewers: (
-    (name: "", title: "", unit: ""),
-  ),
-  defence-committee: (
-    date: (year: 2026, month: 3, day: 9),
-    chairman: (name: "", title: "", unit: ""),
-    members: (
-      (name: "", title: "", unit: ""),
-      (name: "", title: "", unit: ""),
-    ),
-    secretary: (name: "", title: "", unit: ""),
-  ),
-  // 页面内容
-  abstract: none,
-  keywords: (),
-  funding: none,
-  abstract-en: none,
-  keywords-en: (),
-  funding-en: none,
+  info: (:),
+  abstract: (:),
+  abstract-en: (:),
   acknowledgement: none,
   academic-achievements: none,
   appendix: none,
   scan-declaration: none,
-  design_summary: none,
+  design-summary: none,
   bibliography: none,
   background: false,
-  // 文档正文
   body,
 ) = {
   if bibliography == none {
     bibliography = default-bibliography(graduate)
   }
-
-  // 默认参数
-  let info = (
-    title: title,
-    title-en: title-en,
-    student-id: student-id,
-    class-no: class-no,
-    author: author,
-    author-en: author-en,
-    department: department,
-    major: major,
-    major-en: major-en,
-    supervisor: supervisor,
-    supervisor-en: supervisor-en,
-    submit-date: submit-date,
-    reviewers: reviewers,
-    defence-committee: defence-committee,
-  )
 
   // 1. 文稿设置
   show: doc.with(margin: if graduate { page-format.graduate-margin } else { page-format.bachelor-margin })
@@ -125,7 +72,15 @@
     }
   }
 
-  show: init-gb7714.with(read(bibliography), style: "numeric", version: "2025", zh-period: if not graduate { "．" }, zh-colon: if not graduate { "： " }, zh-comma: if not graduate { "，" }, en-family-titlecase: not graduate)
+  show: init-gb7714.with(
+    read(bibliography),
+    style: "numeric",
+    version: "2025",
+    zh-period: if not graduate { "．" },
+    zh-colon: if not graduate { "： " },
+    zh-comma: if not graduate { "，" },
+    en-family-titlecase: not graduate,
+  )
 
   // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
   show: mainmatter.with(
@@ -154,27 +109,27 @@
 
   // 4. 前置部分（摘要、目录）
   frontmatter[
-    #if abstract != none {
+    #if abstract.keys().len() > 0 {
       if graduate {
-        let abstract-content = abstract-page(
-          keywords: keywords,
-          funding: funding,
-        )[#abstract]
+        let abstract-content = abstract-page(abstract: abstract)
         if background {
-          page(background: image("../template/duibi/graduate_abstract.pdf", width: 100%, height: 100%))[#abstract-content]
+          page(background: image(
+            "../template/duibi/graduate_abstract.pdf",
+            width: 100%,
+            height: 100%,
+          ))[#abstract-content]
         } else {
           abstract-content
         }
       } else {
         let abstract-content = abstract-page(
-          keywords: keywords,
+          abstract: abstract,
           keyword-label: "关键词",
           keyword-sep: "，",
           keyword-indent: false,
           outline-title: page-title("abstract", graduate: graduate),
           outlined: false,
-          funding: none,
-        )[#abstract]
+        )
         if background {
           page(background: image("../template/duibi/duibi.pdf", width: 100%, height: 100%))[#abstract-content]
         } else {
@@ -182,29 +137,27 @@
         }
       }
     }
-    #if abstract-en != none {
+    #if abstract-en.keys().len() > 0 {
       if graduate {
         abstract-page(
-          keywords: keywords-en,
-          funding: funding-en,
+          abstract: abstract-en,
           keyword-label: "Key words",
           keyword-weight: "bold",
           keyword-sep: "; ",
           keyword-indent: false,
           outline-title: "ABSTRACT",
           title: [*Abstract*],
-        )[#abstract-en]
+        )
       } else {
         abstract-page(
-          keywords: keywords-en,
+          abstract: abstract-en,
           keyword-label: "KEY WORDS",
           keyword-weight: "bold",
           keyword-sep: ", ",
           keyword-indent: false,
           outline-title: "ABSTRACT",
           outlined: false,
-          funding: none,
-        )[#abstract-en]
+        )
       }
     }
 
@@ -263,7 +216,11 @@
     }
 
     if acknowledgement != none {
-      backmatter-page(title: page-title("acknowledgement", graduate: true, english-writing: english-writing))[#acknowledgement]
+      backmatter-page(title: page-title(
+        "acknowledgement",
+        graduate: true,
+        english-writing: english-writing,
+      ))[#acknowledgement]
     }
 
     if academic-achievements != none {
@@ -273,13 +230,17 @@
     }
   } else {
     if acknowledgement != none {
-      backmatter-page(title: page-title("acknowledgement", graduate: false, english-writing: english-writing))[#acknowledgement]
+      backmatter-page(title: page-title(
+        "acknowledgement",
+        graduate: false,
+        english-writing: english-writing,
+      ))[#acknowledgement]
     }
 
-    if design_summary != none {
+    if design-summary != none {
       backmatter-page(
         title: page-title("design-summary", english-writing: english-writing),
-      )[#design_summary]
+      )[#design-summary]
     }
 
     if appendix != none {

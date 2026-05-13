@@ -162,10 +162,8 @@
   // ========================================
   // 第三页 - 英文封面
   // ========================================
-  // 自动填充英文学科名（当 major-en 为默认值且 major 在映射表中时）
-  if info.major-en == "XX" and info.major in major-en-map {
-    info.major-en = major-en-map.at(info.major)
-  }
+
+  let major-en = major-en-map.at(info.major)
   let supervisor-title-en = title-en-map.at(info.supervisor.at(1, default: "教授"), default: "Professor")
   let degree-title = if degree == "doctor" { "Doctor of " } else { "Master of " }
 
@@ -197,10 +195,10 @@
     #linebreak()
     #if degree == "doctor" {
       text(degree-title)
-      text(weight: "bold", info.major-en)
+      text(weight: "bold", major-en)
     } else {
       text(degree-title)
-      text(info.major-en)
+      text(major-en)
     }
     #v(75pt)
     #text(font: "Times New Roman")[Xi'an, P. R. China]

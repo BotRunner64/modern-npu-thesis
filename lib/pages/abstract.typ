@@ -2,10 +2,11 @@
 #import "../deps.typ": zh
 
 // 摘要页
+// abstract: 摘要字典，包含 content、keywords、funding
 // title: 页面和页眉显示的标题（默认使用 outline-title）
 // outline-title: 目录中显示的标题
-#let abstract(
-  keywords: (),
+#let abstract-page(
+  abstract: (:),
   keyword-label: "关键词",
   keyword-weight: "regular",
   keyword-sep: "；",
@@ -13,14 +14,15 @@
   outline-title: "摘　要",
   title: none,
   outlined: true,
-  funding: none,
-  body,
 ) = {
   let page-title = if title != none { title } else { outline-title }
+  let keywords = abstract.at("keywords", default: ())
+  let funding = abstract.at("funding", default: none)
+  let content = abstract.at("content", default: [])
 
   heading(level: 1, outlined: outlined, page-title)
 
-  body
+  content
 
   [
     #set par(first-line-indent: 0pt)

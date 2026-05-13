@@ -9,42 +9,48 @@
   anonymous: false, // 是否开启盲审模式
   english-writing: false, // 是否用英文写作（国际研究生论文）
   colored-cover: true, // 是否启用彩色封面
-  title: ("基于 Typst 的", "西北工业大学论文模板"),
-  title-en: "This is a Northwestern Polytechnical University thesis template based on Typst",
-  student-id: "2023123456",
-  class-no: "TP311.1",
-  author: "航小天",
-  author-en: "Xiaotian Hang",
-  department: "计算机学院",
-  major: "计算机科学与技术",
-  supervisor: ("张三", "教授"),
-  supervisor-en: "San Zhang",
-  submit-date: (year: 2026, month: 3),
-  reviewers: (
-    (name: "xxx", title: "教授", unit: "西北工业大学"),
-    blind-review,
-  ),
-  defence-committee: (
-    date: (year: 2026, month: 3, day: 9),
-    chairman: (name: "赵某某", title: "教授", unit: "西北工业大学"),
-    members: (
-      (name: "周某某", title: "教授", unit: "西北工业大学"),
-      (name: "吴某某", title: "副教授", unit: "西北工业大学"),
+  info: (
+    title: ("基于 Typst 的", "西北工业大学论文模板"),
+    title-en: "This is a Northwestern Polytechnical University thesis template based on Typst",
+    student-id: "2023123456",
+    class-no: "TP311.1",
+    author: "航小天",
+    author-en: "Xiaotian Hang",
+    department: "计算机学院",
+    major: "计算机科学与技术",
+    supervisor: ("张三", "教授"),
+    supervisor-en: "San Zhang",
+    submit-date: (year: 2026, month: 3),
+    reviewers: (
+      (name: "xxx", title: "教授", unit: "西北工业大学"),
+      blind-review,
     ),
-    secretary: (name: "郑某某", title: "讲师", unit: "西北工业大学"),
+    defence-committee: (
+      date: (year: 2026, month: 3, day: 9),
+      chairman: (name: "赵某某", title: "教授", unit: "西北工业大学"),
+      members: (
+        (name: "周某某", title: "教授", unit: "西北工业大学"),
+        (name: "吴某某", title: "副教授", unit: "西北工业大学"),
+      ),
+      secretary: (name: "郑某某", title: "讲师", unit: "西北工业大学"),
+    ),
   ),
-  abstract: [
-    中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
+  abstract: (
+    content: [
+      中文摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。摘要中不用图、表、化学结构式、非公知公用的符号和术语。
 
-    内容一般包括：从事这项研究工作的目的和意义；完成的工作（作者独立进行的研究工作及相应结果的概括性叙述）；获得的主要结论（这是摘要的中心内容）。
-  ],
-  keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
-  funding: "本研究得到某某基金（编号：   ）资助。",
-  abstract-en: [
-    English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
-  ],
-  keywords-en: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
-  funding-en: "The present work is supported by the XXX（Project No.xxx）",
+      内容一般包括：从事这项研究工作的目的和意义；完成的工作（作者独立进行的研究工作及相应结果的概括性叙述）；获得的主要结论（这是摘要的中心内容）。
+    ],
+    keywords: ("关键词一", "关键词二", "关键词三", "关键词四"),
+    funding: "本研究得到某某基金（编号：   ）资助。",
+  ),
+  abstract-en: (
+    content: [
+      English abstract content. The abstract should generally explain the purpose, experimental methods, results, and final conclusions of the research, with emphasis on the results and conclusions.
+    ],
+    keywords: ("Keyword1", "Keyword2", "Keyword3", "Keyword4"),
+    funding: "The present work is supported by the XXX（Project No.xxx）",
+  ),
   appendix: [
     附录是学位论文主体的补充，并不是必需的。
 

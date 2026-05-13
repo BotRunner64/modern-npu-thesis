@@ -4,30 +4,36 @@
 
 #show: nwpu-thesis.with(
   anonymous: false, // 是否开启盲审模式
-  title: ("基于 Typst 的西工大论文模板", "长标题支持"),
-  author: "航小天",
-  major: "计算机科学与技术",
-  supervisor: ("张三", "教授"),
-  submit-date: (year: 2026, month: 3),
-  abstract: [
-    听觉虚拟又可称为可听化，是近年来随着声学仿真技术的发展而出现的新概念，即通过对包含单个（或多个）声源的声场进行物理或数学建模，以达到模拟空间听音效果的目的。若考虑双耳效应，则可称为双耳听觉虚拟（Binaural Modeling）。
+  info: (
+    title: ("基于 Typst 的西工大论文模板", "长标题支持"),
+    author: "航小天",
+    major: "计算机科学与技术",
+    supervisor: ("张三", "教授"),
+    submit-date: (year: 2026, month: 3),
+  ),
+  abstract: (
+    content: [
+      听觉虚拟又可称为可听化，是近年来随着声学仿真技术的发展而出现的新概念，即通过对包含单个（或多个）声源的声场进行物理或数学建模，以达到模拟空间听音效果的目的。若考虑双耳效应，则可称为双耳听觉虚拟（Binaural Modeling）。
 
-    ……
-  ],
-  keywords: ("听觉虚拟", "HRTF", "神经网络"),
-  abstract-en: [
-    Virtual auditory technology is also called auralization. It is brought forward as a new concept with the development of acoustic simulation techniques in recent years and can be implemented by establishing the physical or mathematical models of a sound field to achieve sound effects simulation. If we consider the binaural effect, it can be called binaural virtual auditory.
+      ……
+    ],
+    keywords: ("听觉虚拟", "HRTF", "神经网络"),
+  ),
+  abstract-en: (
+    content: [
+      Virtual auditory technology is also called auralization. It is brought forward as a new concept with the development of acoustic simulation techniques in recent years and can be implemented by establishing the physical or mathematical models of a sound field to achieve sound effects simulation. If we consider the binaural effect, it can be called binaural virtual auditory.
 
-    ……..
-  ],
-  keywords-en: ("virtual auditory", "HRTF", "neural network"),
+      ……..
+    ],
+    keywords: ("virtual auditory", "HRTF", "neural network"),
+  ),
   appendix: [
     附录内容……
   ],
   acknowledgement: [
     致谢内容……
   ],
-  design_summary: [
+  design-summary: [
     小结内容……
   ],
 )
