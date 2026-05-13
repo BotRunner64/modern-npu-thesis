@@ -75,7 +75,7 @@
   scan-declaration: none,
   design_summary: none,
   bibliography: none,
-  background: true,
+  background: false,
   // 文档正文
   body,
 ) = {
