@@ -12,7 +12,6 @@
 #import "pages/outline.typ": outline-page
 #import "pages/backmatter-page.typ": backmatter-page
 #import "pages/references.typ": bilingual-bibliography
-#import "layouts/format.typ": heading-format, line-spacing, page-format
 #import "utils.typ": blind-review, distribute, page-title
 
 #let default-bibliography(graduate) = {
@@ -25,8 +24,8 @@
 
 #let nwpu-thesis(
   graduate: false,
-  degree: "master", // "master" | "doctor"（仅研究生）
-  track: "academic", // "academic" | "professional"（仅研究生）
+  degree: "master",
+  track: "academic",
   anonymous: false,
   english-writing: false,
   colored-cover: false,
@@ -38,15 +37,12 @@
   appendix: none,
   scan-declaration: none,
   design-summary: none,
-  bibliography: none,
   body,
 ) = {
-  if bibliography == none {
-    bibliography = default-bibliography(graduate)
-  }
+  let bibliography = default-bibliography(graduate)
 
   // 1. 文稿设置
-  show: doc.with(margin: if graduate { page-format.graduate-margin } else { page-format.bachelor-margin })
+  show: doc.with(graduate: graduate)
 
   // 2. 封面
   if graduate {
@@ -79,24 +75,6 @@
     graduate: graduate,
     degree: degree,
     english-writing: english-writing,
-    leading: if graduate { line-spacing.graduate } else { line-spacing.bachelor },
-    spacing: if graduate { line-spacing.graduate } else { line-spacing.bachelor },
-    heading-above: if graduate { heading-format.graduate.above } else { heading-format.bachelor.above },
-    heading-below: if graduate { heading-format.graduate.below } else { heading-format.bachelor.below },
-    heading-numbering: (..nums) => {
-      let nums = nums.pos()
-      if nums.len() == 1 {
-        if english-writing {
-          [Chapter #nums.at(0)#h(0.7em)]
-        } else if graduate {
-          [第 #nums.at(0) 章#h(0.7em)]
-        } else {
-          numbering("第一章　", nums.at(0))
-        }
-      } else if nums.len() <= 3 {
-        numbering("1.1", ..nums)
-      }
-    },
   )
 
   // 4. 前置部分（摘要、目录）
@@ -144,12 +122,10 @@
   body
 
   // 6. 后置部分
-  if bibliography != none {
-    bilingual-bibliography(
-      graduate: graduate,
-      english-writing: english-writing,
-    )
-  }
+  bilingual-bibliography(
+    graduate: graduate,
+    english-writing: english-writing,
+  )
 
   if acknowledgement != none {
     backmatter-page(

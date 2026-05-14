@@ -1,6 +1,5 @@
 #import "../deps.typ": algorithm-figure, cap-style, capfig-style, captab-style, i-figured, style-algorithm, zh
 #import "../utils.typ": 字体
-#import "format.typ": caption-format
 
 // 统一编号格式状态：正文 "1-1"，附录 "A-1"
 #let numbering-format = state("nwpu-numbering-format", "1-1")
@@ -9,23 +8,6 @@
   numbering-format.update(format)
   show: cap-style.with(numbering-format: format)
   it
-}
-
-// 公式编号：研究生用半角括号 (1-1)，本科用全角括号 （1-1）
-#let show-equation-handler(is-graduate) = {
-  if is-graduate {
-    i-figured.show-equation.with(
-      numbering: (..nums) => context {
-        numbering("(" + numbering-format.get() + ")", ..nums)
-      },
-    )
-  } else {
-    i-figured.show-equation.with(
-      numbering: (..nums) => context {
-        [（#numbering(numbering-format.get(), ..nums)）]
-      },
-    )
-  }
 }
 
 #let algorithm(english-writing: false, title: none, ..body) = {
@@ -68,13 +50,21 @@
 
   // 公式编号
   set math.equation(supplement: if english-writing { [Equation] } else { [式] })
-  show math.equation.where(block: true): show-equation-handler(graduate)
+  show math.equation.where(block: true): i-figured.show-equation.with(
+    numbering: (..nums) => context {
+      if graduate {
+        numbering("(" + numbering-format.get() + ")", ..nums)
+      } else {
+        [（#numbering(numbering-format.get(), ..nums)）]
+      }
+    },
+  )
 
   // cap-able 全局样式（共享参数）
   show: cap-style.with(
     numbering-format: "1-1",
     use-chapter: true,
-    caption-size: caption-format.size,
+    caption-size: zh(5),
     pre-supplement-number-spacing: if english-writing { 0.3em } else { 0em },
   )
 
@@ -86,7 +76,7 @@
   show: captab-style.with(
     three-line-table: if graduate { true } else { false },
     supplement: if english-writing { "Table" } else { "表" },
-    body-size: caption-format.size,
+    body-size: zh(5),
     cell-inset: (x: if graduate { 0.5em } else { 0.8em }, y: if graduate { 0.55em } else { 0.7em }),
     middle-rule: 1pt,
     caption-text: if graduate { (font: 字体.宋体混排) } else { (font: 字体.黑体) },

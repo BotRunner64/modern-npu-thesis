@@ -2,19 +2,31 @@
 #import "../utils.typ": 字体
 #import "header-footer.typ": page-footer, page-header-footer
 #import "floats.typ": setup-floats
-#import "format.typ": line-spacing
 
 #let mainmatter(
   graduate: false,
   degree: "master",
   english-writing: false,
-  leading: line-spacing.bachelor,
-  spacing: line-spacing.bachelor,
-  heading-above: (),
-  heading-below: (),
-  heading-numbering: none,
   it,
 ) = {
+  let leading = if graduate { 11.8pt } else { 11pt }
+  let heading-above = if graduate { (13pt, 7pt, 5pt) } else { (20pt, 0pt, 0pt) }
+  let heading-below = if graduate { (14pt, 0pt, 0pt) } else { (24pt, 2pt, 0pt) }
+  let heading-numbering = (..nums) => {
+    let nums = nums.pos()
+    if nums.len() == 1 {
+      if english-writing {
+        [Chapter #nums.at(0)#h(0.7em)]
+      } else if graduate {
+        [第 #nums.at(0) 章#h(0.7em)]
+      } else {
+        numbering("第一章　", nums.at(0))
+      }
+    } else if nums.len() <= 3 {
+      numbering("1.1", ..nums)
+    }
+  }
+
   // 图、表、公式、算法样式
   show: setup-floats.with(graduate: graduate, english-writing: english-writing)
 
@@ -27,7 +39,7 @@
     leading: leading,
     justify: true,
     first-line-indent: (amount: 2em, all: true),
-    spacing: spacing,
+    spacing: leading,
   )
 
   // 处理标题
@@ -47,8 +59,8 @@
     )
     set par(first-line-indent: (amount: 0pt))
 
-    let above-extra = if it.level <= heading-above.len() { heading-above.at(it.level - 1) } else { 0pt }
-    let below-extra = if it.level <= heading-below.len() { heading-below.at(it.level - 1) } else { 0pt }
+    let above-extra = heading-above.at(it.level - 1)
+    let below-extra = heading-below.at(it.level - 1)
 
     // 一级标题统一换页并居中
     if it.level == 1 {
@@ -56,7 +68,7 @@
       v(leading + above-extra)
       align(center, block(below: leading + below-extra, it))
     } else {
-      block(above: leading + above-extra, below: spacing + below-extra, it)
+      block(above: leading + above-extra, below: leading + below-extra, it)
     }
   }
 

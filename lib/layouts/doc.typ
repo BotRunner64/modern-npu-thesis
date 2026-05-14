@@ -3,9 +3,14 @@
 #import "../utils.typ": 字体
 
 #let doc(
-  margin: auto,
+  graduate: false,
   it,
 ) = {
+  let margin = if graduate {
+    (top: 2.54cm, bottom: 2.54cm, left: 2.5cm, right: 2.5cm)
+  } else {
+    (top: 2.54cm, bottom: 2.54cm, left: 3.18cm, right: 3.18cm)
+  }
   show: show-cn-fakebold
   set text(zh(4.5), font: 字体.宋体混排, lang: "zh")
   set par(leading: 12pt, spacing: 12pt)
