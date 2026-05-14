@@ -1,4 +1,4 @@
-#import "../utils.typ": 字体, datetime-display, info-row, mask-value, half-space
+#import "../utils.typ": 字体, char-space, datetime-display, info-row, mask-value
 #import "../deps.typ": zh
 
 // 本科生封面
@@ -26,7 +26,7 @@
     #table(
       columns: (2cm, 11cm),
       rows: if has-second-line { (1.2cm, 1.1cm) } else { (1.2cm,) },
-      ..info-row(text(weight: "bold")[#half-space("题目")], [#info.title.at(0, default: "")]),
+      ..info-row(text(weight: "bold")[#char-space("题目")], [#info.title.at(0, default: "")]),
       ..if has-second-line {
         info-row([], [#info.title.at(1)])
       },

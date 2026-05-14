@@ -14,10 +14,6 @@
   ),
 )
 
-#let chinese-chapter-number(n) = {
-  ("一", "二", "三", "四", "五", "六", "七", "八", "九", "十").at(n - 1)
-}
-
 // ── 封面共享工具 ──
 
 // 分散对齐：将中文以指定宽度显示，每个字之间用均匀空隙填充
@@ -26,20 +22,14 @@
   body + linebreak(justify: true),
 )
 
-// 中文字符间插半角空格
-#let half-space(body) = {
+// 中文字符间插空格：full: false 用半角(0.5em)，full: true 用全角(1em)
+#let char-space(full: false, body) = {
   let chars = body.clusters()
-  chars.filter(c => c != " ").intersperse(h(0.5em)).join()
-}
-
-// 中文字符间插全角空格
-#let full-space(body) = {
-  let chars = body.clusters()
-  chars.filter(c => c != " ").intersperse("\u{3000}").join()
+  chars.filter(c => c != " ").intersperse(if full { h(1em) } else { h(0.5em) }).join()
 }
 
 // 页面标题映射：key => (本科中文, 研究生中文, 英文)
-#let _title-map = (
+#let page-title-map = (
   abstract: ("摘要", "摘要", "Abstract"),
   abstract-en: ("ABSTRACT", "ABSTRACT", "ABSTRACT"),
   outline: ("目录", "目录", "Contents"),
@@ -52,12 +42,12 @@
 
 // 统一页面标题：根据 key 返回对应标题，两字标题自动插空格
 #let page-title(key, graduate: false, english-writing: false) = {
-  let entry = _title-map.at(key)
+  let entry = page-title-map.at(key)
   let zh-title = if graduate { entry.at(1) } else { entry.at(0) }
   if english-writing {
     entry.at(2)
   } else if zh-title != none and zh-title.clusters().len() == 2 {
-    if graduate { full-space(zh-title) } else { half-space(zh-title) }
+    if graduate { char-space(full: true, zh-title) } else { char-space(zh-title) }
   } else {
     zh-title
   }

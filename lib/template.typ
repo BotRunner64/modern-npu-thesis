@@ -13,7 +13,7 @@
 #import "pages/backmatter-page.typ": backmatter-page
 #import "pages/references.typ": bilingual-bibliography
 #import "layouts/format.typ": heading-format, line-spacing, page-format
-#import "utils.typ": blind-review, chinese-chapter-number, distribute, page-title
+#import "utils.typ": blind-review, distribute, page-title
 
 #let default-bibliography(graduate) = {
   if not graduate {
@@ -39,7 +39,6 @@
   scan-declaration: none,
   design-summary: none,
   bibliography: none,
-  background: false,
   body,
 ) = {
   if bibliography == none {
@@ -59,15 +58,10 @@
       info: info,
     )
   } else {
-    let cover-content = bachelor-cover(
+    bachelor-cover(
       anonymous: anonymous,
       info: info,
     )
-    if background {
-      page(background: image("../template/duibi/bachelor_cover.pdf", width: 100%, height: 100%))[#cover-content]
-    } else {
-      cover-content
-    }
   }
 
   show: init-gb7714.with(
@@ -97,7 +91,7 @@
         } else if graduate {
           [第 #nums.at(0) 章#h(0.7em)]
         } else {
-          [第#chinese-chapter-number(nums.at(0))章　]
+          numbering("第一章　", nums.at(0))
         }
       } else if nums.len() <= 3 {
         numbering("1.1", ..nums)
@@ -107,79 +101,35 @@
 
   // 4. 前置部分（摘要、目录）
   frontmatter[
-    #if abstract.keys().len() > 0 {
-      if graduate {
-        let abstract-content = abstract-page(abstract: abstract)
-        if background {
-          page(background: image(
-            "../template/duibi/graduate_abstract.pdf",
-            width: 100%,
-            height: 100%,
-          ))[#abstract-content]
-        } else {
-          abstract-content
-        }
-      } else {
-        let abstract-content = abstract-page(
-          abstract: abstract,
-          keyword-label: "关键词",
-          keyword-sep: "，",
-          keyword-indent: false,
-          outline-title: page-title("abstract", graduate: graduate),
-          outlined: false,
-        )
-        if background {
-          page(background: image("../template/duibi/duibi.pdf", width: 100%, height: 100%))[#abstract-content]
-        } else {
-          abstract-content
-        }
-      }
-    }
-    #if abstract-en.keys().len() > 0 {
-      if graduate {
-        abstract-page(
-          abstract: abstract-en,
-          keyword-label: "Key words",
-          keyword-weight: "bold",
-          keyword-sep: "; ",
-          keyword-indent: false,
-          outline-title: "ABSTRACT",
-          title: [*Abstract*],
-        )
-      } else {
-        abstract-page(
-          abstract: abstract-en,
-          keyword-label: "KEY WORDS",
-          keyword-weight: "bold",
-          keyword-sep: ", ",
-          keyword-indent: false,
-          outline-title: "ABSTRACT",
-          outlined: false,
-        )
-      }
-    }
+    #abstract-page(
+      abstract: abstract,
+      keyword-label: "关键词",
+      keyword-sep: if graduate { "；" } else { "，" },
+      keyword-indent: graduate,
+      outline-title: page-title("abstract", graduate: graduate),
+      outlined: graduate,
+    )
+    #abstract-page(
+      abstract: abstract-en,
+      keyword-label: if graduate { "Key words" } else { "KEY WORDS" },
+      keyword-weight: "bold",
+      keyword-sep: if graduate { "; " } else { ", " },
+      keyword-indent: false,
+      outline-title: "ABSTRACT",
+      title: if graduate { [*Abstract*] },
+      outlined: graduate,
+    )
 
-    #if graduate {
-      let outline-content = outline-page(title: page-title("outline", graduate: true, english-writing: english-writing))
-      if background {
-        page(background: image("../template/duibi/graduate_outline.pdf", width: 100%, height: 100%))[#outline-content]
-      } else {
-        outline-content
-      }
-    } else {
-      let outline-content = outline-page(
-        title: [*#page-title("outline", graduate: false, english-writing: english-writing)*],
-        indent: (0em, 1.8em, 1.3em),
-        weight: ("bold", "regular", "regular"),
-        fill: ([#repeat[#text(zh(5))[…]]],),
-        vspace: (1.25em, 1em),
-        gap: (-0.5em, 0.5em),
+    #{
+      let outline-title = page-title("outline", graduate: graduate, english-writing: english-writing)
+      outline-page(
+        title: if graduate { outline-title } else { [*#outline-title*] },
+        indent: if not graduate { (0em, 1.8em, 1.3em) } else { (0em, 1.8em, 1.7em) },
+        weight: if not graduate { ("bold", "regular", "regular") } else { (auto,) },
+        fill: if not graduate { ([#repeat[#text(zh(5))[…]]],) } else { (repeat([.]),) },
+        vspace: if not graduate { (1.25em, 1em) } else { (none,) },
+        gap: if not graduate { (-0.5em, 0.5em) } else { (auto,) },
       )
-      if background {
-        page(background: image("../template/duibi/bachelor_outline.pdf", width: 100%, height: 100%))[#outline-content]
-      } else {
-        outline-content
-      }
     }
 
     #if graduate {
@@ -201,56 +151,38 @@
     )
   }
 
-  if graduate {
-    if appendix != none {
-      show: appendix-layout.with(
-        graduate: graduate,
-        english-writing: english-writing,
-      )
-      [
-        #heading(level: 1)[]
-        #appendix
-      ]
-    }
+  if acknowledgement != none {
+    backmatter-page(
+      "acknowledgement",
+      graduate: graduate,
+      english-writing: english-writing,
+    )[#acknowledgement]
+  }
 
-    if acknowledgement != none {
-      backmatter-page(title: page-title(
-        "acknowledgement",
-        graduate: true,
-        english-writing: english-writing,
-      ))[#acknowledgement]
-    }
+  if graduate and academic-achievements != none {
+    backmatter-page(
+      "academic-achievements",
+      graduate: true,
+      english-writing: english-writing,
+    )[#academic-achievements]
+  }
 
-    if academic-achievements != none {
-      backmatter-page(
-        title: page-title("academic-achievements", graduate: true, english-writing: english-writing),
-      )[#academic-achievements]
-    }
-  } else {
-    if acknowledgement != none {
-      backmatter-page(title: page-title(
-        "acknowledgement",
-        graduate: false,
-        english-writing: english-writing,
-      ))[#acknowledgement]
-    }
+  if not graduate and design-summary != none {
+    backmatter-page(
+      "design-summary",
+      english-writing: english-writing,
+    )[#design-summary]
+  }
 
-    if design-summary != none {
-      backmatter-page(
-        title: page-title("design-summary", english-writing: english-writing),
-      )[#design-summary]
-    }
-
-    if appendix != none {
-      show: appendix-layout.with(
-        graduate: graduate,
-        english-writing: english-writing,
-      )
-      [
-        #heading(level: 1)[]
-        #appendix
-      ]
-    }
+  if appendix != none {
+    show: appendix-layout.with(
+      graduate: graduate,
+      english-writing: english-writing,
+    )
+    [
+      #heading(level: 1)[]
+      #appendix
+    ]
   }
 
   if graduate {

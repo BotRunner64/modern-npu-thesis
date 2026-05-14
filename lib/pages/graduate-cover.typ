@@ -1,5 +1,5 @@
 #import "../utils.typ": (
-  字体, datetime-display, datetime-display-en, distribute, half-space, info-row, major-en-map, mask-value,
+  字体, char-space, datetime-display, datetime-display-en, distribute, info-row, major-en-map, mask-value,
   title-en-map,
 )
 #import "../deps.typ": zh
@@ -95,13 +95,13 @@
     #table(
       columns: (3.59cm, 9cm),
       rows: (1cm,),
-      ..info-row(half-space(major-label), info.major),
-      ..info-row([#half-space("指导教师")], anonymous-text(
+      ..info-row(char-space(major-label), info.major),
+      ..info-row([#char-space("指导教师")], anonymous-text(
         "supervisor",
         info.supervisor.intersperse(" ").sum(),
       )),
-      ..info-row([#half-space("培养单位")], info.department),
-      ..info-row([#half-space("申请日期")], datetime-display(info.submit-date)),
+      ..info-row([#char-space("培养单位")], info.department),
+      ..info-row([#char-space("申请日期")], datetime-display(info.submit-date)),
     )
   ]
 
@@ -112,12 +112,12 @@
   pagebreak(weak: true, to: "odd")
   v(88pt)
   text(zh(3))[
-    #half-space("西北工业大学")
+    #char-space("西北工业大学")
   ]
   v(10pt)
   let degree-label = if degree == "doctor" { "博士学位论文" } else { "硕士学位论文" }
   text(zh(1))[
-    #half-space(degree-label)
+    #char-space(degree-label)
   ]
   v(140pt)
   text(zh(2))[

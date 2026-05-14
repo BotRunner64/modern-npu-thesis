@@ -2,12 +2,12 @@
 
 // 目录页
 #let outline-page(
-  title: "目　录",
-  indent: (0em, 1.8em, 1.7em),
-  weight: (auto,),
-  fill: (repeat([.]),),
-  vspace: (none,),
-  gap: (auto,),
+  title: none,
+  indent: none,
+  weight: none,
+  fill: none,
+  vspace: none,
+  gap: none,
 ) = {
   [
     #heading(level: 1, outlined: false, title)
