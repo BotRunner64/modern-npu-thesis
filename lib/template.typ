@@ -68,6 +68,7 @@
     zh-colon: if not graduate { "： " },
     zh-comma: if not graduate { "，" },
     en-family-titlecase: not graduate,
+    range-sep: if not graduate { "~" } else { "-" },
   )
 
   // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
