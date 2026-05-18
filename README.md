@@ -41,7 +41,7 @@
 
 QQ 交流群：
 
-<img src="template/figures/QQ交流群.jpg" width="200">
+<img src="template/figures/QQ交流群.png" width="200">
 
 ### 依赖包
 
