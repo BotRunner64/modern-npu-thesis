@@ -18,7 +18,23 @@
 - `../materials/中期报告/吴秉谦-中期报告.pdf`：已有中文研究内容、阶段性实验和参考文献。
 - `../materials/开题报告/auto3R.pdf`：Auto3R 核心论文内容。
 - `../materials/开题报告/ref.pdf`：主动三维重建相关工作整理。
+- `../materials/paper`：Auto3R 论文 LaTeX 源码、参考文献和图资源，是方法、实验、图表、公式和图注的优先参考来源。
 - `../Auto3R`：项目代码和工程实现细节来源。
+
+`../materials/paper` 的关键文件：
+
+- `main.tex`：论文主入口，包含摘要、引言、相关工作、方法、实验、结论和补充材料。
+- `sec/00_abstract.tex`：Auto3R 英文摘要。
+- `sec/01_intro.tex`：引言，可用于第一章背景、问题动机和贡献整理。
+- `sec/02_related.tex`：相关工作，可用于第一章研究现状和第二章主动重建/不确定性基础。
+- `sec/03_overview.tex`：系统概览，可用于第三章总体框架。
+- `sec/04_algorithm.tex`：方法核心，可用于第四章不确定性模型、公式、训练流程和机器人路径扩展。
+- `sec/05_experiment.tex`：实验部分，可用于第五章实验设置、基线、指标、结果表和消融分析。
+- `sec/supple.tex`：补充实验与实现细节，可用于扩展第五章和总结展望。
+- `main.bib`：Auto3R 原论文参考文献来源，后续整理 `template/bib/bachelor.bib` 时优先参考。
+- `figures/`：Auto3R 图资源，包含 teaser、整体流程、训练流程、不确定性融合、实验可视化、机器人扫描等图，可根据本科论文需要转换或重绘。
+
+使用 `../materials/paper` 时，不能直接照搬英文论文的短篇论文结构。应将其内容改写、扩展为中文本科毕业设计论文：英文论文中的 `Overview` 可扩展为第三章，`Method` 可扩展为第四章，`Experiments` 可扩展为第五章；同时补充第二章基础技术背景，使论文篇幅和叙事接近 `good_paper.pdf`。
 
 ## 论文大纲草案
 
