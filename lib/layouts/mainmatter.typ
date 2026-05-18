@@ -44,6 +44,7 @@
 
   // 处理标题
   set heading(numbering: heading-numbering)
+  show heading: set text(font: 字体.黑体)
   show heading: it => {
     if it.level == 1 {
       counter(figure.where(kind: "algorithm")).update(0)
@@ -53,7 +54,6 @@
     }
 
     set text(
-      font: 字体.黑体混排,
       size: (zh(3), zh(4), zh(4.5)).at(calc.min(it.level, 3) - 1),
       weight: "regular",
     )
