@@ -12,8 +12,8 @@
     (top: 2.54cm, bottom: 2.54cm, left: 3.18cm, right: 3.18cm)
   }
   show: show-cn-fakebold
-  set text(zh(4.5), font: 字体.宋体混排, hyphenate: true, lang: "en")
-  show regex("[\p{Han}]+"): set text(lang: "zh")
+  set text(zh(4.5), font: 字体.宋体混排, hyphenate: true, lang: "zh")
+  show regex("[a-zA-Z]+"): set text(lang: "en")
   set par(leading: 12pt, spacing: 12pt)
   set align(center)
   set table(stroke: none, align: center, inset: (x: 0pt, y: 4pt))
