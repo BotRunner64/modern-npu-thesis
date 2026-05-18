@@ -135,7 +135,7 @@
     )[#appendix]
   }
 
-  if acknowledgement != none {
+  if not anonymous {
     backmatter-page(
       "acknowledgement",
       graduate: graduate,

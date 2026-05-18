@@ -28,24 +28,24 @@
   chars.filter(c => c != " ").intersperse(if full { h(1em) } else { h(0.5em) }).join()
 }
 
-// 页面标题映射：key => (本科中文, 研究生中文, 英文)
+// 页面标题映射：key => (中文, 英文)
 #let page-title-map = (
-  abstract: ("摘要", "摘要", "Abstract"),
-  abstract-en: ("ABSTRACT", "ABSTRACT", "ABSTRACT"),
-  outline: ("目录", "目录", "Contents"),
-  references: ("参考文献", "参考文献", "References"),
-  acknowledgement: ("致谢", "致谢", "Acknowledgements"),
-  appendix: ("附录", "附录", "Appendix"),
-  design-summary: ("毕业设计小结", none, "Design Summary"),
-  academic-achievements: (none, "在学期间取得的学术成果和参加科研情况", "Academic Achievements and Research Experience"),
+  abstract: ("摘要", "Abstract"),
+  abstract-en: ("ABSTRACT", "ABSTRACT"),
+  outline: ("目录", "Contents"),
+  references: ("参考文献", "References"),
+  acknowledgement: ("致谢", "Acknowledgements"),
+  appendix: ("附录", "Appendix"),
+  design-summary: ("毕业设计小结", "Design Summary"),
+  academic-achievements: ("在学期间取得的学术成果和参加科研情况", "Academic Achievements and Research Experience"),
 )
 
 // 统一页面标题：根据 key 返回对应标题，两字标题自动插空格
 #let page-title(key, graduate: false, english-writing: false) = {
   let entry = page-title-map.at(key)
-  let zh-title = if graduate { entry.at(1) } else { entry.at(0) }
+  let zh-title = entry.at(0)
   if english-writing {
-    entry.at(2)
+    entry.at(1)
   } else if zh-title != none and zh-title.clusters().len() == 2 {
     if graduate { char-space(full: true, zh-title) } else { char-space(zh-title) }
   } else {
