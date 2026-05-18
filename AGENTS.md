@@ -42,6 +42,16 @@
 - `../materials/paper`：Auto3R 论文 LaTeX 源码、参考文献和图资源，是方法、实验、图表、公式和图注的优先参考来源。
 - `../Auto3R`：项目代码和工程实现细节来源。
 
+图像素材使用规范：
+
+- 已筛选、去重并规范命名的论文候选插图放在 `../materials/figures`。
+- `../materials/figures/README.md` 是图像索引文件，记录每张图的规范文件名、原始来源、建议章节、内容说明和建议图题。写正文或插图前应优先查该文件。
+- `../materials/figures` 中的图片文件采用平铺目录，不再按论文图、汇报图或章节建立子目录。
+- 图片命名统一采用 `chXX_语义描述.png` 格式，例如 `ch03_active_reconstruction_pipeline.png`、`ch04_uncertainty_fusion_module.png`、`ch05_robot_scanning_result.png`。其中 `chXX` 表示建议使用章节，后半部分描述图像内容；不要使用 `slide_`、`paper_`、`legacy` 等按来源或版本区分的前缀。
+- 图像来源可能包括 Auto3R 论文原图和汇报 PPT 图，但正式写作时只按图像内容、清晰度和章节需要选择。来源差异只在 `README.md` 中说明，不体现在文件名中。
+- 若后续新增、删除、重命名或替换图片，必须同步更新 `../materials/figures/README.md`，避免正文引用失效或图题说明过期。
+- 写入论文工程前，图片可先保留在 `../materials/figures`；只有确定正文需要引用时，再复制到 `template/figures` 或按 Typst 可访问路径引用。
+
 `../materials/paper` 的关键文件：
 
 - `main.tex`：论文主入口，包含摘要、引言、相关工作、方法、实验、结论和补充材料。
