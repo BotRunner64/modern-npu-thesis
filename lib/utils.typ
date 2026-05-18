@@ -7,7 +7,10 @@
     (name: "Times New Roman", covers: "latin-in-cjk"),
     "SimSun",
   ),
-  黑体: ("SimHei",),
+  黑体: (
+    (name: "Arial", covers: "latin-in-cjk"),
+    "SimHei",
+  ),
   黑体混排: (
     (name: "Times New Roman", covers: "latin-in-cjk"),
     "SimHei",

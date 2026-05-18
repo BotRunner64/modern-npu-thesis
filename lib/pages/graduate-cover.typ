@@ -51,7 +51,7 @@
 
     v(231pt)
 
-    text(zh(2), font: 字体.黑体混排, weight: "bold")[
+    text(zh(2), font: 字体.黑体, weight: "bold")[
       #table(
         columns: (2.34cm, 12.13cm),
         rows: (1.45cm, 1.45cm),
