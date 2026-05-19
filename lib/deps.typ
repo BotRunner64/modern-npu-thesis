@@ -2,10 +2,10 @@
 // 所有 @preview 包和本地拷贝的包统一在此引入，其他文件从这里 re-export
 
 // cap-able（本地拷贝，dev 分支）
-#import "cap-able/lib.typ": cap-style, capfig, capfig-style, capsubfig, captab, captab-style
+#import "3rdparty/cap-able/lib.typ": cap-style, capfig, capfig-style, capsubfig, captab, captab-style
 
 // gb7714-bilingual（本地拷贝，基于 main 分支修改版）
-#import "gb7714-bilingual/lib.typ": init-gb7714, multicite, gb7714-bibliography, format-authors
+#import "3rdparty/gb7714-bilingual/lib.typ": init-gb7714, multicite, gb7714-bibliography, format-authors
 
 // algorithmic（伪代码/算法排版）
 #import "@preview/algorithmic:1.0.7": algorithm-figure, style-algorithm, If, While, For, Assign, Return, Procedure, Comment, Line, IfElseChain, LineBreak, ElseIf, Else, Function, Break, Terminate
@@ -22,8 +22,8 @@
 // numbly（标题编号模板）
 #import "@preview/numbly:0.1.0": numbly
 
-// outrageous（目录条目排版）
-#import "@preview/outrageous:0.4.1"
+// outrageous（目录条目排版，本地拷贝）
+#import "3rdparty/outrageous/outrageous.typ"
 
 // pointless-size（中文字号）
 #import "@preview/pointless-size:0.1.2": zh
