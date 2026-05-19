@@ -35,9 +35,10 @@
     ],
     keywords: ("active 3D reconstruction", "data-driven uncertainty", "3D Gaussian Splatting", "next-best-view", "robotic scanning"),
   ),
-  appendix: [
-    附录内容……
-  ],
+  appendix: none,
+  // appendix: [
+  //   附录内容……
+  // ],
   acknowledgement: [
     时光荏苒，本科阶段的学习生活即将结束。回顾毕业设计和论文写作的整个过程，从课题理解、文献调研、方法实现、实验分析到论文成文，每一步都离不开老师、同学、朋友和家人的帮助与支持。在论文完成之际，谨向所有关心和帮助过我的人表示衷心的感谢。
 
