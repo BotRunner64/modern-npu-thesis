@@ -28,7 +28,8 @@
 
   let body = []
   if owner != "" {
-    body += [#owner#punct.period ]
+    let o = if type(owner) == str { owner.trim(regex("[.．]"), at: end) } else { owner }
+    body += [#o#punct.period ]
   }
   body += [#title]
   body += [[P]#punct.period ]
@@ -60,11 +61,12 @@
   let publisher = fields.at("publisher", default: fields.at("institution", default: ""))
   let year = str(fields.at("year", default: fields.at("date", default: "")))
   let pages = str(fields.at("pages", default: "")).replace("--", "-")
-  let in-prefix = if lang == "zh" { "见：" } else { "In: " }
+  let in-prefix = if lang == "zh" { "见；" } else { "In; " }
 
   let body = []
   if author != "" {
-    body += [#author#punct.period ]
+    let a = if type(author) == str { author.trim(regex("[.．]"), at: end) } else { author }
+    body += [#a#punct.period ]
   }
   body += [#title]
   if graduate {
@@ -73,7 +75,8 @@
     body += [[A]#punct.period ]
     body += [#in-prefix]
     if editor != "" {
-      body += [#editor#punct.period ]
+      let e = if type(editor) == str { editor.trim(regex("[.．]"), at: end) } else { editor }
+      body += [#e#punct.period ]
     }
     if proceedings-title != "" {
       body += [#proceedings-title]
@@ -115,7 +118,8 @@
 
   let body = []
   if author != "" {
-    body += [#author#punct.period ]
+    let a = if type(author) == str { author.trim(regex("[.．]"), at: end) } else { author }
+    body += [#a#punct.period ]
   }
   if title != "" {
     body += [#title#punct.period ]
@@ -150,7 +154,8 @@
 
   let body = []
   if drafter != "" {
-    body += [#drafter#punct.period ]
+    let d = if type(drafter) == str { drafter.trim(regex("[.．]"), at: end) } else { drafter }
+    body += [#d#punct.period ]
   }
   if standard-number != "" and title != "" {
     body += [#(standard-number + punct.comma + str(title))]
