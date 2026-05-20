@@ -25,7 +25,7 @@
 3. 打开项目后：
    分别修改 [template/graduate.typ](template/graduate.typ) 和 [template/bachelor.typ](template/bachelor.typ) 可编辑研究生或本科生论文。
 
-仓库已提供工作区配置 [.vscode/settings.json](.vscode/settings.json)，会为 Tinymist 默认追加 `--font-path fonts`，因此在不同系统下都会优先使用仓库内自带的 Windows 字体文件。
+非 Windows 系统用户需要另外下载 [`fonts`](https://github.com/1195343015/nwputhesis-fonts) 子模块。
 
 #### 依赖包
 
