@@ -1,4 +1,3 @@
-// 文稿设置，可以进行一些像页面边距这类的全局设置
 #import "../deps.typ": show-cn-fakebold, zh
 #import "../utils.typ": 字体
 

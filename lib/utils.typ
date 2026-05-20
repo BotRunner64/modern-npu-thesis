@@ -85,26 +85,17 @@
 // 学科专业中英文名称对照（仅含西北工业大学开设专业）
 // 来源：NWPU 2026 博士 / 2025 硕士招生简章
 #let major-en-map = (
-  // ======== 02 经济学 ========
   "应用经济学": "Applied Economics",
   "统计学": "Statistics",
-
-  // ======== 03 法学 ========
   "法学": "Science of Law",
   "马克思主义理论": "Theory of Marxism",
-
-  // ======== 04 教育学 ========
   "教育学": "Education",
   "教育技术学": "Education Technology",
   "体育学": "Physical Education and Sport Science",
-
-  // ======== 05 文学 ========
   "外国语言文学": "Foreign Languages and Literatures",
   "英语语言文学": "English Language and Literature",
   "德语语言文学": "German Language and Literature",
   "外国语言学及应用语言学": "Linguistics and Applied Linguistics in Foreign Languages",
-
-  // ======== 07 理学 ========
   "数学": "Mathematics",
   "物理学": "Physics",
   "凝聚态物理": "Condensed Matter Physics",
@@ -116,8 +107,6 @@
   "高分子化学与物理": "Chemistry and Physics of Polymers",
   "生物学": "Biology",
   "生态学": "Ecology",
-
-  // ======== 08 工学 ========
   "力学": "Mechanics",
   "机械工程": "Mechanical Engineering",
   "机械制造及其自动化": "Mechanical Manufacture and Automation",
@@ -154,20 +143,12 @@
   "化学工程": "Chemical Engineering",
   "化学工艺": "Chemical Technology",
   "应用化学": "Applied Chemistry",
-
-  // ======== 10 医学 ========
   "药学": "Pharmaceutical Science",
-
-  // ======== 12 管理学 ========
   "管理科学与工程": "Management Science and Engineering",
   "工商管理学": "Business Administration",
   "公共管理学": "Public Administration",
-
-  // ======== 14 交叉学科 ========
   "集成电路科学与工程": "Integrated Circuit Science and Engineering",
   "设计学": "Design Science",
-
-  // ======== 专业学位类别 ========
   "应用统计": "Applied Statistics",
   "教育": "Education",
   "文物": "Cultural Heritage",
@@ -175,8 +156,6 @@
   "公共管理": "Public Administration",
   "会计": "Professional Accounting",
   "工程管理": "Engineering Management",
-
-  // ======== 工程类专业学位领域（0854 电子信息） ========
   "新一代电子信息技术（含量子技术等）": "New Generation Electronic Information Technology",
   "新一代电子信息技术": "New Generation Electronic Information Technology",
   "通信工程（含宽带网络、移动通信等）": "Communication Engineering",
@@ -188,8 +167,6 @@
   "光电信息工程": "Optoelectronic Information Engineering",
   "人工智能": "Artificial Intelligence",
   "网络与信息安全": "Network and Information Security",
-
-  // ======== 工程类专业学位领域（0855 机械） ========
   "航空工程": "Aeronautical Engineering",
   "航天工程": "Astronautical Engineering",
   "船舶工程": "Ship Engineering",
@@ -197,24 +174,14 @@
   "工业设计工程": "Industrial Design Engineering",
   "智能制造技术": "Intelligent Manufacturing Technology",
   "机器人工程": "Robotics Engineering",
-
-  // ======== 工程类专业学位领域（0856 材料与化工） ========
   "材料工程": "Materials Engineering",
-
-  // ======== 工程类专业学位领域（0858 能源动力） ========
   "动力工程": "Power Engineering",
   "航空发动机工程": "Aero Engine Engineering",
   "航天动力工程": "Aerospace Power Engineering",
   "清洁能源技术": "Clean Energy Technology",
-
-  // ======== 工程类专业学位领域（0860 生物与医药） ========
   "生物技术与工程": "Biotechnology and Bioengineering",
-
-  // ======== 工程类专业学位领域（0861 交通运输） ========
   "道路交通运输": "Road Transportation",
   "航空交通运输": "Air Transportation",
-
-  // ======== 西北工业大学自设/交叉学科 ========
   "微机电系统及纳米技术": "MEMS and Nanotechnology",
   "工业设计": "Industrial Design",
   "工业工程": "Industrial Engineering",
@@ -224,8 +191,6 @@
   "智能科学与工程": "Intelligent Science and Engineering",
   "航空宇航制造工程": "Aerospace Manufacturing Engineering",
   "风能和太阳能系统及工程": "Wind and Solar Energy Systems and Engineering",
-
-  // ======== 其他专业学位领域 ========
   "工业工程与管理": "Industrial Engineering and Management",
   "英语笔译": "English Translation",
   "英语口译": "English Interpreting",
