@@ -57,7 +57,7 @@
 
     // 一级标题统一换页并居中
     if it.level == 1 {
-      pagebreak(weak: true, to: if graduate { "odd" })
+      pagebreak(weak: true, to: "odd")
       v(leading + above-extra)
       align(center, block(below: leading + below-extra, it))
     } else {

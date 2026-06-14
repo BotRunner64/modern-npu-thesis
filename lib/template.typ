@@ -112,9 +112,7 @@
       )
     }
 
-    #if graduate {
-      pagebreak(weak: true, to: "odd")
-    }
+    #pagebreak(weak: true, to: "odd")
   ]
 
   [#metadata(none) <__nwpu_mainmatter_start__>]
